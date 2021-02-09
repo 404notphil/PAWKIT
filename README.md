@@ -9,8 +9,8 @@ This app is a playable musical instrument. It is packaged with a set of ±150 au
 Those samples are recordings of Bombo Legüero, a traditional Andean folk music drum typically made of 
 wood and alpaca skins or cowhide. 
 
-There are 2 primary zones on the screen which represent two primary sounds that the instrument can make:
-a hit on the wooden rim of the drum, and a hit in the center of the drum head. 
+There are two zones on the screen which represent the primary sounds that the instrument can make:
+a hit on the wooden rim of the drum and a hit in the center of the drum head. 
 Each of those two zones has many subzones, generated automatically based on the provided sample set. 
 At present, there are 10 sub-zones for the rim articulation, and 12 for the head articulation. 
 Each sub-zone corresponds to a different volume for that articulation. 
@@ -20,6 +20,6 @@ layer of depth to the sample set. Each volume of each articulations is accompani
 "Round Robins" and are intended to add human imperfections to repeated notes, thus avoiding the
 dreaded "machine gun effect". 
 
-Coming to the app store soon.
+Coming to the play store soon.
  
 See the documentation for useful diagrams of the architecture. 
