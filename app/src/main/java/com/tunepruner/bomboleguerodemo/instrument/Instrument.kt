@@ -17,6 +17,7 @@ class Instrument(private val activity: Activity) {
 
 
     init {
+        System.loadLibrary("bomboleguero")
         val touchLogic: TouchLogic = SimpleTouchLogic()
         val triggerGraph: TriggerGraph =
             TriggerGraphFactory
@@ -31,15 +32,12 @@ class Instrument(private val activity: Activity) {
         val triggerManager: TriggerManager = SimpleTriggerManager(triggerGraph)
         val sampleManager: SampleManager = SimpleSampleManager(sampleLibrary)
 
-        player = PlayerFactory.getInstance(touchLogic, triggerManager, sampleManager)
+        player = PlayerFactory.getInstance(touchLogic, triggerManager, sampleManager, resourceManager)
 
     }
 
     fun onTouch(event: MotionEvent) {
-
         player.play(event)
-
-
     }
 }
 

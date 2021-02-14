@@ -5,7 +5,7 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 
 class ResourceManager(val context: Context) {
-
+    private var counter: Int = 0
     val fileSnapshots = ArrayList<FileSnapshot>()
 
     init {
@@ -14,34 +14,39 @@ class ResourceManager(val context: Context) {
 
     private fun analyzeFiles(context: Context) {
         val assetManager: AssetManager = context.assets
-        val filePaths = assetManager.list("bomboleguerosamples/")
+        val filePaths = assetManager.list("audio/")
             ?: error("AssetManager couldn't get filePaths")
         for (element in filePaths) {
-            val filename: String = element
+            val filename = "audio/${element}"
             val afd: AssetFileDescriptor =
-//                assetManager.openFd("bomboleguerosamples/2_10_1_bomboleguero.wav")
-                assetManager.openFd("bomboleguerosamples/$element")
-            val fileSnapshot = filenameToSnapshot(filename, afd)
+                assetManager.openFd(filename)
+            val fileSnapshot = filenameToSnapshot(filename, afd, assetManager)
             fileSnapshots.add(fileSnapshot)
         }
-        val testing = "sdfjl"
     }
 
 
-    private fun filenameToSnapshot(fileName: String, assetFileDescriptor: AssetFileDescriptor): FileSnapshot {
+    private fun filenameToSnapshot(
+        fileName: String,
+        assetFileDescriptor: AssetFileDescriptor,
+        assetManager: AssetManager
+    ): FileSnapshot {
         /* Example: "2_6_3_bomboleguero.wav"
         [group number]_[layer number]_[round robin number]_[library name]*/
 
-        val fileNameMembers = fileName.split("_")
-        val lastMemberWithoutExtension = fileNameMembers[3].split(".")
+        val trimDirectories = fileName.split("/")
+        val trimExtension = trimDirectories[trimDirectories.size-1].split(".")
+        val fileNameMembers = trimExtension[0].split("_")
 
         return FileSnapshot(
+            counter++,
             fileName,
             fileNameMembers[0].toInt(),
             fileNameMembers[1].toInt(),
             fileNameMembers[2].toInt(),
-            lastMemberWithoutExtension[0],
-            assetFileDescriptor
+            fileNameMembers[3],
+            assetFileDescriptor,
+            assetManager
         )
 
     }
@@ -99,15 +104,31 @@ class ResourceManager(val context: Context) {
         }
         return null
     }
+
+    fun getFileSnapshot(groupIteration: Int, layerIteration: Int, roundRobinIteration: Int): FileSnapshot? {
+        var toReturn: FileSnapshot? = null
+        for (element in fileSnapshots) {
+            if(
+                element.group == groupIteration &&
+                element.layer == layerIteration &&
+                element.roundRobin == roundRobinIteration){
+                toReturn = element
+                break
+            }
+        }
+        return toReturn
+    }
 }
 
 data class FileSnapshot(
+    val index: Int,
     val fileName: String,
     val group: Int,
     val layer: Int,
     val roundRobin: Int,
     val libraryName: String,
-    val assetFileDescriptor: AssetFileDescriptor
+    val assetFileDescriptor: AssetFileDescriptor,
+    var assetManager: AssetManager
 ) {
     fun equals(toFind: FileSnapshot): Boolean {
         return toFind.group == group &&

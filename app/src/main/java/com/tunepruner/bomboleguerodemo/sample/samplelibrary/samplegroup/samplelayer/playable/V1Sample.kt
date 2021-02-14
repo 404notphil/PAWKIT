@@ -3,6 +3,7 @@ package com.tunepruner.bomboleguerodemo.sample.samplelibrary.samplegroup.samplel
 import android.content.res.AssetFileDescriptor
 import android.media.AudioAttributes
 import android.media.SoundPool
+import com.tunepruner.bomboleguerodemo.instrument.FileSnapshot
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -10,6 +11,7 @@ import java.util.*
 class V1Sample(
     private val sampleCoords: SampleCoords,
     private val assetFileDescriptor: AssetFileDescriptor,
+    private val fileSnapshot: FileSnapshot
 ) :
     Playable {
     var soundID: Int = 0
@@ -25,6 +27,10 @@ class V1Sample(
 
     override fun getSampleCoords(): SampleCoords {
         return sampleCoords
+    }
+
+    override fun getIndex(): Int {
+        return fileSnapshot.index
     }
 
 }

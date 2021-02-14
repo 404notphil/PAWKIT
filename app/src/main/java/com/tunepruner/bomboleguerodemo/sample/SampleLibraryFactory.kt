@@ -41,9 +41,14 @@ class SampleLibraryFactory {
                             groupIteration,
                             layerIteration,
                             roundRobinIteration
+                        )//TODO delete this last call, the method it calls, and the property it sets after the transition to Oboe!
+                        val fileSnapshot = resourceManager.getFileSnapshot(
+                            groupIteration,
+                            layerIteration,
+                            roundRobinIteration
                         )
                         val thisRoundRobin: Playable =
-                            V1Sample(sampleCoords, assetFileDescriptor!!)
+                            V1Sample(sampleCoords, assetFileDescriptor!!, fileSnapshot!!)
                         thisSampleLayer.addPlayable(sampleCoords, thisRoundRobin)
                         thisSampleLayer.addSampleCoords(roundRobinIteration, sampleCoords)
                     }
