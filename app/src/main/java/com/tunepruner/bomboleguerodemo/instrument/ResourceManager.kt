@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 
-class ResourceManager(val context: Context) {
+class ResourceManager(val context: Context, val libraryName: String) {
     private var counter: Int = 0
     val fileSnapshots = ArrayList<FileSnapshot>()
 
@@ -31,8 +31,6 @@ class ResourceManager(val context: Context) {
         assetFileDescriptor: AssetFileDescriptor,
         assetManager: AssetManager
     ): FileSnapshot {
-        /* Example: "2_6_3_bomboleguero.wav"
-        [group number]_[layer number]_[round robin number]_[library name]*/
 
         val trimDirectories = fileName.split("/")
         val trimExtension = trimDirectories[trimDirectories.size-1].split(".")
@@ -98,7 +96,7 @@ class ResourceManager(val context: Context) {
             if (element.group == group &&
                 element.layer == layer &&
                 element.roundRobin == roundRobin &&
-                element.libraryName == "bomboleguero"
+                element.libraryName == libraryName
             )//compiler told me this is fine, but I'm not sure...not .equals? or .contains?
                 return element.assetFileDescriptor
         }

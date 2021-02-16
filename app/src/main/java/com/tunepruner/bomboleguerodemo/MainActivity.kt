@@ -16,11 +16,11 @@ import com.tunepruner.bomboleguerodemo.instrument.ScreenPrep
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() { //change signature to Instrument activity (val libraryName: String)
     lateinit var instrument: Instrument
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        instrument = instrumentFactory(this)
+        instrument = instrumentFactory(this, "bomboleguero")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.playable_area_2)
     }
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-fun instrumentFactory(activity: Activity): Instrument {
-    return Instrument(activity)
+fun instrumentFactory(activity: Activity, libraryName: String): Instrument {
+    return Instrument(activity, libraryName)
 }
 
