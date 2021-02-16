@@ -1,4 +1,4 @@
 include ':parselib'
 include ':iolib'
 include ':app'
-rootProject.name = "BomboLeguero"
+rootProject.name = "FingerPerc"
