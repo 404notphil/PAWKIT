@@ -4,6 +4,7 @@ import android.app.Activity
 import android.graphics.Insets
 import android.os.Build
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.WindowInsets
 
 class ScreenPrep {

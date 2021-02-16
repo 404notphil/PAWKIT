@@ -10,4 +10,5 @@ interface TriggerZone {
     fun addLayer(triggerLayerZone: LayerZone)
     fun getLayer(zoneLayer: Int): LayerZone
     fun getLimits(): ZoneLimits
+    fun getZoneNumber(): Int
 }

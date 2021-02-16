@@ -7,32 +7,32 @@ import com.tunepruner.bomboleguerodemo.trigger.triggergraph.triggerzone.zonelaye
 import java.util.LinkedList;
 
 class V1TriggerGraph : TriggerGraph {
-    private val triggerZones: LinkedList<TriggerZone> = LinkedList<TriggerZone>()
+    private val triggerTriggerZones: LinkedList<TriggerZone> = LinkedList<TriggerZone>()
 
     override fun invokeLayer(pointF: PointF): LayerZone {
 
-        var triggerZone: TriggerZone? = null
-        for (element in triggerZones) {
+        var triggerTriggerZone: TriggerZone? = null
+        for (element in triggerTriggerZones) {
             if (element.isMatch(pointF)) {
-                triggerZone = element
+                triggerTriggerZone = element
             }
         }
-        triggerZone?: error("TriggerManager called triggerGraph.invokeLayer(point) but got back a null value")
-        return triggerZone.invokeLayer(pointF)?: error("TriggerGraph called triggerZone.invokeLayer(point) but got back a null value")
+        triggerTriggerZone?: error("TriggerManager called triggerGraph.invokeLayer(point) but got back a null value")
+        return triggerTriggerZone.invokeLayer(pointF)?: error("TriggerGraph called triggerZone.invokeLayer(point) but got back a null value")
     }
 
     override fun getLayer(triggerZone: Int, zoneLayer: Int): LayerZone {
-        return triggerZones[triggerZone-1].getLayer(zoneLayer)
+        return triggerTriggerZones[triggerZone-1].getLayer(zoneLayer)
     }
 
-    override fun addTriggerZone(triggerZone: TriggerZone) {
-        triggerZones.add(triggerZone)
+    override fun addTriggerZone(triggerTriggerZone: TriggerZone) {
+        triggerTriggerZones.add(triggerTriggerZone)
     }
 
     override fun getZoneLimits(): ArrayList<ZoneLimits>{
         var zoneLimits = ArrayList<ZoneLimits>()
-        for (i in 0 until triggerZones.size) {
-            zoneLimits.add(triggerZones[i].getLimits())
+        for (i in 0 until triggerTriggerZones.size) {
+            zoneLimits.add(triggerTriggerZones[i].getLimits())
         }
         return zoneLimits
     }

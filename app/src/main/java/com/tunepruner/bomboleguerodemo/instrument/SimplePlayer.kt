@@ -1,19 +1,18 @@
 package com.tunepruner.bomboleguerodemo.instrument
 
-import android.content.res.AssetManager
 import android.util.Log
 import android.view.MotionEvent
+import com.tunepruner.bomboleguerodemo.graphics.GUIManager
 import com.tunepruner.bomboleguerodemo.sample.SampleManager
 import com.tunepruner.bomboleguerodemo.sample.samplelibrary.samplegroup.samplelayer.playable.Playable
 import com.tunepruner.bomboleguerodemo.trigger.TriggerManager
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
 class SimplePlayer(
     private val touchLogic: TouchLogic,
     private val triggerManager: TriggerManager,
     private val sampleManager: SampleManager,
+    private val GUIManager: GUIManager,
     private val resourceManager: ResourceManager
 
 ) : Player {
@@ -28,8 +27,10 @@ class SimplePlayer(
         val pointF = touchLogic.reduceTouchEvent(event)
         if (pointF != null) {
             val zoneLayer = triggerManager.computeZoneLayer(pointF)
+            Log.i("zoneLayer", zoneLayer.getLayerIteration().toString())
             val playable = sampleManager.computeSample(zoneLayer)
             jniPlayerAdapter.play(playable)
+            GUIManager.startAnimation(zoneLayer)
         }
     }
 

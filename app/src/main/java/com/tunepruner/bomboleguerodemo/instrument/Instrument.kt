@@ -1,7 +1,10 @@
 package com.tunepruner.bomboleguerodemo.instrument
 
 import android.app.Activity
+import android.util.Log
 import android.view.MotionEvent
+import com.tunepruner.bomboleguerodemo.graphics.GUIManager
+import com.tunepruner.bomboleguerodemo.graphics.SimpleGUIManager
 import com.tunepruner.bomboleguerodemo.sample.SampleLibraryFactory
 import com.tunepruner.bomboleguerodemo.sample.SampleManager
 import com.tunepruner.bomboleguerodemo.sample.SimpleSampleManager
@@ -31,13 +34,15 @@ class Instrument(private val activity: Activity) {
 
         val triggerManager: TriggerManager = SimpleTriggerManager(triggerGraph)
         val sampleManager: SampleManager = SimpleSampleManager(sampleLibrary)
+        val guiManager: GUIManager = SimpleGUIManager(resourceManager)
 
-        player = PlayerFactory.getInstance(touchLogic, triggerManager, sampleManager, resourceManager)
+        player = PlayerFactory.getInstance(touchLogic, triggerManager, sampleManager, guiManager, resourceManager)
 
     }
 
     fun onTouch(event: MotionEvent) {
         player.play(event)
+
     }
 }
 

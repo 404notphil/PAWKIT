@@ -7,7 +7,7 @@ import com.tunepruner.bomboleguerodemo.trigger.triggergraph.triggerzone.zonelaye
 
 interface TriggerGraph {
     fun invokeLayer(pointF: PointF): LayerZone?
-    fun addTriggerZone(triggerZone: TriggerZone)
+    fun addTriggerZone(triggerTriggerZone: TriggerZone)
     fun getLayer(triggerZone: Int, zoneLayer: Int): LayerZone
     fun getZoneLimits(): ArrayList<ZoneLimits>
 }

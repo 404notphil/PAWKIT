@@ -23,8 +23,8 @@ class SimpleTouchLogic : TouchLogic {
         val pointF: PointF = PointF()
         when (maskedAction) {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
-                pointF.x = event.getX(pointerIndex)
-                pointF.y = event.getY(pointerIndex)
+                pointF.x = event.getRawX(pointerIndex)
+                pointF.y = event.getRawY(pointerIndex) // experimenting. Uncomment afterwards
 
                 returns.add(pointF)
                 lastTime = Calendar.getInstance().timeInMillis;

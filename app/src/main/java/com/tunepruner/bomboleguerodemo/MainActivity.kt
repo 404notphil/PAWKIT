@@ -3,10 +3,13 @@ package com.tunepruner.bomboleguerodemo
 import android.app.Activity
 import android.graphics.Point
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.HandlerCompat.postDelayed
 import com.tunepruner.bomboleguerodemo.instrument.Instrument
 import com.tunepruner.bomboleguerodemo.instrument.ScreenDimensions
 import com.tunepruner.bomboleguerodemo.instrument.ScreenPrep
@@ -23,11 +26,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val point = Point()
-        point.x = event.x.toInt()
-        point.y = event.y.toInt()
         instrument.onTouch(event)
         guiFlicker(event)
+        Log.i("coords", "event.y = ${event.y}")
+        Log.i("coords", "event.rawY = ${event.rawY}")
+        Log.i("coords", "Screen dimensions = ${ScreenPrep.getDimensions(this)}")
         return true
     }
 
@@ -37,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideSystemUI() {
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN

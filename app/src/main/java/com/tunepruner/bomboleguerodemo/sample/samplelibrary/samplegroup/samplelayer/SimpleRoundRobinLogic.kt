@@ -1,5 +1,6 @@
 package com.tunepruner.bomboleguerodemo.sample.samplelibrary.samplegroup.samplelayer
 
+import android.util.Log
 import com.tunepruner.bomboleguerodemo.sample.samplelibrary.samplegroup.samplelayer.playable.Playable
 import com.tunepruner.bomboleguerodemo.sample.samplelibrary.samplegroup.samplelayer.playable.SampleCoords
 import java.util.concurrent.ConcurrentLinkedQueue
@@ -19,6 +20,7 @@ class SimpleRoundRobinLogic : RoundRobinLogic {
         val newRR: Int = (Math.random() * ((totalRR - 1) + 1) + 1).toInt()
         var outgoingSampleID = incomingLayer.getSampleIDByInt(newRR)
         history.add(incomingLayer.getPlayableBySampleCoords(outgoingSampleID))
+        Log.i("SampleID", "${ outgoingSampleID.getGroupNumber() } -- ${outgoingSampleID.getLayerNumber()} -- ${outgoingSampleID.getRoundRobinNumber()}")
         return outgoingSampleID
     }
 

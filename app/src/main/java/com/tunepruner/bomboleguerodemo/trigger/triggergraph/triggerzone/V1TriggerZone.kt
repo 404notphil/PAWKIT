@@ -54,6 +54,10 @@ class V1TriggerZone(
         return layerZones[zoneLayer-1]
     }
 
+    override fun getZoneNumber(): Int{
+        return zoneIteration
+    }
+
     override fun getLimits(): ZoneLimits{
         return zoneLimits
     }
