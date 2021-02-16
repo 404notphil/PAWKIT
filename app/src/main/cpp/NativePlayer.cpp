@@ -32,7 +32,7 @@ static const char* TAG = "DrumPlayerJNI";
 static SimpleMultiPlayer sDTPlayer;
 
 JNIEXPORT jboolean JNICALL
-Java_com_tunepruner_bomboleguerodemo_instrument_JNIPlayerAdapter_loadWavAssetNative(
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_loadWavAssetNative(
         JNIEnv* env, jobject, jbyteArray bytearray, jint index, jfloat pan, jint channels) {
     int len = env->GetArrayLength (bytearray);
 
@@ -60,29 +60,29 @@ Java_com_tunepruner_bomboleguerodemo_instrument_JNIPlayerAdapter_loadWavAssetNat
 }
 
 JNIEXPORT void JNICALL
-Java_com_tunepruner_bomboleguerodemo_instrument_JNIPlayerAdapter_trigger(JNIEnv* env, jobject, jint index) {
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_trigger(JNIEnv* env, jobject, jint index) {
     sDTPlayer.triggerDown(index);
 }
 
 
 JNIEXPORT void JNICALL
-Java_com_tunepruner_bomboleguerodemo_instrument_JNIPlayerAdapter_unloadWavAssetsNative(JNIEnv* env, jobject){
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_unloadWavAssetsNative(JNIEnv* env, jobject){
 
 }
 
 JNIEXPORT void JNICALL
-Java_com_tunepruner_bomboleguerodemo_instrument_JNIPlayerAdapter_setupAudioStreamNative(JNIEnv* env, jobject, jint numChannels){
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_setupAudioStreamNative(JNIEnv* env, jobject, jint numChannels){
     sDTPlayer.setupAudioStream(numChannels);
     sDTPlayer.startStream();
 }
 
 JNIEXPORT void JNICALL
-Java_com_tunepruner_bomboleguerodemo_instrument_JNIPlayerAdapter_startAudioStreamNative(JNIEnv* env, jobject){
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_startAudioStreamNative(JNIEnv* env, jobject){
 
 }
 
 JNIEXPORT void JNICALL
-Java_com_tunepruner_bomboleguerodemo_instrument_JNIPlayerAdapter_teardownAudioStreamNative(JNIEnv* env, jobject){
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_teardownAudioStreamNative(JNIEnv* env, jobject){
 
 }
 
