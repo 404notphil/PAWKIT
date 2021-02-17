@@ -12,7 +12,7 @@
         <activity
             android:name=".LaunchScreenActivity"
             android:label="@string/title_activity_launcher_screen"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".InstrumentActivity"
             android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".InstrumentActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".LaunchScreenActivity"/>
     </application>

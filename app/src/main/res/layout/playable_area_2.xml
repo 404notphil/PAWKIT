@@ -22,7 +22,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/Louder1"
+                android:id="@+id/SofterA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Louder"
@@ -35,14 +35,14 @@
                 android:id="@+id/imageView6"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:layout_constraintBottom_toTopOf="@+id/Softer1"
+                app:layout_constraintBottom_toTopOf="@+id/LouderA"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Louder1"
+                app:layout_constraintTop_toBottomOf="@+id/SofterA"
                 app:srcCompat="@mipmap/arrow_png_foreground" />
 
             <TextView
-                android:id="@+id/Softer1"
+                android:id="@+id/LouderA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Softer"
@@ -86,7 +86,7 @@
 
 
             <TextView
-                android:id="@+id/Softer2"
+                android:id="@+id/LouderB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Softer"
@@ -99,14 +99,14 @@
                 android:id="@+id/imageView8"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:layout_constraintBottom_toTopOf="@+id/Louder2"
+                app:layout_constraintBottom_toTopOf="@+id/SofterB"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Softer2"
+                app:layout_constraintTop_toBottomOf="@+id/LouderB"
                 app:srcCompat="@mipmap/arrow_png_foreground" />
 
             <TextView
-                android:id="@+id/Louder2"
+                android:id="@+id/SofterB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Louder"
