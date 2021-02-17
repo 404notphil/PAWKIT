@@ -16,7 +16,11 @@ class ResourceManager(val context: Context, val libraryName: String) {
         val assetManager: AssetManager = context.assets
         val filePaths = assetManager.list("audio/")
             ?: error("AssetManager couldn't get filePaths")
+        val filePathsFiltered = ArrayList<String>()
         for (element in filePaths) {
+            if (element.contains(libraryName)) filePathsFiltered.add(element)
+        }
+        for (element in filePathsFiltered) {
             val filename = "audio/${element}"
             val afd: AssetFileDescriptor =
                 assetManager.openFd(filename)
@@ -95,8 +99,8 @@ class ResourceManager(val context: Context, val libraryName: String) {
         for (element in fileSnapshots) {
             if (element.group == group &&
                 element.layer == layer &&
-                element.roundRobin == roundRobin &&
-                element.libraryName == libraryName
+                element.roundRobin == roundRobin /*&&*/
+//                element.libraryName ==
             )//compiler told me this is fine, but I'm not sure...not .equals? or .contains?
                 return element.assetFileDescriptor
         }
