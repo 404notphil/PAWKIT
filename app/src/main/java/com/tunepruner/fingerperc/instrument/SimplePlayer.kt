@@ -19,7 +19,7 @@ class SimplePlayer(
     private val jniPlayerAdapter = JNIPlayerAdapter()
 
     init {
-        jniPlayerAdapter.prepareStream(resourceManager)
+        prepare()
         jniPlayerAdapter.loadAllAssets(resourceManager)
     }
 
@@ -34,8 +34,14 @@ class SimplePlayer(
         }
     }
 
+    override fun tearDown() {
+        jniPlayerAdapter.unloadWavAssetsNative()
+        jniPlayerAdapter.teardownAudioStreamNative()
+    }
+
     fun prepare(){
-        jniPlayerAdapter.prepareStream(resourceManager)
+        jniPlayerAdapter.setupAudioStreamNative(1)
+        jniPlayerAdapter.startAudioStreamNative()
         jniPlayerAdapter.loadAllAssets(resourceManager)
     }
 }
@@ -47,11 +53,6 @@ class JNIPlayerAdapter{
     }
 
 
-    fun prepareStream(resourceManager: ResourceManager){
-        resourceManager.fileSnapshots
-        setupAudioStreamNative(1)
-        startAudioStreamNative()
-    }
     fun loadAllAssets(resourceManager: ResourceManager): Boolean{
         var allAssetsCorrect = true
 

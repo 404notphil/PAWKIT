@@ -4,4 +4,5 @@ import android.view.MotionEvent
 
 interface Player {
     fun play(x: MotionEvent)
+    fun tearDown()
 }

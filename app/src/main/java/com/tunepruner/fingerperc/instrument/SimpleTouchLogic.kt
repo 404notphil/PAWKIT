@@ -1,6 +1,7 @@
 package com.tunepruner.fingerperc.instrument
 
 import android.graphics.PointF
+import android.util.Log
 import android.view.MotionEvent
 import java.util.*
 import java.util.concurrent.ConcurrentLinkedQueue
@@ -14,6 +15,7 @@ class SimpleTouchLogic : TouchLogic {
     var timeNow by Delegates.notNull<Long>()
 
     override fun reduceTouchEvent(event: MotionEvent): PointF? {
+        Log.i("SimpleTouchLogic", "${event.y}")
         val pointerIndex = event.actionIndex
         val pointerId = event.getPointerId(pointerIndex)
         val maskedAction = event.actionMasked

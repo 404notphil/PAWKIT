@@ -16,15 +16,17 @@ class TriggerGraphFactory {
             val triggerGraph: TriggerGraph = V1TriggerGraph()
             val zoneCount = resourceManager.getGroupCount()
             for (zoneIteration in 1..zoneCount) {
-                val thisTriggerTriggerZone: TriggerZone = V1TriggerZone(zoneCount, zoneIteration, screenDimensions)
+                val thisTriggerZone: TriggerZone = V1TriggerZone(zoneCount, zoneIteration, screenDimensions)
                 val layerCount = resourceManager.getLayerCount(zoneIteration)
+                Log.i("TriggerGraphFactory",
+                    "\n\ntriggerzone iteration = ${thisTriggerZone.getZoneNumber()}\ntop limit = ${thisTriggerZone.getLimits().topLimit}\nbottom limit = ${thisTriggerZone.getLimits().bottomLimit}")
                 for (layerIteration in 1..layerCount) {
                     val thisLayerZone: LayerZone = V1LayerZone(zoneCount, zoneIteration, layerIteration, layerCount, screenDimensions)
                     Log.i("TriggerGraphFactory",
-                        "layer iteration = ${thisLayerZone.getLayerIteration()}\ntop limit = ${thisLayerZone.getLimits().topLimit}\nbottom limit = ${thisLayerZone.getLimits().bottomLimit}")
-                    thisTriggerTriggerZone.addLayer(thisLayerZone)
+                        "\n\nlayer iteration = ${thisLayerZone.getLayerIteration()}\ntop limit = ${thisLayerZone.getLimits().topLimit}\nbottom limit = ${thisLayerZone.getLimits().bottomLimit}")
+                    thisTriggerZone.addLayer(thisLayerZone)
                 }
-                triggerGraph.addTriggerZone(thisTriggerTriggerZone)
+                triggerGraph.addTriggerZone(thisTriggerZone)
             }
             return triggerGraph
         }

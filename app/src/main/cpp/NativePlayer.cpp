@@ -67,23 +67,23 @@ Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_trigger(JNIEnv* env, 
 
 JNIEXPORT void JNICALL
 Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_unloadWavAssetsNative(JNIEnv* env, jobject){
-
+    sDTPlayer.unloadSampleData();
 }
 
 JNIEXPORT void JNICALL
 Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_setupAudioStreamNative(JNIEnv* env, jobject, jint numChannels){
     sDTPlayer.setupAudioStream(numChannels);
-    sDTPlayer.startStream();
+
 }
 
 JNIEXPORT void JNICALL
 Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_startAudioStreamNative(JNIEnv* env, jobject){
-
+    sDTPlayer.startStream();
 }
 
 JNIEXPORT void JNICALL
 Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_teardownAudioStreamNative(JNIEnv* env, jobject){
-
+    sDTPlayer.teardownAudioStream();
 }
 
 //#ifdef __cplusplus

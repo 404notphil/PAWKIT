@@ -3,6 +3,7 @@ package com.tunepruner.fingerperc.instrument
 import android.content.Context
 import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
+import android.util.Log
 
 class ResourceManager(val context: Context, val libraryName: String) {
     private var counter: Int = 0
@@ -13,6 +14,7 @@ class ResourceManager(val context: Context, val libraryName: String) {
     }
 
     private fun analyzeFiles(context: Context) {
+
         val assetManager: AssetManager = context.assets
         val filePaths = assetManager.list("audio/")
             ?: error("AssetManager couldn't get filePaths")
@@ -26,6 +28,7 @@ class ResourceManager(val context: Context, val libraryName: String) {
                 assetManager.openFd(filename)
             val fileSnapshot = filenameToSnapshot(filename, afd, assetManager)
             fileSnapshots.add(fileSnapshot)
+            Log.i("ResourceManager = ", element)
         }
     }
 

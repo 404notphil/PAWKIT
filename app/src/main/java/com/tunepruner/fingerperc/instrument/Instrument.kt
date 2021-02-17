@@ -19,7 +19,7 @@ class Instrument(private val activity: Activity, libraryName: String) {
 
 
     init {
-        System.loadLibrary("bomboleguero")//TODO this is the JNI one, and shouldn't use the libraryName string, but should be refactored eventually!
+
         val touchLogic: TouchLogic = SimpleTouchLogic()
         val triggerGraph: TriggerGraph =
             TriggerGraphFactory
@@ -42,6 +42,10 @@ class Instrument(private val activity: Activity, libraryName: String) {
     fun onTouch(event: MotionEvent) {
         player.play(event)
 
+    }
+
+    fun tearDownPlayer(){
+        player.tearDown()
     }
 }
 

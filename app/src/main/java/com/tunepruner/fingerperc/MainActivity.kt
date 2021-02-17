@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() { //change signature to Instrument acti
     override fun onCreate(savedInstanceState: Bundle?) {
         val libraryName = intent.extras?.getString("libraryName")
         instrument = instrumentFactory(this, libraryName!!)
-
+        Log.i("MainActivity", intent.extras?.getString("libraryName")!!)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.playable_area_2)
 
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() { //change signature to Instrument acti
         instrument.onTouch(event)
         guiFlicker(event)
         Log.i("coords", "event.y = ${event.y}")
-        Log.i("coorgitds", "event.rawY = ${event.rawY}")
+        Log.i("coords", "event.rawY = ${event.rawY}")
         Log.i("coords", "Screen dimensions = ${ScreenPrep.getDimensions(this)}")
         return true
     }
@@ -78,6 +78,12 @@ class MainActivity : AppCompatActivity() { //change signature to Instrument acti
             }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        instrument.tearDownPlayer()
+    }
+
 }
 
 fun instrumentFactory(activity: Activity, libraryName: String): Instrument {
