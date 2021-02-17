@@ -2,11 +2,13 @@ package com.tunepruner.fingerperc
 
 import android.app.Activity
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.ActivityNavigator
 import com.tunepruner.fingerperc.instrument.Instrument
 import com.tunepruner.fingerperc.instrument.ScreenPrep
 
@@ -15,16 +17,19 @@ class MainActivity : AppCompatActivity() { //change signature to Instrument acti
     lateinit var instrument: Instrument
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        instrument = instrumentFactory(this, "bomboleguero")
+        val libraryName = intent.extras?.getString("libraryName")
+        instrument = instrumentFactory(this, libraryName!!)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.playable_area_2)
+
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         instrument.onTouch(event)
         guiFlicker(event)
         Log.i("coords", "event.y = ${event.y}")
-        Log.i("coords", "event.rawY = ${event.rawY}")
+        Log.i("coorgitds", "event.rawY = ${event.rawY}")
         Log.i("coords", "Screen dimensions = ${ScreenPrep.getDimensions(this)}")
         return true
     }

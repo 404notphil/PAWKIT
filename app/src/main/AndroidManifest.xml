@@ -10,18 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name="com.tunepruner.fingerperc.MainActivity"
-            android:screenOrientation="portrait">
-
+            android:name=".LaunchScreenActivity"
+            android:label="@string/title_activity_launcher_screen"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/NoActionBar">
             <intent-filter>
-<!--                android:theme="@style/Theme.noActionBar"-->
-<!--                android:screenOrientation="landscape"-->
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".LaunchScreenActivity"/>
     </application>
 
 </manifest>
