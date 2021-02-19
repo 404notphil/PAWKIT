@@ -4,6 +4,8 @@ Screen recording of app:
 
 ![](gifOfDemo.gif)
 
+<img src="gifOfDemo.gif" width="200" height="40" alt="Screen recording of app">
+
 This app is a playable musical instrument. It is packaged with a set of 300+ audio samples
 (expandable) which are individually triggered when a user touches various zones on the screen. 
 Those samples are recordings of two different percussion instruments: 1) Bombo Legüero, a 
