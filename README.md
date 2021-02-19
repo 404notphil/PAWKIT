@@ -2,8 +2,6 @@
 
 Screen recording of app: 
 
-![](gifOfDemo.gif)
-
 <img src="gifOfDemo.gif" width="200" alt="Screen recording of app">
 
 This app is a playable musical instrument. It is packaged with a set of 300+ audio samples
