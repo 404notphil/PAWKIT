@@ -6,33 +6,33 @@ ResourceManager->: analyzeFiles()
 ResourceManager<--
 
 return
-Instrument-> SampleLibraryFactory++: prepareSamples()
-SampleLibraryFactory->ResourceManager++: getGroupCount()
+Instrument-> SampleFactory++: prepareSamples()
+SampleFactory->ResourceManager++: getGroupCount()
 return Int
 
 loop forEachGroupInSnapshot
-SampleLibraryFactory->SampleGroup++: SampleGroup()
+SampleFactory->Articulation++: Articulation()
 return new
-SampleLibraryFactory->ResourceManager++: getLayerCount(group: Int)
+SampleFactory->ResourceManager++: getLayerCount(group: Int)
 return Int
 loop forEachLayerInGroup
-SampleLibraryFactory->SampleLayer++: SampleLayer(layerNumber, LayerLogic)
+SampleFactory->VelocityLayer++: VelocityLayer(layerNumber, RoundRobinLogic)
 return new
-SampleLibraryFactory->ResourceManager++: getRoundRobinCount(group: Int, layer: Int)
+SampleFactory->ResourceManager++: getRoundRobinCount(group: Int, layer: Int)
 return Int
 loop forEachSampleInLayer
-SampleLibraryFactory->Playable++: Playable(SampleCoords, path: String, LayerLogic)
-Playable->Playable++: init()
+SampleFactory->Sample++: Sample(SampleCoords, FileSnapshot)
+Sample->Sample++: init()
 
 deactivate
 return new
-SampleLibraryFactory->SampleLayer++: addSample(Playable)
+SampleFactory->VelocityLayer++: addSample(Sample)
 return
 end loop
-SampleLibraryFactory->SampleGroup++:addLayer(SampleLayer)
+SampleFactory->Articulation++:addLayer(VelocityLayer)
 return
 end loop
-SampleLibraryFactory->SampleLibraryFactory++: addGroup(SampleGroup)
+SampleFactory->SampleFactory++: addGroup(Articulation)
 deactivate
 end loop
 

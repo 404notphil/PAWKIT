@@ -1,8 +1,8 @@
 package com.tunepruner.fingerperc.sample
 
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.playable.Playable
-import com.tunepruner.fingerperc.trigger.triggergraph.triggerzone.zonelayer.LayerZone
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.Sample
+import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 
 interface SampleManager {
-    fun computeSample(layerZone: LayerZone): Playable
+    fun computeSample(velocityZone: VelocityZone): Sample
 }

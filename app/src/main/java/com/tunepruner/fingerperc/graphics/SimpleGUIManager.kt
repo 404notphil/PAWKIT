@@ -1,7 +1,7 @@
 package com.tunepruner.fingerperc.graphics
 
 import com.tunepruner.fingerperc.instrument.ResourceManager
-import com.tunepruner.fingerperc.trigger.triggergraph.triggerzone.zonelayer.LayerZone
+import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 import java.util.*
 
 class SimpleGUIManager(resourceManager: ResourceManager) : GUIManager {
@@ -28,13 +28,13 @@ class SimpleGUIManager(resourceManager: ResourceManager) : GUIManager {
     }
 
 
-    override fun startAnimation(layerZone: LayerZone){
+    override fun startAnimation(velocityZone: VelocityZone){
 //        if (isAnimating) restartRequested = true
 //        else isAnimating = true
 //
 //
-//        val zoneNumber = layerZone.getZoneIteration()
-//        val layerNumber = layerZone.getLayerIteration()
+//        val zoneNumber = velocityZone.getZoneIteration()
+//        val layerNumber = velocityZone.getLayerIteration()
 //        val cycleZone = zones[zoneNumber]
 //        val cycle = cycleZone[layerNumber]
 //        cycle.cycle()

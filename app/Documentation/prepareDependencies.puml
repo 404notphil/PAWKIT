@@ -4,15 +4,15 @@ header This diagram shows dependencies that are implied by the prepare sequence 
 !include Declarations.puml!Instrument
 !include Declarations.puml!Player
 !include Declarations.puml!ResourceManager
-!include Declarations.puml!TriggerGraphFactory
-!include Declarations.puml!SampleLibraryFactory
-!include Declarations.puml!TriggerManager
+!include Declarations.puml!ZoneFactory
+!include Declarations.puml!SampleFactory
+!include Declarations.puml!ZoneManager
 !include Declarations.puml!SampleManager
-!include Declarations.puml!SampleGroup
-!include Declarations.puml!SampleLayer
-!include Declarations.puml!TriggerZone
-!include Declarations.puml!ZoneLayer
-!include Declarations.puml!Playable
+!include Declarations.puml!Articulation
+!include Declarations.puml!VelocityLayer
+!include Declarations.puml!ArticulationZone
+!include Declarations.puml!VelocityLayer
+!include Declarations.puml!Sample
 
 folder externalResources{
 }
@@ -20,21 +20,21 @@ folder externalResources{
 
 Instrument ..> Player
 Instrument ..> ResourceManager
-Instrument ..> SampleLibraryFactory
-Instrument ..> TriggerGraphFactory
-Instrument ..> TriggerManager
+Instrument ..> SampleFactory
+Instrument ..> ZoneFactory
+Instrument ..> ZoneManager
 Instrument ..> SampleManager
 
 externalResources <. ResourceManager
 
-SampleLibraryFactory ..> ResourceManager
-SampleLibraryFactory ..> SampleGroup
-SampleLibraryFactory ..> SampleLayer
-SampleLibraryFactory ..> Playable
-Playable ..> ResourceManager
+SampleFactory ..> ResourceManager
+SampleFactory ..> Articulation
+SampleFactory ..> VelocityLayer
+SampleFactory ..> Sample
+Sample ..> ResourceManager
 
-TriggerGraphFactory ..> ResourceManager
-TriggerGraphFactory ..> TriggerZone
-TriggerGraphFactory ..> ZoneLayer
+ZoneFactory ..> ResourceManager
+ZoneFactory ..> ArticulationZone
+ZoneFactory ..> VelocityLayer
 
 @enduml

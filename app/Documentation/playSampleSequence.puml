@@ -3,32 +3,30 @@
 
 
 Instrument->Player++: play(Point)
-Player->TriggerManager++: computeZoneLayer(Point)
-return ZoneLayer
+Player->ZoneManager++: computeVelocityZone(Point)
+return VelocityZone
 
 
-Player->SampleManager++: computeSample(ZoneLayer)
-SampleManager->SampleLibrary++: invokeLayer(ZoneLayer)
-SampleLibrary->SampleGroup++: invokeLayer(ZoneLayer)
-SampleGroup->SampleLayer++: invokeSample()
-SampleLayer->LayerLogic++:computeID(SampleLayer)
-LayerLogic->LayerLogic++:addInstance()
+Player->SampleManager++: computeSample(VelocityZone)
+SampleManager->SampleLibrary++: computeSample(VelocityZone)
+SampleLibrary->Articulation++: computeSample(VelocityZone)
+Articulation->VelocityLayer++: computeSample(VelocityZone)
+VelocityLayer->RoundRobinLogic++:computeID(VelocityZone)
+RoundRobinLogic->RoundRobinLogic++:addInstance()
 deactivate
 return SampleCoords
-SampleLayer->Playable++:getPlayable(SampleCoords)
-Playable->Playable:moveToBusy()
 
 
-return Playable
-return Playable
-return Playable
-return Playable
-return Playable
+return Sample
+return Sample
+return Sample
+return Sample
+return Sample
 
 Player->Player++:startThread()
 
-Player->Playable++: play()
+Player->Sample++: play()
 return
 deactivate
-return done
+Player --> Instrument: done
 @enduml

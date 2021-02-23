@@ -1,0 +1,52 @@
+@startuml
+Instrument->Instrument++: init()
+
+Instrument->ResourceManager++: ResourceManager()
+ResourceManager->ResourceManager++: prepareSnapshot()
+deactivate
+ResourceManager->: analyzeFiles()
+ResourceManager<--
+return ResourceManager
+Instrument->: prepareSamples()
+Instrument<--:SampleFactory
+
+
+Instrument->SampleManager: SampleManager(SampleFactory)
+
+
+Instrument->ZoneFactory++: ZoneFactory()
+ZoneFactory->ZoneFactory++: prepareZones()
+ZoneFactory->ResourceManager++: getGroupCount()
+return Int
+
+
+loop forEachGroupInSnapshot
+ZoneFactory->ArticulationZone++: ArticulationZone()
+return new
+ZoneFactory->ResourceManager++: getLayerCount(group: Int)
+return Int
+loop forEachLayerInGroup
+ZoneFactory->VelocityLayer++: VelocityLayer()
+return new
+
+
+ZoneFactory->Articulation++:addLayer(VelocityLayer)
+return
+end loop
+ZoneFactory->ZoneFactory++: addZone(ArticulationZone)
+deactivate
+end loop
+deactivate
+return ZoneGraph
+
+
+Instrument->ZoneManager++: ZoneManager(ZoneGraph)
+return ZoneManager
+
+Instrument->ZoneManager++: SampleManager(SampleLibrary)
+return SampleManager
+
+
+Instrument->PlayerFactory++: getInstance(ZoneManager, SampleManager)
+return PlayerFactory
+@enduml

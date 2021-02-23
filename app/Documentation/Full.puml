@@ -2,89 +2,72 @@
 
 !include Declarations.puml!ResourceManagerFactory
 !include Declarations.puml!SampleLibrary
-!include Declarations.puml!TriggerGraph
+!include Declarations.puml!ZoneGraph
 !include Declarations.puml!V1SampleLibrary
-!include Declarations.puml!V1TriggerGraph
+!include Declarations.puml!V1ZoneGraph
 !include Declarations.puml!Instrument
 !include Declarations.puml!ResourceManagerFactory
 !include Declarations.puml!ResourceManager
-!include Declarations.puml!SimpleResourceManager
-!include Declarations.puml!TriggerGraphFactory
-!include Declarations.puml!TriggerManager
-!include Declarations.puml!SimpleTriggerManager
-!include Declarations.puml!SampleLibraryFactory
-!include Declarations.puml!TriggerManager
-!include Declarations.puml!TriggerZone
-!include Declarations.puml!HeadZone
-!include Declarations.puml!RimZone
-!include Declarations.puml!ZoneLayer
-!include Declarations.puml!HeadZoneLayer
-!include Declarations.puml!RimZoneLayer
+!include Declarations.puml!ZoneFactory
+!include Declarations.puml!ZoneManager
+!include Declarations.puml!SimpleZoneManager
+!include Declarations.puml!SampleFactory
+!include Declarations.puml!ZoneManager
+!include Declarations.puml!ArticulationZone
+!include Declarations.puml!V1ArticulationZone
+!include Declarations.puml!VelocityZone
+!include Declarations.puml!V1VelocityZone
 !include Declarations.puml!Player
 !include Declarations.puml!SimplePlayer
 !include Declarations.puml!PlayerFactory
-!include Declarations.puml!LayerLogic
-!include Declarations.puml!SimpleLayerLogic
+!include Declarations.puml!RoundRobinLogic
+!include Declarations.puml!SimpleRoundRobinLogic
 !include Declarations.puml!SampleManager
 !include Declarations.puml!SimpleSampleManager
-!include Declarations.puml!SampleGroup
-!include Declarations.puml!HeadSampleGroup
-!include Declarations.puml!RimSampleGroup
-!include Declarations.puml!SampleLayer
-!include Declarations.puml!HeadSampleLayer
-!include Declarations.puml!RimSampleLayer
+!include Declarations.puml!Articulation
+!include Declarations.puml!V1Articulation
+!include Declarations.puml!VelocityLayer
+!include Declarations.puml!V1VelocityLayer
 !include Declarations.puml!SampleID
 !include Declarations.puml!SampleCoords
-!include Declarations.puml!Playable
-!include Declarations.puml!HeadSample
+!include Declarations.puml!Sample
+!include Declarations.puml!V1Sample
 
-Instrument .> ResourceManagerFactory
-PlayerFactory <. Instrument
-TriggerGraphFactory <.. Instrument
-SampleLibraryFactory <.. Instrument
-
-ResourceManager <|.. SimpleResourceManager
 Player <|.. SimplePlayer
-TriggerProvider <|.. SimpleTriggerProvider
-SampleProvider <|.. SimpleSampleProvider
-TriggerManager <|.. SimpleTriggerManager
+ZoneManager <|.. SimpleZoneManager
 SampleManager <|.. SimpleSampleManager
-TriggerGraph <|.. V1TriggerGraph
-TriggerZone <|.. HeadZone
-TriggerZone <|.. RimZone
-SampleLibrary <.. V1SampleLibrary
-SampleGroup <|.. HeadSampleGroup
-SampleGroup <|.. RimSampleGroup
-ZoneLayer <|.. HeadZoneLayer
-ZoneLayer <|.. RimZoneLayer
-SampleLayer <|.. HeadSampleLayer
-SampleLayer <|.. RimSampleLayer
-LayerLogic <|.. SimpleLayerLogic
-Playable <|.. HeadSample
+ZoneGraph <|.. V1ZoneGraph
+ArticulationZone <|.. V1ArticulationZone
+Articulation <|.. V1Articulation
+SampleLibrary <|.. V1SampleLibrary
+VelocityLayer <|.. V1VelocityLayer
+VelocityZone <|.. V1VelocityZone
+RoundRobinLogic <|.. SimpleRoundRobinLogic
+Sample <|.. V1Sample
 SampleID <|.. SampleCoords
+
 
 Instrument *-- ResourceManager
 Instrument *-- Player
 
-Player *-- TriggerManager
-Player *-- SampleManager
+SimplePlayer *- ZoneManager
+SampleManager -* SimplePlayer
 
-SimpleTriggerManager *-- SimpleTriggerProvider
-SimpleSampleManager *-- SimpleSampleProvider
+Instrument .> SampleFactory
+ZoneFactory <. Instrument
+PlayerFactory <.. Instrument
 
-HeadSample *- SampleID
-HeadSampleGroup *-- SampleLayer 
-RimSampleGroup *-- SampleLayer 
-HeadZone *-- ZoneLayer
-RimZone *-- ZoneLayer
+V1ArticulationZone o-- VelocityZone
+V1Sample *- SampleID
+V1Articulation o-- VelocityLayer
 
-SimpleSampleManager o-- ZoneLayer
-SimpleSampleManager o-- SampleLayer
+SimpleZoneManager *-  ZoneGraph
+V1ZoneGraph o-- ArticulationZone
+SampleLibrary -* SimpleSampleManager
+V1SampleLibrary o-- Articulation
 
-HeadSampleLayer o-- SampleID
-HeadSampleLayer o-- Playable
-RimSampleLayer o-- SampleID
-RimSampleLayer o-- Playable
-SimpleLayerLogic o-- SampleID
+V1VelocityLayer o-- SampleID
+V1VelocityLayer o-- Sample
+SimpleRoundRobinLogic o-- SampleID
 hide members
 @enduml

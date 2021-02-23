@@ -3,16 +3,16 @@ package com.tunepruner.fingerperc.sample
 import com.tunepruner.fingerperc.instrument.ScreenDimensions
 import com.tunepruner.fingerperc.sample.samplelibrary.SampleLibrary
 import com.tunepruner.fingerperc.sample.samplelibrary.V1SampleLibrary
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.SampleGroup
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.V1SampleGroup
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.RoundRobinLogic
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.SampleLayer
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.SimpleRoundRobinLogic
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.V1SampleLayer
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.playable.BasicCoords
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.playable.SampleCoords
-import com.tunepruner.fingerperc.trigger.triggergraph.triggerzone.zonelayer.V1LayerZone
-import com.tunepruner.fingerperc.trigger.triggergraph.triggerzone.zonelayer.LayerZone
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.Articulation
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.V1Articulation
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.RoundRobinLogic
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.VelocityLayer
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.SimpleRoundRobinLogic
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.V1VelocityLayer
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.BasicCoords
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.SampleCoords
+import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.V1VelocityZone
+import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -24,35 +24,35 @@ internal class SimpleSampleManagerTest {
     lateinit var sampleManager: SimpleSampleManager
     lateinit var screenDimensions: ScreenDimensions
     lateinit var sampleLibrary: SampleLibrary
-    lateinit var sampleGroupToAdd: SampleGroup
-    lateinit var layerZoneToQuery: LayerZone
-    lateinit var sampleLayerToAdd: SampleLayer
+    lateinit var articulationToAdd: Articulation
+    lateinit var velocityZoneToQuery: VelocityZone
+    lateinit var velocityLayerToAdd: VelocityLayer
     lateinit var basicCoords: SampleCoords
     lateinit var roundRobinLogic: RoundRobinLogic
     @BeforeEach
     fun setUp() {
         sampleLibrary = V1SampleLibrary()
-        sampleGroupToAdd = V1SampleGroup()
+        articulationToAdd = V1Articulation()
         screenDimensions = ScreenDimensions(1000, 500)
-        layerZoneToQuery = V1LayerZone(2, 1, 1, 6, screenDimensions)
+        velocityZoneToQuery = V1VelocityZone(2, 1, 1, 6, screenDimensions)
         roundRobinLogic = SimpleRoundRobinLogic()
-        sampleLayerToAdd = V1SampleLayer(1, roundRobinLogic)
+        velocityLayerToAdd = V1VelocityLayer(1, roundRobinLogic)
         basicCoords = BasicCoords(1, 1, 1, 4, 4)
-//        sampleLayerToAdd.addPlayable(
+//        velocityLayerToAdd.addPlayable(
 //            basicCoords,
 //            V1Sample(
 //                basicCoords,
 //                "sdfjkl", layerLogic
 //            )
 //        )
-        sampleLayerToAdd.addSampleCoords(1, basicCoords)
-        sampleGroupToAdd.addLayer(layerZoneToQuery, sampleLayerToAdd)
-        sampleLibrary.addSampleGroup(sampleGroupToAdd)
+        velocityLayerToAdd.addSampleCoords(1, basicCoords)
+        articulationToAdd.addLayer(velocityZoneToQuery, velocityLayerToAdd)
+        sampleLibrary.addSampleGroup(articulationToAdd)
         sampleManager = SimpleSampleManager(sampleLibrary)
     }
 
     @Test
     fun computeSample() {
-        assertNotNull(sampleManager.computeSample(layerZoneToQuery))
+        assertNotNull(sampleManager.computeSample(velocityZoneToQuery))
     }
 }

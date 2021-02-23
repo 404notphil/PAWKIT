@@ -1,6 +1,6 @@
 @startuml(id=SampleLibrary)
 interface SampleLibrary{
-+invokeLayer(): Playable
++invokeZone(): Sample
 }
 @enduml
 
@@ -12,29 +12,29 @@ class V1SampleLibrary<<SampleLibrary>>{
 @enduml
 
 
-@startuml(id=SampleLibraryFactory)
-class SampleLibraryFactory{
+@startuml(id=SampleFactory)
+class SampleFactory{
 +prepareSamples(): SampleLibrary
 }
 @enduml
 
 
-@startuml(id=TriggerGraph)
-interface TriggerGraph{
-+invokeLayer(): Playable
+@startuml(id=ZoneGraph)
+interface ZoneGraph{
++invokeZone(): Sample
 +addLayer(TiggerLayer)
 }
 @enduml
 
-@startuml(id=V1TriggerGraph)
-class V1TriggerGraph<<TriggerGraph>>{
+@startuml(id=V1ZoneGraph)
+class V1ZoneGraph<<ZoneGraph>>{
 
 }
 @enduml
 
-@startuml(id=TriggerGraphFactory)
-class TriggerGraphFactory{
-+{static}prepareTriggers(): TriggerGraph
+@startuml(id=ZoneFactory)
+class ZoneFactory{
++{static}prepareZones(): ZoneGraph
 }
 @enduml
 
@@ -54,59 +54,59 @@ init()
 @startuml(id=ResourceManager)
 class ResourceManager{
 
-+{static} prepareSnapshot()
--{static}  analyzeFiles()
-+{static} getGroupCount()
-+{static} getLayerCount(group: Int)
-+{static} getRoundRobinCount(group: Int, layer: Int)
-+{static} getResource(group: Int, layer: Int, roundRobin: Int)
+'+{static} prepareSnapshot()
+'-{static}  analyzeFiles()
+'+{static} getGroupCount()
+'+{static} getLayerCount(group: Int)
+'+{static} getRoundRobinCount(group: Int, layer: Int)
+'+{static} getResource(group: Int, layer: Int, roundRobin: Int)
 }
 @enduml
 
 
 
-@startuml(id=TriggerManager)
-interface TriggerManager{
-prepareTriggerManager()
-computeZoneLayer(Point): ZoneLayer
+@startuml(id=ZoneManager)
+interface ZoneManager{
+prepareZoneManager()
+computeVelocityLayer(Point): VelocityLayer
 }
 @enduml
 
 
-@startuml(id=SimpleTriggerManager)
-class SimpleTriggerManager<<TriggerManager>>{
-TriggerGraph
-}
-@enduml
-
-
-
-@startuml(id=TriggerZone)
-interface TriggerZone{
-invokeLayer(Point): ZoneLayer
-}
-@enduml
-
-
-@startuml(id=V1TriggerZone)
-class V1TriggerZone<<TriggerZone>>{
-
+@startuml(id=SimpleZoneManager)
+class SimpleZoneManager<<ZoneManager>>{
+ZoneGraph
 }
 @enduml
 
 
 
+@startuml(id=ArticulationZone)
+interface ArticulationZone{
+invokeZone(Point): VelocityLayer
+}
+@enduml
 
 
-@startuml(id=ZoneLayer)
-interface ZoneLayer{
+@startuml(id=V1ArticulationZone)
+class V1ArticulationZone<<ArticulationZone>>{
+
+}
+@enduml
+
+
+
+
+
+@startuml(id=VelocityZone)
+interface VelocityZone{
 isMatch(Point): boolean
 }
 @enduml
 
 
-@startuml(id=V1ZoneLayer)
-class V1ZoneLayer<<ZoneLayer>>{
+@startuml(id=V1VelocityZone)
+class V1VelocityZone<<VelocityZone>>{
 topLimit: Int
 bottomLimit: Int
 rightLimit: Int
@@ -120,16 +120,16 @@ leftLimit: Int
 @startuml(id=PlayerFactory)
 class PlayerFactory{
 
-+{static} getInstance(TriggerManager, SampleManager)
++{static} getInstance(ZoneManager, SampleManager)
 }
 @enduml
 
 
 @startuml(id=Player)
 interface Player{
-+invokePlayable(): Playable
++invokeSample(): Sample
 -startThread()
--play(Playable)
+-play(Sample)
 }
 @enduml
 
@@ -137,23 +137,23 @@ interface Player{
 
 @startuml(id=SimplePlayer)
 class SimplePlayer<<Player>>{
--TriggerManager
+-ZoneManager
 -SampleManager
 }
 @enduml
 
 
 
-@startuml(id=LayerLogic)
-interface LayerLogic{
+@startuml(id=RoundRobinLogic)
+interface RoundRobinLogic{
 computeID(): SampleID
 addInstance(SampleID)
 }
 @enduml
 
 
-@startuml(id=SimpleLayerLogic)
-class SimpleLayerLogic<<LayerLogic>>{
+@startuml(id=SimpleRoundRobinLogic)
+class SimpleRoundRobinLogic<<RoundRobinLogic>>{
 history: Queue<SampleID>
 
 }
@@ -162,8 +162,8 @@ history: Queue<SampleID>
 
 @startuml(id=SampleManager)
 interface SampleManager{
-+computeSample(ZoneLayer): Playable
-+invokeSampleGroup(ZoneLayer): Playable
++computeSample(VelocityLayer): Sample
++invokeArticulation(VelocityLayer): Sample
 +prepareSampleManager()
 }
 @enduml
@@ -171,35 +171,35 @@ interface SampleManager{
 
 @startuml(id=SimpleSampleManager)
 class SimpleSampleManager<<SampleManager>>{
--layers: Map<ZoneLayer, SampleLayer>
+-layers: Map<VelocityLayer, VelocityLayer>
 }
 @enduml
 
 
-@startuml(id=SampleGroup)
-interface SampleGroup{
-invokeLayer(): Playable
+@startuml(id=Articulation)
+interface Articulation{
+invokeZone(): Sample
 }
 @enduml
 
 
-@startuml(id=V1SampleGroup)
-class V1SampleGroup<<SampleGroup>>{
--Map<ZoneLayer, SampleLayer>
+@startuml(id=V1Articulation)
+class V1Articulation<<Articulation>>{
+-Map<VelocityLayer, VelocityLayer>
 }
 @enduml
 
-@startuml(id=SampleLayer)
-interface SampleLayer{
-+invokeSample(): Playable
-+addSample(Playable)
+@startuml(id=VelocityLayer)
+interface VelocityLayer{
++invokeSample(): Sample
++addSample(Sample)
 }
 @enduml
 
 
-@startuml(id=V1SampleLayer)
-class V1SampleLayer<<SampleLayer>>{
-samplesThisLayer: Map<SampleID, Playable>
+@startuml(id=V1VelocityLayer)
+class V1VelocityLayer<<VelocityLayer>>{
+samplesThisLayer: Map<SampleID, Sample>
 }
 @enduml
 
@@ -220,8 +220,8 @@ roundRobin: Int
 @enduml
 
 
-@startuml(id=Playable)
-interface Playable{
+@startuml(id=Sample)
+interface Sample{
 -createPlayer()
 +play()
 +getSampleID(): SampleID
@@ -230,7 +230,7 @@ interface Playable{
 
 
 @startuml(id=V1Sample)
-class V1Sample<<Playable>>{
+class V1Sample<<Sample>>{
 context: Context
 sampleID: SampleID
 resourceID: Int

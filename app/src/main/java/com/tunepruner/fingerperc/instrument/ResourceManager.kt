@@ -56,53 +56,53 @@ class ResourceManager(val context: Context, val libraryName: String) {
 
     }
 
-    fun getGroupCount(): Int {
-        var groupCounter = 0
+    fun getArticulationCount(): Int {
+        var articulationCounter = 0
         for (element in fileSnapshots) {
-            if (element.group > groupCounter)
-                groupCounter = element.group
+            if (element.articulationNumber > articulationCounter)
+                articulationCounter = element.articulationNumber
         }
-        return groupCounter
+        return articulationCounter
     }
 
-    fun getLayerCount(group: Int): Int {
-        var fileSnapshotsThisGroup = ArrayList<FileSnapshot>()
+    fun getVelocityLayerCount(articulationNumber: Int): Int {
+        var fileSnapshotsThisArticulation = ArrayList<FileSnapshot>()
         for (element in fileSnapshots) {
-            if (element.group == group)
-                fileSnapshotsThisGroup.add(element)
+            if (element.articulationNumber == articulationNumber)
+                fileSnapshotsThisArticulation.add(element)
 
         }
         var layerCounter = 0
-        for (element in fileSnapshotsThisGroup) {
-            if (element.layer > layerCounter)
-                layerCounter = element.layer
+        for (element in fileSnapshotsThisArticulation) {
+            if (element.velocityNumber > layerCounter)
+                layerCounter = element.velocityNumber
         }
         return layerCounter
     }
 
-    fun getRoundRobinCount(group: Int, layer: Int): Int {
-        var fileSnapshotsThisGroupAndLayer = ArrayList<FileSnapshot>()
+    fun getRoundRobinCount(articulationNumber: Int, velocityNumber: Int): Int {
+        var fileSnapshotsThisArticulationAndVelocity = ArrayList<FileSnapshot>()
         for (element in fileSnapshots) {
-            if (element.group == group && element.layer == layer)
-                fileSnapshotsThisGroupAndLayer.add(element)
+            if (element.articulationNumber == articulationNumber && element.velocityNumber == velocityNumber)
+                fileSnapshotsThisArticulationAndVelocity.add(element)
         }
         var getRoundRobinCounter = 0
-        for (element in fileSnapshotsThisGroupAndLayer) {
-            if (element.roundRobin > getRoundRobinCounter)
-                getRoundRobinCounter = element.roundRobin
+        for (element in fileSnapshotsThisArticulationAndVelocity) {
+            if (element.roundRobinNumber > getRoundRobinCounter)
+                getRoundRobinCounter = element.roundRobinNumber
         }
         return getRoundRobinCounter
     }
 
     fun getAssetFileDescriptor(
-        group: Int,
-        layer: Int,
-        roundRobin: Int
+        articulationNumber: Int,
+        velocityNumber: Int,
+        roundRobinNumber: Int
     ): AssetFileDescriptor? {
         for (element in fileSnapshots) {
-            if (element.group == group &&
-                element.layer == layer &&
-                element.roundRobin == roundRobin /*&&*/
+            if (element.articulationNumber == articulationNumber &&
+                element.velocityNumber == velocityNumber &&
+                element.roundRobinNumber == roundRobinNumber /*&&*/
 //                element.libraryName ==
             )//compiler told me this is fine, but I'm not sure...not .equals? or .contains?
                 return element.assetFileDescriptor
@@ -110,13 +110,13 @@ class ResourceManager(val context: Context, val libraryName: String) {
         return null
     }
 
-    fun getFileSnapshot(groupIteration: Int, layerIteration: Int, roundRobinIteration: Int): FileSnapshot? {
+    fun getFileSnapshot(articulationNumber: Int, velocityNumber: Int, roundRobinNumber: Int): FileSnapshot? {
         var toReturn: FileSnapshot? = null
         for (element in fileSnapshots) {
             if(
-                element.group == groupIteration &&
-                element.layer == layerIteration &&
-                element.roundRobin == roundRobinIteration){
+                element.articulationNumber == articulationNumber &&
+                element.velocityNumber == velocityNumber &&
+                element.roundRobinNumber == roundRobinNumber){
                 toReturn = element
                 break
             }
@@ -128,17 +128,17 @@ class ResourceManager(val context: Context, val libraryName: String) {
 data class FileSnapshot(
     val index: Int,
     val fileName: String,
-    val group: Int,
-    val layer: Int,
-    val roundRobin: Int,
+    val articulationNumber: Int,
+    val velocityNumber: Int,
+    val roundRobinNumber: Int,
     val libraryName: String,
     val assetFileDescriptor: AssetFileDescriptor,
     var assetManager: AssetManager
 ) {
     fun equals(toFind: FileSnapshot): Boolean {
-        return toFind.group == group &&
-                toFind.layer == layer &&
-                toFind.roundRobin == roundRobin &&
+        return toFind.articulationNumber == articulationNumber &&
+                toFind.velocityNumber == velocityNumber &&
+                toFind.roundRobinNumber == roundRobinNumber &&
                 toFind.libraryName.contains(libraryName)//compiler told me this is fine, but I'm not sure...not .equals? or .contains?
     }
 }

@@ -4,44 +4,42 @@ import android.app.Activity
 import android.view.MotionEvent
 import com.tunepruner.fingerperc.graphics.GUIManager
 import com.tunepruner.fingerperc.graphics.SimpleGUIManager
-import com.tunepruner.fingerperc.sample.SampleLibraryFactory
+import com.tunepruner.fingerperc.sample.SampleFactory
 import com.tunepruner.fingerperc.sample.SampleManager
 import com.tunepruner.fingerperc.sample.SimpleSampleManager
 import com.tunepruner.fingerperc.sample.samplelibrary.SampleLibrary
-import com.tunepruner.fingerperc.trigger.SimpleTriggerManager
-import com.tunepruner.fingerperc.trigger.TriggerGraphFactory
-import com.tunepruner.fingerperc.trigger.TriggerManager
-import com.tunepruner.fingerperc.trigger.triggergraph.TriggerGraph
+import com.tunepruner.fingerperc.zone.SimpleZoneManager
+import com.tunepruner.fingerperc.zone.ZoneFactory
+import com.tunepruner.fingerperc.zone.ZoneManager
+import com.tunepruner.fingerperc.zone.zonegraph.ZoneGraph
 
-class Instrument(private val activity: Activity, libraryName: String) {
+class Instrument(activity: Activity, libraryName: String) {
     private var player: Player
     private var resourceManager = ResourceManager(activity, libraryName)
 
 
     init {
-
         val touchLogic: TouchLogic = SimpleTouchLogic()
-        val triggerGraph: TriggerGraph =
-            TriggerGraphFactory
+        val zoneGraph: ZoneGraph =
+            ZoneFactory
                 .prepareTriggers(
                     ScreenPrep.getDimensions(activity), resourceManager
                 )
-        val sampleLibrary: SampleLibrary = SampleLibraryFactory.prepareSamples(
-            triggerGraph,
+        val sampleLibrary: SampleLibrary = SampleFactory.prepareSamples(
+            zoneGraph,
             resourceManager
         )
 
-        val triggerManager: TriggerManager = SimpleTriggerManager(triggerGraph)
+        val zoneManager: ZoneManager = SimpleZoneManager(zoneGraph)
         val sampleManager: SampleManager = SimpleSampleManager(sampleLibrary)
         val guiManager: GUIManager = SimpleGUIManager(resourceManager)
 
-        player = PlayerFactory.getInstance(touchLogic, triggerManager, sampleManager, guiManager, resourceManager)
+        player = PlayerFactory.getInstance(touchLogic, zoneManager, sampleManager, guiManager, resourceManager)
 
     }
 
     fun onTouch(event: MotionEvent) {
         player.play(event)
-
     }
 
     fun tearDownPlayer(){

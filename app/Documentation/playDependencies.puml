@@ -2,30 +2,31 @@
 !include Declarations.puml!Instrument
 !include Declarations.puml!Player
 !include Declarations.puml!SampleManager
-!include Declarations.puml!TriggerManager
-!include Declarations.puml!Playable
-!include Declarations.puml!SampleLayer
-!include Declarations.puml!TriggerZone
-!include Declarations.puml!ZoneLayer
-!include Declarations.puml!SampleLayer
-!include Declarations.puml!SampleGroup
-!include Declarations.puml!LayerLogic
-!include Declarations.puml!TriggerGraph
+!include Declarations.puml!ZoneManager
+!include Declarations.puml!Sample
+!include Declarations.puml!VelocityLayer
+!include Declarations.puml!ArticulationZone
+!include Declarations.puml!V1VelocityLayer
+!include Declarations.puml!VelocityZone
+!include Declarations.puml!V1VelocityZone
+!include Declarations.puml!Articulation
+!include Declarations.puml!RoundRobinLogic
+!include Declarations.puml!ZoneGraph
 !include Declarations.puml!SampleLibrary
 
 Instrument .> Player
 Player ..> SampleManager
-Player ..> TriggerManager
-Player ..> Playable: weak
+Player ..> ZoneManager
+Player ..> Sample: weak
 
-SampleManager ..> SampleLibraryFactory
-SampleLibraryFactory ..> SampleGroup
-SampleGroup ..> SampleLayer
-SampleLayer ..> LayerLogic
-SampleLayer ..> Playable
+SampleManager ..> SampleFactory
+SampleFactory ..> Articulation
+Articulation ..> VelocityLayer
+VelocityLayer ..> RoundRobinLogic
+VelocityLayer ..> Sample
 
-TriggerManager ..> TriggerGraph
-TriggerGraph ..> TriggerZone
-TriggerZone ..> ZoneLayer
+ZoneManager ..> ZoneGraph
+ZoneGraph ..> ArticulationZone
+ArticulationZone ..> VelocityLayer
 
 @enduml

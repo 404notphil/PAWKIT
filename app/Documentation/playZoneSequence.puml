@@ -2,13 +2,13 @@
 -->Instrument: onTouch()
 
 Instrument->Player++: play(Point)
-Player->TriggerManager++: computeZoneLayer(Point)
-TriggerManager->TriggerGraph++: invokeLayer(Point)
-TriggerGraph->TriggerZone++: invokeLayer(Point)
-TriggerZone->ZoneLayer++: getLayer(Point)
-return ZoneLayer
-return ZoneLayer
-return ZoneLayer
-return ZoneLayer
+Player->ZoneManager++: computeVelocityZone(Point)
+ZoneManager->ZoneGraph++: invokeZone(Point)
+ZoneGraph->ArticulationZone++: invokeZone(Point)
+ArticulationZone->VelocityZone++: getLayer(Point)
+return VelocityZone
+return VelocityZone
+return VelocityZone
+return VelocityZone
 Player->: computeSample()
 @enduml

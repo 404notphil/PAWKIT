@@ -1,6 +1,6 @@
 package com.tunepruner.fingerperc.graphics
 
-import com.tunepruner.fingerperc.trigger.triggergraph.triggerzone.zonelayer.LayerZone
+import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 
 interface GUIManager {
 
@@ -21,6 +21,6 @@ interface GUIManager {
     //a function called startAnimation() which receives the trigger zone
         //resets all properties
         //based on layer level, it accesses zones and calls cycle on appropriate Cycle object
-    fun startAnimation(layerZone: LayerZone)
+    fun startAnimation(velocityZone: VelocityZone)
 
 }

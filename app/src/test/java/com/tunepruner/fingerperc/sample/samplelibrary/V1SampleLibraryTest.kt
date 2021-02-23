@@ -1,16 +1,16 @@
 package com.tunepruner.fingerperc.sample.samplelibrary
 
 import com.tunepruner.fingerperc.instrument.ScreenDimensions
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.SampleGroup
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.V1SampleGroup
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.RoundRobinLogic
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.SampleLayer
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.SimpleRoundRobinLogic
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.V1SampleLayer
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.playable.BasicCoords
-import com.tunepruner.fingerperc.sample.samplelibrary.samplegroup.samplelayer.playable.SampleCoords
-import com.tunepruner.fingerperc.trigger.triggergraph.triggerzone.zonelayer.V1LayerZone
-import com.tunepruner.fingerperc.trigger.triggergraph.triggerzone.zonelayer.LayerZone
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.Articulation
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.V1Articulation
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.RoundRobinLogic
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.VelocityLayer
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.SimpleRoundRobinLogic
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.V1VelocityLayer
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.BasicCoords
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.SampleCoords
+import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.V1VelocityZone
+import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 
@@ -22,19 +22,19 @@ import org.junit.jupiter.api.BeforeAll
 internal class V1SampleLibraryTest {
     lateinit var screenDimensions: ScreenDimensions
     lateinit var sampleLibrary: SampleLibrary
-    lateinit var groupToAdd: SampleGroup
-    lateinit var layerZoneToQuery: LayerZone
-    lateinit var layerToAdd: SampleLayer
+    lateinit var groupToAdd: Articulation
+    lateinit var velocityZoneToQuery: VelocityZone
+    lateinit var layerToAdd: VelocityLayer
     lateinit var basicCoords: SampleCoords
     lateinit var roundRobinLogic: RoundRobinLogic
     @BeforeAll
     fun setUp() {
         sampleLibrary = V1SampleLibrary()
-        groupToAdd = V1SampleGroup()
+        groupToAdd = V1Articulation()
         screenDimensions = ScreenDimensions(1000, 500)
-        layerZoneToQuery = V1LayerZone(2, 1, 1, 6, screenDimensions)
+        velocityZoneToQuery = V1VelocityZone(2, 1, 1, 6, screenDimensions)
         roundRobinLogic = SimpleRoundRobinLogic()
-        layerToAdd = V1SampleLayer(1, roundRobinLogic)
+        layerToAdd = V1VelocityLayer(1, roundRobinLogic)
         basicCoords = BasicCoords(1, 1, 1, 4, 4)
 //        layerToAdd.addPlayable(
 //            basicCoords,
@@ -44,13 +44,13 @@ internal class V1SampleLibraryTest {
 //            )
 //        )
         layerToAdd.addSampleCoords(1, basicCoords)
-        groupToAdd.addLayer(layerZoneToQuery, layerToAdd)
+        groupToAdd.addLayer(velocityZoneToQuery, layerToAdd)
         sampleLibrary.addSampleGroup(groupToAdd)
     }
 
     @Test
     fun computeSampleReturnsNotNull() {
-        assertNotNull(sampleLibrary.computeSample(layerZoneToQuery))
+        assertNotNull(sampleLibrary.computeSample(velocityZoneToQuery))
     }
 
     @Test
