@@ -2,8 +2,6 @@
 Instrument->Instrument++: init()
 
 Instrument->ResourceManager++: ResourceManager()
-ResourceManager->ResourceManager++: prepareSnapshot()
-deactivate
 ResourceManager->: analyzeFiles()
 ResourceManager<--
 return ResourceManager
@@ -16,21 +14,21 @@ Instrument->SampleManager: SampleManager(SampleFactory)
 
 Instrument->ZoneFactory++: ZoneFactory()
 ZoneFactory->ZoneFactory++: prepareZones()
-ZoneFactory->ResourceManager++: getGroupCount()
+ZoneFactory->ResourceManager++: getArticulationCount()
 return Int
 
 
-loop forEachGroupInSnapshot
+loop forEachArticulationInSnapshot
 ZoneFactory->ArticulationZone++: ArticulationZone()
 return new
-ZoneFactory->ResourceManager++: getLayerCount(group: Int)
+ZoneFactory->ResourceManager++: getLayerCount(articulationNumber: Int)
 return Int
-loop forEachLayerInGroup
-ZoneFactory->VelocityLayer++: VelocityLayer()
+loop forEachLayerInArticulation
+ZoneFactory->VelocityZone++: VelocityZone()
 return new
 
 
-ZoneFactory->Articulation++:addLayer(VelocityLayer)
+ZoneFactory->ArticulationZone++:addLayer(VelocityZone)
 return
 end loop
 ZoneFactory->ZoneFactory++: addZone(ArticulationZone)

@@ -37,11 +37,13 @@ The audio needs to have very low latency. The lower the latency, the better the 
 
 ### The preparation sequence
 
-First, the ResourceManager class is tasked with analyzing the audio resources provided. It exposes 
+At runtime, the ResourceManager class is tasked with analyzing the audio resources provided. It exposes 
 functions that other classes can call to get information about these resources.
 
-The first class to call those functions is the ZoneFactory, which, based on that data, 
-will create a set of zones, one for each velocity layer of each articulation. The classes in the 
+The first class to call those functions is the ZoneFactory, which will request that data as 
+soon as an instrument is ordered to load (selecting an instrument from the launch screen). 
+Based on data provided by the ResourceManager, it will create a set of zones, 
+one for each velocity layer of each articulation. The classes in the 
 <code>zone</code> package will be in charge of managing the coordinatates of those zones. Other classes 
 in the app will interact with these classes through the ZoneManager class.
 

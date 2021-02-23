@@ -11,12 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.tunepruner.fingerperc.instrument.Instrument
 
 class LaunchScreenActivity : AppCompatActivity() {
-    private lateinit var instrument: Instrument
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        System.loadLibrary("bomboleguero")//TODO this is the JNI one, and shouldn't use the libraryName string, but should be refactored eventually!
+        System.loadLibrary("bomboleguero")//TODO this is the JNI one, and shouldn't use the libraryName string. It should be refactored eventually!
 
         actionBar?.hide()
         setContentView(R.layout.activity_launch_screen)

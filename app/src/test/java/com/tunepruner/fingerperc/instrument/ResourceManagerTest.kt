@@ -12,8 +12,8 @@ internal class ResourceManagerTest {
 //    }
 
     @Test
-    fun prepareSnapshotPopulatesList() {
-//        ResourceManager.prepareSnapshot()
+    fun analyzeFilesPopulatesList() {
+//        ResourceManager.analyzeFiles()
 //        assertTrue(ResourceManager.getGroupCount() > 0)
     }
 }

@@ -54,12 +54,12 @@ init()
 @startuml(id=ResourceManager)
 class ResourceManager{
 
-'+{static} prepareSnapshot()
+'+{static} analyzeFiles()
 '-{static}  analyzeFiles()
-'+{static} getGroupCount()
-'+{static} getLayerCount(group: Int)
-'+{static} getRoundRobinCount(group: Int, layer: Int)
-'+{static} getResource(group: Int, layer: Int, roundRobin: Int)
+'+{static} getArticulationCount()
+'+{static} getLayerCount(articulationNumber: Int)
+'+{static} getRoundRobinCount(articulationNumber: Int, layer: Int)
+'+{static} getResource(articulationNumber: Int, layer: Int, roundRobin: Int)
 }
 @enduml
 

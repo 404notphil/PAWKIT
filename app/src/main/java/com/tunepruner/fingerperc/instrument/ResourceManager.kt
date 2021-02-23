@@ -5,7 +5,7 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.util.Log
 
-class ResourceManager(val context: Context, val libraryName: String) {
+class ResourceManager(context: Context, private val libraryName: String) {
     private var counter: Int = 0
     val fileSnapshots = ArrayList<FileSnapshot>()
 
@@ -66,7 +66,7 @@ class ResourceManager(val context: Context, val libraryName: String) {
     }
 
     fun getVelocityLayerCount(articulationNumber: Int): Int {
-        var fileSnapshotsThisArticulation = ArrayList<FileSnapshot>()
+        val fileSnapshotsThisArticulation = ArrayList<FileSnapshot>()
         for (element in fileSnapshots) {
             if (element.articulationNumber == articulationNumber)
                 fileSnapshotsThisArticulation.add(element)
@@ -81,7 +81,7 @@ class ResourceManager(val context: Context, val libraryName: String) {
     }
 
     fun getRoundRobinCount(articulationNumber: Int, velocityNumber: Int): Int {
-        var fileSnapshotsThisArticulationAndVelocity = ArrayList<FileSnapshot>()
+        val fileSnapshotsThisArticulationAndVelocity = ArrayList<FileSnapshot>()
         for (element in fileSnapshots) {
             if (element.articulationNumber == articulationNumber && element.velocityNumber == velocityNumber)
                 fileSnapshotsThisArticulationAndVelocity.add(element)

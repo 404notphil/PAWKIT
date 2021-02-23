@@ -1,27 +1,27 @@
 @startuml
 Instrument->Instrument++: init()
 
-Instrument->ResourceManager++: prepareSnapshot()
+Instrument->ResourceManager++: analyzeFiles()
 ResourceManager->: analyzeFiles()
 ResourceManager<--
 
 return
 Instrument-> SampleFactory++: prepareSamples()
-SampleFactory->ResourceManager++: getGroupCount()
+SampleFactory->ResourceManager++: getArticulationCount()
 return Int
 
-loop forEachGroupInSnapshot
+loop forEachArticulationInSnapshots
 SampleFactory->Articulation++: Articulation()
 return new
-SampleFactory->ResourceManager++: getLayerCount(group: Int)
+SampleFactory->ResourceManager++: getLayerCount(articulationNumber: Int)
 return Int
-loop forEachLayerInGroup
+loop forEachLayerInArticulation
 SampleFactory->VelocityLayer++: VelocityLayer(layerNumber, RoundRobinLogic)
 return new
-SampleFactory->ResourceManager++: getRoundRobinCount(group: Int, layer: Int)
+SampleFactory->ResourceManager++: getRoundRobinCount(articulationNumber: Int, layer: Int)
 return Int
 loop forEachSampleInLayer
-SampleFactory->Sample++: Sample(SampleCoords, FileSnapshot)
+SampleFactory->Sample++: Sample(SampleCoords, FileSnapshots)
 Sample->Sample++: init()
 
 deactivate
@@ -32,7 +32,7 @@ end loop
 SampleFactory->Articulation++:addLayer(VelocityLayer)
 return
 end loop
-SampleFactory->SampleFactory++: addGroup(Articulation)
+SampleFactory->SampleFactory++: addArticulation(Articulation)
 deactivate
 end loop
 
