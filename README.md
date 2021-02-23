@@ -27,5 +27,4 @@ dreaded "machine gun effect".
 
 The first test build of the app is complete and has been released for internal testing. 
 
-See the documentation for useful diagrams of the architecture (not completely up to date, but still 
-demonstrate how things work).
+![On this page, ](./app/Documentation/RenderedImages/RenderedImages.md)
