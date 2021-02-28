@@ -17,6 +17,7 @@ class OboePlayer(
 
 ) : Player {
     private val jniPlayerAdapter = JNIPlayerAdapter()
+    private val TAG = "Player"
 
     init {
         prepare()
@@ -26,6 +27,7 @@ class OboePlayer(
     override fun play(event: MotionEvent) {
         val pointF = touchLogic.reduceTouchEvent(event)
         if (pointF != null) {
+            Log.i(TAG, "pointF.x = ${pointF.x}\npointF.y = ${pointF.y}")
             val zoneLayer = zoneManager.computeVelocityLayer(pointF)
             Log.i("zoneLayer", zoneLayer.getVelocityNumber().toString())
             val sample = sampleManager.computeSample(zoneLayer)

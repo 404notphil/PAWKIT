@@ -16,6 +16,7 @@ import com.tunepruner.fingerperc.instrument.ScreenPrep
 class InstrumentActivity : AppCompatActivity() { //change signature to Instrument activity (val libraryName: String)
     lateinit var instrument: Instrument
     lateinit var libraryName: String
+    private val TAG = "InstrumentActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -34,9 +35,9 @@ class InstrumentActivity : AppCompatActivity() { //change signature to Instrumen
     override fun onTouchEvent(event: MotionEvent): Boolean {
         instrument.onTouch(event)
         guiFlicker(event)
-        Log.i("coords", "event.y = ${event.y}")
-        Log.i("coords", "event.rawY = ${event.rawY}")
-        Log.i("coords", "Screen dimensions = ${ScreenPrep.getDimensions(this)}")
+        Log.i(TAG, "event.y = ${event.y}")
+        Log.i(TAG, "event.rawY = ${event.rawY}")
+        Log.i(TAG, "Screen dimensions = ${ScreenPrep.getDimensions(this)}")
         return true
     }
 

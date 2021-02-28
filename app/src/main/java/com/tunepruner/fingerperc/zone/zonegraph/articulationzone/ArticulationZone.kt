@@ -5,7 +5,7 @@ import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.Ve
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.ZoneLimits
 
 interface ArticulationZone {
-    fun isMatch(pointF: PointF): Boolean
+    fun isMatch(pointF: PointF): Int
     fun invokeZone(pointF: PointF): VelocityZone?
     fun addLayer(triggerVelocityZone: VelocityZone)
     fun getLayer(velocityNumber: Int): VelocityZone

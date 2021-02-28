@@ -12,17 +12,18 @@ import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.Ve
 
 class ZoneFactory {
     companion object {
+        private const val TAG = "ZoneFactory"
         fun prepareTriggers(screenDimensions: ScreenDimensions, resourceManager: ResourceManager): ZoneGraph {
             val zoneGraph: ZoneGraph = V1ZoneGraph()
             val zoneCount = resourceManager.getArticulationCount()
             for (zoneIteration in 1..zoneCount) {
                 val thisArticulationZone: ArticulationZone = V1ArticulationZone(zoneCount, zoneIteration, screenDimensions)
                 val layerCount = resourceManager.getVelocityLayerCount(zoneIteration)
-                Log.i("ZoneFactory",
+                Log.i(TAG,
                     "\n\ntriggerzone iteration = ${thisArticulationZone.getArticulationNumber()}\ntop limit = ${thisArticulationZone.getLimits().topLimit}\nbottom limit = ${thisArticulationZone.getLimits().bottomLimit}")
                 for (layerIteration in 1..layerCount) {
                     val thisVelocityZone: VelocityZone = V1VelocityZone(zoneCount, zoneIteration, layerIteration, layerCount, screenDimensions)
-                    Log.i("ZoneFactory",
+                    Log.i(TAG,
                         "\n\nlayer iteration = ${thisVelocityZone.getVelocityNumber()}\ntop limit = ${thisVelocityZone.getLimits().topLimit}\nbottom limit = ${thisVelocityZone.getLimits().bottomLimit}")
                     thisArticulationZone.addLayer(thisVelocityZone)
                 }

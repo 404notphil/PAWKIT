@@ -1,6 +1,7 @@
 package com.tunepruner.fingerperc.zone.zonegraph.articulationzone
 
 import android.graphics.PointF
+import android.util.Log
 import com.tunepruner.fingerperc.instrument.ScreenDimensions
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.ZoneLimits
@@ -11,6 +12,7 @@ class V1ArticulationZone(
     val zoneIteration: Int,
     val screenDimensions: ScreenDimensions
 ) : ArticulationZone {
+    private val TAG = "ArticulationZone"
     private val velocityZones: LinkedList<VelocityZone> = LinkedList<VelocityZone>()
     private var zoneLimits: ZoneLimits
 
@@ -29,20 +31,57 @@ class V1ArticulationZone(
         return ZoneLimits(leftLimit, rightLimit, topLimit, bottomLimit)
     }
 
-    override fun isMatch(pointF: PointF): Boolean {
-        return pointF.x.toInt() in (zoneLimits.leftLimit + 1)..zoneLimits.rightLimit &&
+    override fun isMatch(pointF: PointF): Int {
+        val isInBounds = pointF.x.toInt() in (zoneLimits.leftLimit + 1)..zoneLimits.rightLimit &&
                 pointF.y.toInt() in (zoneLimits.topLimit + 1)..zoneLimits.bottomLimit
+        return if (isInBounds) {
+            0
+        } else{
+            var boundaryCode = 0
+            if (pointF.y < zoneLimits.topLimit){
+                boundaryCode = -1
+            } else if (pointF.y > zoneLimits.bottomLimit){
+                boundaryCode = -2
+            }
+            boundaryCode
+        }
     }
 
     override fun invokeZone(pointF: PointF): VelocityZone {
         var velocityZone: VelocityZone? = null
+//        for (element in velocityZones) {
+//            if (element.compareWithLimits(pointF)) {
+//                velocityZone = element
+//            }
+//        }
+
         for (element in velocityZones) {
-            if (element.isMatch(pointF)) {
-                velocityZone = element
+            val result = element.isMatch(pointF)
+            when (result){
+                0 -> {
+                    velocityZone = element
+                    Log.i(TAG, result.toString())
+                    return velocityZone
+                }
+                -1 -> {
+                    velocityZone = velocityZones.first
+                    Log.i(TAG, result.toString())
+                }
+                -2 -> {
+                    velocityZone = velocityZones[velocityZones.lastIndex]
+                    Log.i(TAG, result.toString())
+                }
             }
         }
+        if (velocityZone == null){
+            velocityZone = if(pointF.y <= 0){
+                velocityZones[0]
+            }else{
+                velocityZones[velocityZones.lastIndex]
+            }
+        }
+
         return velocityZone
-            ?: error("V1ArticulationZone looked for match layer in it's implementation, but didn't find a layer that contains that point")
     }
 
 

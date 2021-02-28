@@ -12,14 +12,29 @@ class V1VelocityZone(
     val screenDimensions: ScreenDimensions
 ) : VelocityZone {
     private var zoneLimits: ZoneLimits
+    private val TAG = "V1VelocityZone"
 
     init {
         zoneLimits = calculateLimits()
     }
 
-    override fun isMatch(pointF: PointF): Boolean {
-        return pointF.x.toInt() in (zoneLimits.leftLimit + 1)..zoneLimits.rightLimit &&
+    override fun isMatch(pointF: PointF): Int {
+        val isInBounds = pointF.x.toInt() in (zoneLimits.leftLimit + 1)..zoneLimits.rightLimit &&
                 pointF.y.toInt() in (zoneLimits.topLimit + 1)..zoneLimits.bottomLimit
+        return if (isInBounds) {
+            Log.i(TAG, "a match!")
+            0
+        } else {
+            var boundaryCode = 0
+            if (pointF.y < zoneLimits.topLimit) {
+                boundaryCode = -1
+                Log.i(TAG, boundaryCode.toString())
+            } else if (pointF.y > zoneLimits.bottomLimit) {
+                boundaryCode = -2
+                Log.i(TAG, boundaryCode.toString())
+            }
+            boundaryCode
+        }
     }
 
     override fun getZoneIteration(): Int {
@@ -34,14 +49,15 @@ class V1VelocityZone(
         return zoneLimits
     }
 
-    private fun calculateLimits(): ZoneLimits{
+    private fun calculateLimits(): ZoneLimits {
         /* Deriving top limit of this ArticulationZone from (height of a zone) * (number of preceding ones) */
         val thisArticulationZone = screenDimensions.screenHeight.toFloat() / zoneCount
         val articulationZoneTopLimit = thisArticulationZone * (zoneIteration - 1)
 
         /* Deriving top limit of this VelocityLayer from (height of a layer) * (number of preceding ones) */
-        val thisLayerZoneHeight = thisArticulationZone / layerCountOfZone//TODO I don't yet account for remainders of the division, which might be causing crashes!
-        Log.i("V1VelocityZone", "thisLayerZoneHeight = $thisLayerZoneHeight")
+        val thisLayerZoneHeight =
+            thisArticulationZone / layerCountOfZone//TODO I don't yet account for remainders of the division, which might be causing crashes!
+//        Log.i(TAG, "thisLayerZoneHeight = $thisLayerZoneHeight")
         val topLimit = articulationZoneTopLimit + thisLayerZoneHeight * (layerIteration - 1)
 
         val bottomLimit = topLimit + thisLayerZoneHeight
@@ -53,4 +69,9 @@ class V1VelocityZone(
     }
 }
 
-data class ZoneLimits(val leftLimit: Int, val rightLimit: Int, val topLimit: Int, val bottomLimit: Int)
+data class ZoneLimits(
+    val leftLimit: Int,
+    val rightLimit: Int,
+    val topLimit: Int,
+    val bottomLimit: Int
+)
