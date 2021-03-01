@@ -12,18 +12,22 @@ class V1ZoneGraph : ZoneGraph {
 
     override fun invokeZone(pointF: PointF): VelocityZone {
         var articulationZone: ArticulationZone? = null
-        for (element in articulationZones) {
+        loop@ for (element in articulationZones) {
             val result = element.isMatch(pointF)
-            if (result == 0) {
-                articulationZone = element
-                Log.i(TAG, result.toString())
-                break
-            } else if (element.isMatch(pointF) == -1) {
-                articulationZone = articulationZones.first
-                Log.i(TAG, result.toString())
-            } else if (element.isMatch(pointF) == -2) {
-                articulationZone = articulationZones[articulationZones.lastIndex]
-                Log.i(TAG, result.toString())
+            when (result) {
+                0 -> {
+                    articulationZone = element
+                    Log.i(TAG, result.toString())
+                    break@loop
+                }
+                -1 -> {
+                    articulationZone = articulationZones.first
+                    Log.i(TAG, result.toString())
+                }
+                -2 -> {
+                    articulationZone = articulationZones[articulationZones.lastIndex]
+                    Log.i(TAG, result.toString())
+                }
             }
         }
         if (articulationZone == null){

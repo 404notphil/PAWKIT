@@ -56,8 +56,7 @@ class V1ArticulationZone(
 //        }
 
         for (element in velocityZones) {
-            val result = element.isMatch(pointF)
-            when (result){
+            when (val result = element.isMatch(pointF)){
                 0 -> {
                     velocityZone = element
                     Log.i(TAG, result.toString())
