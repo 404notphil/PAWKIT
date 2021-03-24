@@ -56,5 +56,5 @@ The first test build of the app is complete and has been released for internal t
 # Architecture
 
 [On this page, ](./app/Documentation/RenderedImages/RenderedImages.md) I've provided some 
-notes and diagrams that describe how the whole project works in the abstract, and it should 
+notes and diagrams that describe how the whole project works, and it should
 greatly help anyone who wants to dig in.  
