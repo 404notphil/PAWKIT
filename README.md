@@ -1,4 +1,4 @@
-**Finger Perc**
+**Finger Perc** {text-align: center;}
 =======
 Android app
 
