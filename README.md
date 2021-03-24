@@ -1,7 +1,8 @@
 <p align="center">
-  <b>FingerPerc:</b><br>
-   A touchscreen percussion instrument that can <em>actually</em> make expressive music.
-  <br><br>
+    <font size="+20">
+  <b>FingerPerc</b><br>
+  </font>
+   A touchscreen percussion instrument that can <em>actually</em> make expressive music.<br>
   <a Android app </a>
   <img src="gifOfDemo.gif" width="200" alt="Screen recording of app">
 </p>
