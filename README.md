@@ -1,24 +1,17 @@
+<h1 align="center">FingerPerc</h1>
 <p align="center">
-
-  <b><font size="20">FingerPerc</font></b><br>
-
-   A touchscreen percussion instrument that can <em>actually</em> make expressive music.<br>
-  <a Android app </a>
-  <img src="gifOfDemo.gif" width="200" alt="Screen recording of app">
-</p>
+ A touchscreen percussion instrument that can <em>actually</em> make expressive music.<br>
+ <img src="gifOfDemo.gif" width="200" alt="Screen recording of app"></p>
 
 
 
 
 _____
 
-Screen recording of app: 
-
-
 
 # Abstract
 
-This app is a musical instrument. The sounds it makes correspond to two different percussion 
+FingerPerc is a musical instrument in the form of an Android app. The sounds it makes correspond to two different percussion
 instruments: 1) Bombo Legüero, a traditional Andean folk music drum typically made of 
 wood and alpaca skins or cowhide 2) Cajón Flamenco, the popular Spanish variation of a box drum,
 containing snares. A user can play these sounds by tapping the screen, and the dynamic level 
