@@ -1,14 +1,19 @@
-**Finger Perc** {text-align: center;}
-=======
-Android app
+<p align="center">
+  <b>FingerPerc:</b><br>
+   A touchscreen percussion instrument that can **actually** make expressive music.
+  <br><br>
+  <a Android app </a>
+  <img src="gifOfDemo.gif" width="200" alt="Screen recording of app">
+</p>
 
-*A touchscreen percussion instrument that can **actually** make expressive music.*
+
+
 
 _____
 
 Screen recording of app: 
 
-<img src="gifOfDemo.gif" width="200" alt="Screen recording of app">
+
 
 # Abstract
 
