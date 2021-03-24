@@ -5,6 +5,8 @@ Android app
 *I've never before seen a touchscreen percussion instrument that allows you to perform 
 while controlling dynamics. So that's what FingerPerc does!*
 
+========
+
 Screen recording of app: 
 
 <img src="gifOfDemo.gif" width="200" alt="Screen recording of app">
