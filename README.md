@@ -26,20 +26,21 @@ hit on the top edge and 2) a hit in the front center.
 # Under the hood
 FingerPerc installs with hundreds of audio samples which are 
 individually triggered when a user touches various zones on the screen. As mentioned above, 
-each instrument has two principal sounds, often referred to as "articulations", and each of those
-corresponds to a zone (occupying half of the device's screen). Each of those two zones has many 
-subzones, generated automatically based on the provided sample set. 
-Those sub-zone correspond to a different volume for that articulation. 
-(Volume levels are more precisely referred to as "Velocities" hereafter)
+each instrument has two principal sounds, often referred to as "articulations", and each corresponding
+to a zone which occupies half of the device's screen. Within each articulation zone, there are many 
+subzones, generated automatically based on the provided sample set, and those each correspond to a 
+different volume for that articulation. Volume levels are more precisely referred to as "Velocities" hereafter.
 While velocity level is the deepest level of detail that the user can control, there is another 
 layer of depth to the sample set. That layer is made of groups of recorded audio samples 
-where I "attepmpted" to play the drum at an identical volume, but allowing human imperfection. 
+where I played the drum at an identical volume, but allowed human imperfection. 
 These repetitions are called "Round Robins" in the audio sample industry, and 
 I recorded up to 10 of them for each velocity layer.
 When a user triggers the exact same zone multiple times in a row, programming logic
-chooses any sample except for the last one played and submits that to the Player service.
-The reason that RoundRobins are used is to avoiding the dreaded "machine gun effect" that happens in 
+chooses any RoundRobin, excluding the last one played, and submits its choice to the Player service.
+The reason that RoundRobins are used is to avoid the dreaded "machine gun effect" that happens in 
 virtual instruments of lower quality. 
+
+# Status
 
 The first test build of the app is complete and has been released for internal testing. 
 
