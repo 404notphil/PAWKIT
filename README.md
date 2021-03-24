@@ -2,8 +2,7 @@
 =======
 Android app
 
-*I've never before seen a touchscreen percussion instrument that allows you to perform 
-while controlling dynamics. So that's what FingerPerc does!*
+*A touchscreen percussion instrument that can **actually** make expressive music.*
 
 _____
 
