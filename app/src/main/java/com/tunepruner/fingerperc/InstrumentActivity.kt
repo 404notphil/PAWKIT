@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ActivityNavigator
 import com.tunepruner.fingerperc.instrument.Instrument
 import com.tunepruner.fingerperc.instrument.ScreenPrep
+import java.util.*
 
 
 class InstrumentActivity : AppCompatActivity() { //change signature to Instrument activity (val libraryName: String)
@@ -22,7 +23,7 @@ class InstrumentActivity : AppCompatActivity() { //change signature to Instrumen
 
         libraryName = intent.extras?.getString("libraryName")!!
         instrument = instrumentFactory(this, libraryName)
-        Log.i("MainActivity", libraryName)
+//        Log.i("MainActivity", libraryName)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.playable_area)
         if (libraryName == "cajon"){
@@ -35,9 +36,9 @@ class InstrumentActivity : AppCompatActivity() { //change signature to Instrumen
     override fun onTouchEvent(event: MotionEvent): Boolean {
         instrument.onTouch(event)
         guiFlicker(event)
-        Log.i(TAG, "event.y = ${event.y}")
-        Log.i(TAG, "event.rawY = ${event.rawY}")
-        Log.i(TAG, "Screen dimensions = ${ScreenPrep.getDimensions(this)}")
+//        Log.i(TAG, "event.y = ${event.y}")
+//        Log.i(TAG, "event.rawY = ${event.rawY}")
+//        Log.i(TAG, "Screen dimensions = ${ScreenPrep.getDimensions(this)}")
         return true
     }
 

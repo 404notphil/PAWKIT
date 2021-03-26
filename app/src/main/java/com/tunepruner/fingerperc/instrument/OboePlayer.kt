@@ -7,6 +7,7 @@ import com.tunepruner.fingerperc.sample.SampleManager
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.Sample
 import com.tunepruner.fingerperc.zone.ZoneManager
 import java.io.IOException
+import java.util.*
 
 class OboePlayer(
     private val touchLogic: TouchLogic,
@@ -27,12 +28,10 @@ class OboePlayer(
     override fun play(event: MotionEvent) {
         val pointF = touchLogic.reduceTouchEvent(event)
         if (pointF != null) {
-            Log.i(TAG, "pointF.x = ${pointF.x}\npointF.y = ${pointF.y}")
             val zoneLayer = zoneManager.computeVelocityLayer(pointF)
-            Log.i("zoneLayer", zoneLayer.getVelocityNumber().toString())
             val sample = sampleManager.computeSample(zoneLayer)
-            jniPlayerAdapter.play(sample)
             GUIManager.startAnimation(zoneLayer)
+            jniPlayerAdapter.play(sample)
         }
     }
 
@@ -41,21 +40,21 @@ class OboePlayer(
         jniPlayerAdapter.teardownAudioStreamNative()
     }
 
-    private fun prepare(){
+    private fun prepare() {
         jniPlayerAdapter.setupAudioStreamNative(1)
         jniPlayerAdapter.startAudioStreamNative()
         jniPlayerAdapter.loadAllAssets(resourceManager)
     }
 }
 
-class JNIPlayerAdapter{
+class JNIPlayerAdapter {
     private val tag = "JNIPlayerAdapter"
-    fun play(sample: Sample){
+    fun play(sample: Sample) {
         trigger(sample.getIndex())
     }
 
 
-    fun loadAllAssets(resourceManager: ResourceManager): Boolean{
+    fun loadAllAssets(resourceManager: ResourceManager): Boolean {
         var allAssetsCorrect = true
 
         for (element in resourceManager.fileSnapshots) {
@@ -71,7 +70,7 @@ class JNIPlayerAdapter{
 
     external fun teardownAudioStreamNative()
 
-    private fun loadWavAssetLocal(fileSnapshot: FileSnapshot): Boolean{
+    private fun loadWavAssetLocal(fileSnapshot: FileSnapshot): Boolean {
         var returnVal = false
         try {
             val assetFD = fileSnapshot.assetFileDescriptor
@@ -88,7 +87,8 @@ class JNIPlayerAdapter{
     }
 
     private external fun loadWavAssetNative(
-        wavBytes: ByteArray, index: Int, pan: Float, channels: Int) : Boolean
+        wavBytes: ByteArray, index: Int, pan: Float, channels: Int
+    ): Boolean
 
     external fun unloadWavAssetsNative()
 

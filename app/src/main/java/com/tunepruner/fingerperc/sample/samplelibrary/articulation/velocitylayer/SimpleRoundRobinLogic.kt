@@ -20,7 +20,7 @@ class SimpleRoundRobinLogic : RoundRobinLogic {
         val newRR: Int = (Math.random() * ((totalRR - 1) + 1) + 1).toInt()
         val outgoingSampleID = incomingLayer.getSampleIDByInt(newRR)
         history.add(incomingLayer.getSampleBySampleCoords(outgoingSampleID))
-        Log.i("SampleID", "${ outgoingSampleID.getGroupNumber() } -- ${outgoingSampleID.getLayerNumber()} -- ${outgoingSampleID.getRoundRobinNumber()}")
+//        Log.i("SampleID", "${ outgoingSampleID.getGroupNumber() } -- ${outgoingSampleID.getLayerNumber()} -- ${outgoingSampleID.getRoundRobinNumber()}")
         return outgoingSampleID
     }
 

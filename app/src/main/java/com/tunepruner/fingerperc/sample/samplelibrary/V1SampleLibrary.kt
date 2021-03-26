@@ -6,7 +6,7 @@ import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.Ve
 import java.util.*
 
 class V1SampleLibrary : SampleLibrary {
-    val articulations: LinkedList<Articulation> = LinkedList()
+    val articulations: ArrayList<Articulation> = ArrayList()
 
     override fun computeSample(velocityZone: VelocityZone): Sample {
         val currentGroup = articulations[velocityZone.getZoneIteration()-1]

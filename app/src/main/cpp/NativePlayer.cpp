@@ -27,17 +27,17 @@ extern "C" {
 using namespace iolib;
 using namespace parselib;
 
-static const char* TAG = "DrumPlayerJNI";
+static const char *TAG = "DrumPlayerJNI";
 
 static SimpleMultiPlayer sDTPlayer;
 
 JNIEXPORT jboolean JNICALL
 Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_loadWavAssetNative(
-        JNIEnv* env, jobject, jbyteArray bytearray, jint index, jfloat pan, jint channels) {
-    int len = env->GetArrayLength (bytearray);
+        JNIEnv *env, jobject, jbyteArray bytearray, jint index, jfloat pan, jint channels) {
+    int len = env->GetArrayLength(bytearray);
 
-    unsigned char* buf = new unsigned char[len];
-    env->GetByteArrayRegion (bytearray, 0, len, reinterpret_cast<jbyte*>(buf));
+    unsigned char *buf = new unsigned char[len];
+    env->GetByteArrayRegion(bytearray, 0, len, reinterpret_cast<jbyte *>(buf));
 
     MemInputStream stream(buf, len);
 
@@ -48,41 +48,49 @@ Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_loadWavAssetNative(
 
     jboolean isFormatValid = actualChannels == channels;
 
-    SampleBuffer* sampleBuffer = new SampleBuffer();
+    SampleBuffer *sampleBuffer = new SampleBuffer();
     sampleBuffer->loadSampleData(&reader);
 
-    OneShotSampleSource* source = new OneShotSampleSource(sampleBuffer, pan);
+    OneShotSampleSource *source = new OneShotSampleSource(sampleBuffer, pan);
     sDTPlayer.addSampleSource(source, sampleBuffer);
 
     delete[] buf;
+
+    }
 
     return isFormatValid;
 }
 
 JNIEXPORT void JNICALL
-Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_trigger(JNIEnv* env, jobject, jint index) {
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_trigger(JNIEnv *env, jobject,
+                                                                   jint index) {
     sDTPlayer.triggerDown(index);
 }
 
 
 JNIEXPORT void JNICALL
-Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_unloadWavAssetsNative(JNIEnv* env, jobject){
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_unloadWavAssetsNative(JNIEnv *env,
+                                                                                 jobject) {
     sDTPlayer.unloadSampleData();
 }
 
 JNIEXPORT void JNICALL
-Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_setupAudioStreamNative(JNIEnv* env, jobject, jint numChannels){
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_setupAudioStreamNative(JNIEnv *env,
+                                                                                  jobject,
+                                                                                  jint numChannels) {
     sDTPlayer.setupAudioStream(numChannels);
 
 }
 
 JNIEXPORT void JNICALL
-Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_startAudioStreamNative(JNIEnv* env, jobject){
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_startAudioStreamNative(JNIEnv *env,
+                                                                                  jobject) {
     sDTPlayer.startStream();
 }
 
 JNIEXPORT void JNICALL
-Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_teardownAudioStreamNative(JNIEnv* env, jobject){
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_teardownAudioStreamNative(JNIEnv *env,
+                                                                                     jobject) {
     sDTPlayer.teardownAudioStream();
 }
 

@@ -13,7 +13,7 @@ class V1ArticulationZone(
     val screenDimensions: ScreenDimensions
 ) : ArticulationZone {
     private val TAG = "ArticulationZone"
-    private val velocityZones: LinkedList<VelocityZone> = LinkedList<VelocityZone>()
+    private val velocityZones: ArrayList<VelocityZone> = ArrayList<VelocityZone>()
     private var zoneLimits: ZoneLimits
 
     init {
@@ -49,26 +49,21 @@ class V1ArticulationZone(
 
     override fun invokeZone(pointF: PointF): VelocityZone {
         var velocityZone: VelocityZone? = null
-//        for (element in velocityZones) {
-//            if (element.compareWithLimits(pointF)) {
-//                velocityZone = element
-//            }
-//        }
 
         for (element in velocityZones) {
             when (val result = element.isMatch(pointF)){
                 0 -> {
                     velocityZone = element
-                    Log.i(TAG, result.toString())
+//                    Log.i(TAG, result.toString())
                     return velocityZone
                 }
                 -1 -> {
-                    velocityZone = velocityZones.first
-                    Log.i(TAG, result.toString())
+                    velocityZone = velocityZones[0]
+//                    Log.i(TAG, result.toString())
                 }
                 -2 -> {
                     velocityZone = velocityZones[velocityZones.lastIndex]
-                    Log.i(TAG, result.toString())
+//                    Log.i(TAG, result.toString())
                 }
             }
         }

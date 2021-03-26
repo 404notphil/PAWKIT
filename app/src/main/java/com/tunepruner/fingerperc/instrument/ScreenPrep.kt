@@ -34,12 +34,12 @@ class ScreenPrep {
                 val windowMetrics = activity.windowManager.currentWindowMetrics
                 /*val insets: Insets = windowMetrics.windowInsets
                     .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())*/
-                Log.i(TAG, "screen height = ${windowMetrics.bounds.height()}")
+//                Log.i(TAG, "screen height = ${windowMetrics.bounds.height()}")
                 windowMetrics.bounds.height()/* - insets.top - insets.bottom*/
             } else {
                 val displayMetrics = DisplayMetrics()
                 activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-                Log.i(TAG, "screen height DIP= ${displayMetrics.heightPixels}")
+//                Log.i(TAG, "screen height DIP= ${displayMetrics.heightPixels}")
 //                Log.i(TAG, "screen height raw= ${ceil(displayMetrics.heightPixels * (displayMetrics.densityDpi / displayMetrics.density)).toInt()}")
                 var density = displayMetrics.density
                 var scaledDestity = displayMetrics.scaledDensity

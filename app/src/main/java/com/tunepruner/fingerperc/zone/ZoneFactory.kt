@@ -23,10 +23,10 @@ class ZoneFactory {
                 val thisArticulationZone: ArticulationZone =
                     V1ArticulationZone(articulationCount, articulationNumber, screenDimensions)
                 val velocityLayerCount = resourceManager.getVelocityLayerCount(articulationNumber)
-                Log.i(
-                    TAG,
-                    "\n\ntriggerzone iteration = ${thisArticulationZone.getArticulationNumber()}\ntop limit = ${thisArticulationZone.getLimits().topLimit}\nbottom limit = ${thisArticulationZone.getLimits().bottomLimit}"
-                )
+//                Log.i(
+//                    TAG,
+//                    "\n\ntriggerzone iteration = ${thisArticulationZone.getArticulationNumber()}\ntop limit = ${thisArticulationZone.getLimits().topLimit}\nbottom limit = ${thisArticulationZone.getLimits().bottomLimit}"
+//                )
                 for (velocityLayerNumber in 1..velocityLayerCount) {
                     var adjustedVelocityLayerNumber: Int
                     if (articulationNumber == 1) adjustedVelocityLayerNumber = velocityLayerCount - velocityLayerNumber + 1 //So that the first articulation will lay its velocities out in reversed order
@@ -38,10 +38,10 @@ class ZoneFactory {
                         velocityLayerCount,
                         screenDimensions
                     )
-                    Log.i(
-                        TAG,
-                        "\n\nlayer iteration = ${thisVelocityZone.getVelocityNumber()}\ntop limit = ${thisVelocityZone.getLimits().topLimit}\nbottom limit = ${thisVelocityZone.getLimits().bottomLimit}"
-                    )
+//                    Log.i(
+//                        TAG,
+//                        "\n\nlayer iteration = ${thisVelocityZone.getVelocityNumber()}\ntop limit = ${thisVelocityZone.getLimits().topLimit}\nbottom limit = ${thisVelocityZone.getLimits().bottomLimit}"
+//                    )
                     thisArticulationZone.addLayer(thisVelocityZone)
 
                 }

@@ -22,16 +22,16 @@ class V1VelocityZone(
         val isInBounds = pointF.x.toInt() in (zoneLimits.leftLimit + 1)..zoneLimits.rightLimit &&
                 pointF.y.toInt() in (zoneLimits.topLimit + 1)..zoneLimits.bottomLimit
         return if (isInBounds) {
-            Log.i(TAG, "a match!")
+//            Log.i(TAG, "a match!")
             0
         } else {
             var boundaryCode = 0
             if (pointF.y < zoneLimits.topLimit) {
                 boundaryCode = -1
-                Log.i(TAG, boundaryCode.toString())
+//                Log.i(TAG, boundaryCode.toString())
             } else if (pointF.y > zoneLimits.bottomLimit) {
                 boundaryCode = -2
-                Log.i(TAG, boundaryCode.toString())
+//                Log.i(TAG, boundaryCode.toString())
             }
             boundaryCode
         }

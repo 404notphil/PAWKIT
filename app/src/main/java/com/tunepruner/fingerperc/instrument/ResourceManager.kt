@@ -28,7 +28,7 @@ class ResourceManager(context: Context, private val libraryName: String) {
                 assetManager.openFd(filename)
             val fileSnapshot = filenameToSnapshot(filename, afd, assetManager)
             fileSnapshots.add(fileSnapshot)
-            Log.i("ResourceManager = ", element)
+//            Log.i("ResourceManager = ", element)
         }
     }
 

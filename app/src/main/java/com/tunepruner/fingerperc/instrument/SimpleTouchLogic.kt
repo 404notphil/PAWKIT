@@ -15,7 +15,7 @@ class SimpleTouchLogic : TouchLogic {
     var lastTime = Calendar.getInstance().timeInMillis;
 
     override fun reduceTouchEvent(event: MotionEvent): PointF? {
-        Log.i("SimpleTouchLogic", "${event.y}")
+//        Log.i("SimpleTouchLogic", "${event.y}")
         val pointerIndex = event.actionIndex
         event.getPointerId(pointerIndex)
         val maskedAction = event.actionMasked
