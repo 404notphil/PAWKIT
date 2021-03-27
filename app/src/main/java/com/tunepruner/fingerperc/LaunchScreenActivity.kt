@@ -18,9 +18,9 @@ class LaunchScreenActivity : AppCompatActivity() {
         System.loadLibrary("bomboleguero")//TODO this is the JNI one, and shouldn't use the libraryName string. It should be refactored eventually!
 
         actionBar?.hide()
-        setContentView(R.layout.activity_launch_screen)
+        setContentView(R.layout.launch_screen)
 
-        findViewById<ImageView>(R.id.bomboleguero).setOnClickListener {
+        findViewById<ImageView>(R.id.cajon_button).setOnClickListener {
 //
 //            fadeOut(findViewById<ImageView>(R.id.cajon))
             val intent = Intent(this, InstrumentActivity::class.java).apply {
@@ -29,7 +29,7 @@ class LaunchScreenActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findViewById<ImageView>(R.id.cajon).setOnClickListener {
+        findViewById<ImageView>(R.id.bombo_button).setOnClickListener {
 //            fadeOut(findViewById<ImageView>(R.id.bomboleguero))
 
             val intent = Intent(this, InstrumentActivity::class.java).apply {
