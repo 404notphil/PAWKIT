@@ -25,7 +25,6 @@ class InstrumentActivity :
 //        Log.i("MainActivity", libraryName)
         super.onCreate(savedInstanceState)
 
-
         usageReportingService = UsageReportingService(this)
     }
 
