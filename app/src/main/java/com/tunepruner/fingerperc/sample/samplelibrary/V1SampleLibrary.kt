@@ -9,7 +9,7 @@ class V1SampleLibrary : SampleLibrary {
     val articulations: ArrayList<Articulation> = ArrayList()
 
     override fun computeSample(velocityZone: VelocityZone): Sample {
-        val currentGroup = articulations[velocityZone.getZoneIteration()-1]
+        val currentGroup = articulations[velocityZone.getArticulationNumber()-1]
         return currentGroup.computeSample(velocityZone)
     }
 

@@ -37,7 +37,7 @@ class V1VelocityZone(
         }
     }
 
-    override fun getZoneIteration(): Int {
+    override fun getArticulationNumber(): Int {
         return zoneIteration
     }
 

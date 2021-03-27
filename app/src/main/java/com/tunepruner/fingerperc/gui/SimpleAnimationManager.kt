@@ -1,6 +1,7 @@
 package com.tunepruner.fingerperc.gui
 
 import android.widget.ImageView
+import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.instrument.ResourceManager
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 
@@ -11,7 +12,7 @@ class SimpleAnimationManager(val resourceManager: ResourceManager) : AnimationMa
     val DURATION_MIN: Long = 100
 
     override fun animate(velocityZone: VelocityZone) {
-        val image = findImageToAnimate(velocityZone)
+        val resourceID = findImageToAnimate(velocityZone)
 
         val velocityCount =
             resourceManager.getVelocityLayerCount(velocityZone.getArticulationNumber())
@@ -20,18 +21,18 @@ class SimpleAnimationManager(val resourceManager: ResourceManager) : AnimationMa
         val offset = (OFFSET_MAX / velocityCount) * velocityNumber
         val duration = (DURATION_MAX / velocityCount) * velocityNumber
 
-        startAnimation(offset, duration, image)
+        startAnimation(offset, duration, resourceID)
     }
 
-    private fun findImageToAnimate(velocityZone: VelocityZone): ImageView {
-//        return if (velocityZone.getArticulationNumber() == 1) {
-//            //articulation1 from layout
-//        } else {
-//            //articulation2 from layout
-//        }
+    private fun findImageToAnimate(velocityZone: VelocityZone): Int {
+        return if (velocityZone.getArticulationNumber() == 1) {
+            R.id.articulation1image
+        } else {
+            R.id.articulation2image
+        }
     }
 
-    fun startAnimation(offset: Int, duration: Long, image: ImageView) {
+    fun startAnimation(offset: Int, duration: Long, resourceID: Int) {
         //todo implement
 
     }

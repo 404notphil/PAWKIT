@@ -3,6 +3,7 @@ package com.tunepruner.fingerperc.instrument
 import android.util.Log
 import android.view.MotionEvent
 import com.tunepruner.fingerperc.graphics.GUIManager
+import com.tunepruner.fingerperc.gui.AnimationManager
 import com.tunepruner.fingerperc.sample.SampleManager
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.Sample
 import com.tunepruner.fingerperc.zone.ZoneManager
@@ -13,7 +14,7 @@ class OboePlayer(
     private val touchLogic: TouchLogic,
     private val zoneManager: ZoneManager,
     private val sampleManager: SampleManager,
-    private val GUIManager: GUIManager,
+    private val animationManager: AnimationManager,
     private val resourceManager: ResourceManager
 
 ) : Player {
@@ -30,7 +31,7 @@ class OboePlayer(
         if (pointF != null) {
             val zoneLayer = zoneManager.computeVelocityLayer(pointF)
             val sample = sampleManager.computeSample(zoneLayer)
-            GUIManager.startAnimation(zoneLayer)
+            animationManager.animate(zoneLayer)
             jniPlayerAdapter.play(sample)
         }
     }

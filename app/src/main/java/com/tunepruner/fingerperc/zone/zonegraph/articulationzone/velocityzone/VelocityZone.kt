@@ -4,7 +4,7 @@ import android.graphics.PointF
 
 interface VelocityZone{
     fun isMatch(pointF: PointF): Int
-    abstract fun getZoneIteration(): Int
+    abstract fun getArticulationNumber(): Int
 
     fun getVelocityNumber(): Int
     fun getLimits(): ZoneLimits

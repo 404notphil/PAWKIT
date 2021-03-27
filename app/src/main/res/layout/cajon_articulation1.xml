@@ -7,7 +7,7 @@
     android:background="@drawable/border_top_bottom">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/articulation1image"
         android:layout_width="425dp"
         android:layout_height="433dp"
         android:alpha="0.3"

@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.tunepruner.fingerperc.gui.InstrumentGUI
 import com.tunepruner.fingerperc.instrument.Instrument
 import com.tunepruner.fingerperc.instrument.ScreenPrep
 
@@ -23,11 +24,7 @@ class InstrumentActivity :
         instrument = instrumentFactory(this, libraryName)
 //        Log.i("MainActivity", libraryName)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.playable_area)
-        if (libraryName == "cajon") {
-            findViewById<ImageView>(R.id.rimImage).setImageResource(R.mipmap.cajon_top_atrest_foreground)
-            findViewById<ImageView>(R.id.headImage).setImageResource(R.mipmap.cajon_center_atrest_foreground)
-        }
+
 
         usageReportingService = UsageReportingService(this)
     }
@@ -132,6 +129,6 @@ class InstrumentActivity :
 }
 
 fun instrumentFactory(activity: Activity, libraryName: String): Instrument {
-    return Instrument(activity, libraryName)
+    return Instrument(activity, libraryName, InstrumentGUI(activity, libraryName))
 }
 

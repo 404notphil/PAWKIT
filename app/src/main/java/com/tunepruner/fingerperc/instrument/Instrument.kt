@@ -2,8 +2,9 @@ package com.tunepruner.fingerperc.instrument
 
 import android.app.Activity
 import android.view.MotionEvent
-import com.tunepruner.fingerperc.graphics.GUIManager
-import com.tunepruner.fingerperc.graphics.SimpleGUIManager
+import com.tunepruner.fingerperc.gui.AnimationManager
+import com.tunepruner.fingerperc.gui.InstrumentGUI
+import com.tunepruner.fingerperc.gui.SimpleAnimationManager
 import com.tunepruner.fingerperc.sample.SampleFactory
 import com.tunepruner.fingerperc.sample.SampleManager
 import com.tunepruner.fingerperc.sample.SimpleSampleManager
@@ -13,12 +14,13 @@ import com.tunepruner.fingerperc.zone.ZoneFactory
 import com.tunepruner.fingerperc.zone.ZoneManager
 import com.tunepruner.fingerperc.zone.zonegraph.ZoneGraph
 
-class Instrument(activity: Activity, libraryName: String) {
+class Instrument(activity: Activity, libraryName: String, val instrumentGUI: InstrumentGUI) {
     private var player: Player
     private var resourceManager = ResourceManager(activity, libraryName)
 
 
     init {
+        instrumentGUI.setupImages()
         val touchLogic: TouchLogic = SimpleTouchLogic()
         val zoneGraph: ZoneGraph =
             ZoneFactory
@@ -32,9 +34,9 @@ class Instrument(activity: Activity, libraryName: String) {
 
         val zoneManager: ZoneManager = SimpleZoneManager(zoneGraph)
         val sampleManager: SampleManager = SimpleSampleManager(sampleLibrary)
-        val guiManager: GUIManager = SimpleGUIManager(resourceManager)
+        val animationManager: AnimationManager = SimpleAnimationManager(resourceManager)
 
-        player = PlayerFactory.getInstance(touchLogic, zoneManager, sampleManager, guiManager, resourceManager)
+        player = PlayerFactory.getInstance(touchLogic, zoneManager, sampleManager, animationManager, resourceManager)
 
     }
 
