@@ -56,8 +56,6 @@ Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_loadWavAssetNative(
 
     delete[] buf;
 
-    }
-
     return isFormatValid;
 }
 

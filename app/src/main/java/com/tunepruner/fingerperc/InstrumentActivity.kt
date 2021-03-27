@@ -2,22 +2,20 @@ package com.tunepruner.fingerperc
 
 import android.app.Activity
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ActivityNavigator
 import com.tunepruner.fingerperc.instrument.Instrument
 import com.tunepruner.fingerperc.instrument.ScreenPrep
-import java.util.*
 
 
-class InstrumentActivity : AppCompatActivity() { //change signature to Instrument activity (val libraryName: String)
+class InstrumentActivity :
+    AppCompatActivity() { //change signature to Instrument activity (val libraryName: String)
     lateinit var instrument: Instrument
     lateinit var libraryName: String
     private val TAG = "InstrumentActivity"
+    private lateinit var usageReportingService: UsageReportingService
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -26,11 +24,17 @@ class InstrumentActivity : AppCompatActivity() { //change signature to Instrumen
 //        Log.i("MainActivity", libraryName)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.playable_area)
-        if (libraryName == "cajon"){
+        if (libraryName == "cajon") {
             findViewById<ImageView>(R.id.rimImage).setImageResource(R.mipmap.cajon_top_atrest_foreground)
             findViewById<ImageView>(R.id.headImage).setImageResource(R.mipmap.cajon_center_atrest_foreground)
         }
 
+        usageReportingService = UsageReportingService(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        usageReportingService.startClock()
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -87,7 +91,7 @@ class InstrumentActivity : AppCompatActivity() { //change signature to Instrumen
                     }
                 }
             }
-        }else{
+        } else {
             val dimensions = ScreenPrep.getDimensions(this)
             val maskedAction = event.actionMasked
             when (maskedAction) {
@@ -113,10 +117,17 @@ class InstrumentActivity : AppCompatActivity() { //change signature to Instrumen
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        instrument.tearDownPlayer()
+        usageReportingService.stopClock()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         instrument.tearDownPlayer()
     }
+
 
 }
 
