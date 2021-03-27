@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "542308914929",
+    "project_id": "fingerperc",
+    "storage_bucket": "fingerperc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542308914929:android:6c1bb1c8e831952b7abb50",
+        "android_client_info": {
+          "package_name": "com.tunepruner.fingerperc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542308914929-5qett655hb26jjmrgpu89amv2plmupfb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgtABP6YmzZbjAIp6EBioz1BW8nx8Wb14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542308914929-5qett655hb26jjmrgpu89amv2plmupfb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
