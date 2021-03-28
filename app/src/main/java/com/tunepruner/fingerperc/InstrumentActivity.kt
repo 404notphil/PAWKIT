@@ -19,7 +19,7 @@ class InstrumentActivity :
     private lateinit var usageReportingService: UsageReportingService
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         libraryName = intent.extras?.getString("libraryName")!!
         instrument = instrumentFactory(this, libraryName)
 //        Log.i("MainActivity", libraryName)
@@ -30,6 +30,7 @@ class InstrumentActivity :
 
     override fun onResume() {
         super.onResume()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         usageReportingService.startClock()
     }
 
@@ -62,56 +63,6 @@ class InstrumentActivity :
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
     }
 
-//    fun guiFlicker(event: MotionEvent) {
-//
-//        if (libraryName == "bomboleguero") {
-//            val dimensions = ScreenPrep.getDimensions(this)
-//            val maskedAction = event.actionMasked
-//            when (maskedAction) {
-//                MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
-//                    if (event.y > dimensions.screenHeight / 2) {
-//                        var imageView: ImageView = findViewById(R.id.headImage)
-//                        imageView.setImageResource(R.mipmap.head_no_blur_png_foreground)
-//                    } else {
-//                        var imageView: ImageView = findViewById(R.id.rimImage)
-//                        imageView.setImageResource(R.mipmap.rim_no_blur_png_foreground)
-//                    }
-//                }
-//                MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {
-//                    if (event.y > dimensions.screenHeight / 2) {
-//                        var imageView: ImageView = findViewById(R.id.headImage)
-//                        imageView.setImageResource(R.mipmap.head_png_foreground)
-//                    } else {
-//                        var imageView: ImageView = findViewById(R.id.rimImage)
-//                        imageView.setImageResource(R.mipmap.rim_png_foreground)
-//                    }
-//                }
-//            }
-//        } else {
-//            val dimensions = ScreenPrep.getDimensions(this)
-//            val maskedAction = event.actionMasked
-//            when (maskedAction) {
-//                MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
-//                    if (event.y > dimensions.screenHeight / 2) {
-//                        var imageView: ImageView = findViewById(R.id.headImage)
-//                        imageView.setImageResource(R.mipmap.cajon_center_onhit_foreground)
-//                    } else {
-//                        var imageView: ImageView = findViewById(R.id.rimImage)
-//                        imageView.setImageResource(R.mipmap.cajon_top_onhit_foreground)
-//                    }
-//                }
-//                MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {
-//                    if (event.y > dimensions.screenHeight / 2) {
-//                        var imageView: ImageView = findViewById(R.id.headImage)
-//                        imageView.setImageResource(R.mipmap.cajon_center_atrest_foreground)
-//                    } else {
-//                        var imageView: ImageView = findViewById(R.id.rimImage)
-//                        imageView.setImageResource(R.mipmap.cajon_top_atrest_foreground)
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     override fun onPause() {
         super.onPause()

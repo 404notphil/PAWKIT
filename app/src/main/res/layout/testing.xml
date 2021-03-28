@@ -4,13 +4,13 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/test1"
+        android:id="@+id/topLevelConstraint"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/border_top_bottom"
         app:layout_constrainedHeight="true"
         app:layout_constraintHeight_default="spread"
-        app:layout_constraintBottom_toTopOf="@id/test2"
+        app:layout_constraintBottom_toTopOf="@id/bottomLevelConstraint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
             app:srcCompat="@mipmap/cajon_top_atrest_foreground" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/articulation1title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edge Sound"
@@ -99,7 +99,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/test2"
+        android:id="@+id/bottomLevelConstraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/border_top_bottom"
@@ -108,7 +108,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/test1">
+        app:layout_constraintTop_toBottomOf="@id/topLevelConstraint">
 
         <ImageView
             android:id="@+id/imageView2"

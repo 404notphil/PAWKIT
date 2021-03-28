@@ -34,7 +34,7 @@ class Instrument(activity: Activity, libraryName: String, val instrumentGUI: Ins
 
         val zoneManager: ZoneManager = SimpleZoneManager(zoneGraph)
         val sampleManager: SampleManager = SimpleSampleManager(sampleLibrary)
-        val animationManager: AnimationManager = SimpleAnimationManager(resourceManager)
+        val animationManager: AnimationManager = SimpleAnimationManager(resourceManager, activity)
 
         player = PlayerFactory.getInstance(touchLogic, zoneManager, sampleManager, animationManager, resourceManager)
 

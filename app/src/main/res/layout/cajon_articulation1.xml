@@ -18,7 +18,7 @@
         app:srcCompat="@mipmap/cajon_top_atrest_foreground" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/articulation1title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edge Sound"

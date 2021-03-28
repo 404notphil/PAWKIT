@@ -18,6 +18,7 @@
         android:textSize="56sp"
         android:textColor="@color/white"
         android:padding="30dp"
+        android:alpha=".6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,14 +43,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bombo Legüero"
+                android:textSize="20sp"
                 android:textColor="@color/white"
-                android:fontFamily="@font/fingerperc_regular"/>
+                android:fontFamily="@font/fingerperc_regular"
+                android:alpha=".6"/>
 
             <ImageView
                 android:id="@+id/cajon_button"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:srcCompat="@mipmap/cajon_center_atrest_foreground" />
+                android:background="@drawable/button_background"
+                app:srcCompat="@mipmap/cajon_top_atrest_foreground"
+                />
 
             <TextView
                 android:id="@+id/cajon_title"
@@ -57,13 +62,17 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:text="Cajón"
-                android:fontFamily="@font/fingerperc_regular"/>
+                android:textSize="20sp"
+                android:fontFamily="@font/fingerperc_regular"
+                android:alpha=".6"/>
 
             <ImageView
                 android:id="@+id/bombo_button"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:srcCompat="@mipmap/head_png_foreground" />
+                android:background="@drawable/button_background"
+                app:srcCompat="@mipmap/head_png_foreground"
+                android:alpha=".6"/>
         </LinearLayout>
     </ScrollView>
 

@@ -18,6 +18,10 @@ class InstrumentGUI(val activity: Activity, val libraryName: String) {
                 .setImageResource(R.mipmap.rim_png_foreground)
             activity.findViewById<ImageView>(R.id.articulation2image)
                 .setImageResource(R.mipmap.head_png_foreground)
+            activity.findViewById<ImageView>(R.id.articulation1image)
+                .imageAlpha = 120
+            activity.findViewById<ImageView>(R.id.articulation2image)
+                .imageAlpha = 120
         }
 
         activity.findViewById<ImageView>(R.id.up_arrow_image)
