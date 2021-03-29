@@ -6,5 +6,7 @@ interface VelocityZone{
     fun isMatch(pointF: PointF): Int
     fun getArticulationNumber(): Int
     fun getVelocityNumber(): Int
+    fun getVelocityCount(): Int
+
     fun getLimits(): ZoneLimits
 }

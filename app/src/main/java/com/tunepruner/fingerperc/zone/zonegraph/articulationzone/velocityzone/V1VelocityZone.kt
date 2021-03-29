@@ -8,7 +8,7 @@ class V1VelocityZone(
     private val zoneIteration: Int,
     private val reverseVelocityNumber: Int,
     private val velocityNumber: Int,
-    private val layerCountOfZone: Int,
+    private val velocityCountOfArticulation: Int,
     val screenDimensions: ScreenDimensions
 ) : VelocityZone {
     private var zoneLimits: ZoneLimits
@@ -45,6 +45,10 @@ class V1VelocityZone(
         return velocityNumber
     }
 
+    override fun getVelocityCount(): Int {
+        return velocityCountOfArticulation
+    }
+
     override fun getLimits(): ZoneLimits {
         return zoneLimits
     }
@@ -56,7 +60,7 @@ class V1VelocityZone(
 
         /* Deriving top limit of this VelocityLayer from (height of a layer) * (number of preceding ones) */
         val thisLayerZoneHeight =
-            thisArticulationZone / layerCountOfZone//TODO I don't yet account for remainders of the division, which might be causing crashes!
+            thisArticulationZone / velocityCountOfArticulation//TODO I don't yet account for remainders of the division, which might be causing crashes!
 //        Log.i(TAG, "thisLayerZoneHeight = $thisLayerZoneHeight")
         val topLimit = articulationZoneTopLimit + thisLayerZoneHeight * (reverseVelocityNumber - 1)
 

@@ -102,9 +102,8 @@ class ResourceManager(context: Context, private val libraryName: String) {
         for (element in fileSnapshots) {
             if (element.articulationNumber == articulationNumber &&
                 element.velocityNumber == velocityNumber &&
-                element.roundRobinNumber == roundRobinNumber /*&&*/
-//                element.libraryName ==
-            )//compiler told me this is fine, but I'm not sure...not .equals? or .contains?
+                element.roundRobinNumber == roundRobinNumber
+            )//Library name isn't needed here, because fileSnapshots already filtered samples from other libraries
                 return element.assetFileDescriptor
         }
         return null

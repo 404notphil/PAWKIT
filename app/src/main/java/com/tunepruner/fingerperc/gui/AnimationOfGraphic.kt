@@ -10,7 +10,7 @@ import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.Ve
 
 class AnimationOfGraphic(
     private val animationManager: SimpleAnimationManager,
-    velocityZone: VelocityZone,
+    val velocityZone: VelocityZone,
     resourceManager: ResourceManager,
     private val activity: Activity,
     instrumentGUI: InstrumentGUI,
@@ -80,12 +80,19 @@ class AnimationOfGraphic(
         var counter = 0
         val imageView = activity.findViewById<ImageView>(imageID)
 
+        imageView.scaleX = 1F + (velocityZone.getVelocityNumber() * 0.2F / velocityZone.getVelocityCount())
+        imageView.scaleY = 1F + (velocityZone.getVelocityNumber() * 0.2F / velocityZone.getVelocityCount())
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            imageView.scaleX = 1.0F
+            imageView.scaleY = 1.0F
+        }, 50)
+
         while (
             timeSpent < duration &&
             adjustedOffset > offsetMin &&
             !stopRequested
         ) {
-            val handler = Handler(Looper.getMainLooper())
             val adjustedOffsetLocal = adjustedOffset
             val delayLocal = delay
 
