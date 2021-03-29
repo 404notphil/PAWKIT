@@ -2,13 +2,11 @@ package com.tunepruner.fingerperc.instrument
 
 import android.util.Log
 import android.view.MotionEvent
-import com.tunepruner.fingerperc.graphics.GUIManager
 import com.tunepruner.fingerperc.gui.AnimationManager
 import com.tunepruner.fingerperc.sample.SampleManager
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.Sample
 import com.tunepruner.fingerperc.zone.ZoneManager
 import java.io.IOException
-import java.util.*
 
 class OboePlayer(
     private val touchLogic: TouchLogic,

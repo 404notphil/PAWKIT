@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.graphics
+package com.tunepruner.fingerperc.gui
 
 import com.tunepruner.fingerperc.instrument.ResourceManager
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
