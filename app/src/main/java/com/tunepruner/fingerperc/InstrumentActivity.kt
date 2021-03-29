@@ -1,6 +1,7 @@
 package com.tunepruner.fingerperc
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -9,23 +10,25 @@ import androidx.appcompat.app.AppCompatActivity
 import com.tunepruner.fingerperc.gui.InstrumentGUI
 import com.tunepruner.fingerperc.instrument.Instrument
 import com.tunepruner.fingerperc.instrument.ScreenPrep
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 
 
-class InstrumentActivity :
-    AppCompatActivity() { //change signature to Instrument activity (val libraryName: String)
+class InstrumentActivity : AppCompatActivity() {
     lateinit var instrument: Instrument
     lateinit var libraryName: String
     private val TAG = "InstrumentActivity"
     private lateinit var usageReportingService: UsageReportingService
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         libraryName = intent.extras?.getString("libraryName")!!
-        instrument = instrumentFactory(this, libraryName)
-//        Log.i("MainActivity", libraryName)
-        super.onCreate(savedInstanceState)
 
         usageReportingService = UsageReportingService(this)
+        instrument = instrumentFactory(this, libraryName)
+
     }
 
     override fun onResume() {
@@ -36,10 +39,6 @@ class InstrumentActivity :
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         instrument.onTouch(event)
-//        guiFlicker(event)
-//        Log.i(TAG, "event.y = ${event.y}")
-//        Log.i(TAG, "event.rawY = ${event.rawY}")
-//        Log.i(TAG, "Screen dimensions = ${ScreenPrep.getDimensions(this)}")
         return true
     }
 
@@ -63,7 +62,6 @@ class InstrumentActivity :
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
     }
 
-
     override fun onPause() {
         super.onPause()
         instrument.tearDownPlayer()
@@ -73,9 +71,8 @@ class InstrumentActivity :
     override fun onDestroy() {
         super.onDestroy()
         instrument.tearDownPlayer()
+        usageReportingService.stopClock()
     }
-
-
 }
 
 fun instrumentFactory(activity: Activity, libraryName: String): Instrument {

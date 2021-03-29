@@ -35,6 +35,7 @@ class ZoneFactory {
                         articulationCount,
                         articulationNumber,
                         adjustedVelocityLayerNumber,
+                        velocityLayerNumber,
                         velocityLayerCount,
                         screenDimensions
                     )

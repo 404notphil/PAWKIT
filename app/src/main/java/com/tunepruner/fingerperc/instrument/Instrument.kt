@@ -14,7 +14,7 @@ import com.tunepruner.fingerperc.zone.ZoneFactory
 import com.tunepruner.fingerperc.zone.ZoneManager
 import com.tunepruner.fingerperc.zone.zonegraph.ZoneGraph
 
-class Instrument(activity: Activity, libraryName: String, val instrumentGUI: InstrumentGUI) {
+class Instrument(activity: Activity, libraryName: String, instrumentGUI: InstrumentGUI) {
     private var player: Player
     private var resourceManager = ResourceManager(activity, libraryName)
 
@@ -34,7 +34,7 @@ class Instrument(activity: Activity, libraryName: String, val instrumentGUI: Ins
 
         val zoneManager: ZoneManager = SimpleZoneManager(zoneGraph)
         val sampleManager: SampleManager = SimpleSampleManager(sampleLibrary)
-        val animationManager: AnimationManager = SimpleAnimationManager(resourceManager, activity)
+        val animationManager: AnimationManager = SimpleAnimationManager(resourceManager, activity, instrumentGUI)
 
         player = PlayerFactory.getInstance(touchLogic, zoneManager, sampleManager, animationManager, resourceManager)
 
@@ -46,6 +46,9 @@ class Instrument(activity: Activity, libraryName: String, val instrumentGUI: Ins
 
     fun tearDownPlayer(){
         player.tearDown()
+        1 boo 2
     }
+
+    private infix fun Int.boo(x: Int) {println(x + this)}
 }
 

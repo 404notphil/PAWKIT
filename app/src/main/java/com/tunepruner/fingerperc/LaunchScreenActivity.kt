@@ -60,23 +60,6 @@ class LaunchScreenActivity : AppCompatActivity() {
             override fun onAnimationRepeat(animation: Animation?) {}
             override fun onAnimationStart(animation: Animation?) {}
         })
-
-        viewToFadeOut.startAnimation(fadeOut)
-    }
-    private fun fadeIn(viewToFadeOut: View) {
-        val fadeOut: Animation = AlphaAnimation(0F, 1F)
-        fadeOut.interpolator = AccelerateInterpolator()
-        fadeOut.duration = 500
-
-        fadeOut.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationEnd(animation: Animation?) {
-                viewToFadeOut.visibility = View.VISIBLE
-            }
-
-            override fun onAnimationRepeat(animation: Animation?) {}
-            override fun onAnimationStart(animation: Animation?) {}
-        })
-
         viewToFadeOut.startAnimation(fadeOut)
     }
 
@@ -85,12 +68,7 @@ class LaunchScreenActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.cajon_button).visibility = View.VISIBLE
         findViewById<ImageView>(R.id.bombo_button).visibility = View.VISIBLE
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        System.loadLibrary("bomboleguero")//TODO this is the JNI one, and shouldn't use the libraryName string, but should be refactored eventually!
+        System.loadLibrary("bomboleguero")
     }
 
-    fun animateButtonPress(imageID: Int) {
-//        findViewById<ImageView>(imageID).scaleX = 2.0F
-//        findViewById<ImageView>(imageID).scaleY = 2.0F
-
-    }
 }

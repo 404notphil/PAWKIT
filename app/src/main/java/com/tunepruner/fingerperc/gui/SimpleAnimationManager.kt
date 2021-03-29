@@ -1,63 +1,67 @@
 package com.tunepruner.fingerperc.gui
 
 import android.app.Activity
+import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.instrument.ResourceManager
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
+import android.os.Handler
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
-class SimpleAnimationManager(val resourceManager: ResourceManager, val activity: Activity) :
+class SimpleAnimationManager(
+    val resourceManager: ResourceManager,
+    val activity: Activity,
+    val instrumentGUI: InstrumentGUI
+) :
     AnimationManager {
     val TAG: String = "AniManager"
-    val articulationArrays: ArrayList<ArrayList<Animation>> = ArrayList()
+    val articulationArrays: ArrayList<HashMap<Int, Animation>> = ArrayList()
+    var currentIndex = 0
 
     init {
-        articulationArrays.add(ArrayList())
-        articulationArrays.add(ArrayList())
+        articulationArrays.add(HashMap())
+        articulationArrays.add(HashMap())
     }
 
 
     override fun animate(velocityZone: VelocityZone) {
         Log.i(TAG, "size 0 = ${articulationArrays[0].size}")
         Log.i(TAG, "size 1 = ${articulationArrays[1].size}")
-        stopAllPrevious(velocityZone.getArticulationNumber())
-        val animation = Animation(this, velocityZone, resourceManager, activity)
-        articulationArrays[velocityZone.getArticulationNumber() - 1].add(animation)
+
+        articulationArrays[velocityZone.getArticulationNumber() - 1][currentIndex]?.stopAnimation() /*Stop the previous animation*/
+
+        val animation =
+            Animation(this, velocityZone, resourceManager, activity, instrumentGUI, currentIndex)
+        articulationArrays[velocityZone.getArticulationNumber() - 1][currentIndex] = animation
+        currentIndex++
     }
 
-    private fun stopAllPrevious(articulationNumber: Int) {
-        Log.i(TAG, "stopAllPrevious")
-
-        if (!articulationArrays.isNullOrEmpty())
-            for (element in articulationArrays[articulationNumber - 1]) {
-                element.stopAnimation()
-            }
-    }
 }
 
 class Animation(
-    val animationManager: SimpleAnimationManager,
-    val velocityZone: VelocityZone,
-    val resourceManager: ResourceManager,
-    val activity: Activity
+    private val animationManager: SimpleAnimationManager,
+    velocityZone: VelocityZone,
+    resourceManager: ResourceManager,
+    private val activity: Activity,
+    instrumentGUI: InstrumentGUI,
+    private val currentIndex: Int
 ) {
     val TAG: String = "Animation.Class"
-    private val offsetMax = 25
+    private val offsetMax = 50
     private val offsetMin = 5
-    private val durationMax: Long = 500
+    private val durationMax = 3000L
     private val articulationNumber = velocityZone.getArticulationNumber()
     private var stopRequested: Boolean = false
+    private var originX: Float
+    private var originY: Float
 
     init {
         val imageID = findImageToAnimate(velocityZone)
         val textID = findTextToAnimate(velocityZone)
-
 
         val velocityCount =
             resourceManager.getVelocityLayerCount(articulationNumber)
@@ -65,6 +69,14 @@ class Animation(
 
         val offset = (offsetMax / velocityCount) * velocityNumber
         val duration = (durationMax / velocityCount) * velocityNumber
+
+        if (articulationNumber == 1) {
+            originX = instrumentGUI.topArticulationPosition.x
+            originY = instrumentGUI.topArticulationPosition.y
+        } else {
+            originX = instrumentGUI.bottomArticulationPosition.x
+            originY = instrumentGUI.bottomArticulationPosition.y
+        }
 
         startAnimation(offset, duration, imageID, textID, articulationNumber)
     }
@@ -87,8 +99,6 @@ class Animation(
 
     fun stopAnimation() {
         stopRequested = true
-        Log.i(TAG, "stopRequested")
-
     }
 
     private fun startAnimation(
@@ -98,55 +108,52 @@ class Animation(
         textID: Int,
         articulationNumber: Int
     ) {
+        var timeSpent = 0
+        var adjustedOffset = offset
+        var delay = 0L
+        var counter = 0
+        val imageView = activity.findViewById<ImageView>(imageID)
 
+        while (
+            timeSpent < duration &&
+            adjustedOffset > offsetMin &&
+            !stopRequested
+        ) {
+            val handler = Handler(Looper.getMainLooper())
+            val adjustedOffsetLocal = adjustedOffset
+            val delayLocal = delay
 
-        GlobalScope.launch {
-            var counter = 0
-            var remaining = offset
-            val origin = activity.findViewById<ImageView>(imageID).x
+            handler.postDelayed({
+                imageView.x = originX + adjustedOffsetLocal
+                handler.postDelayed({
+                    imageView.y = originY + adjustedOffsetLocal
+                    handler.postDelayed({
+                        imageView.y = originY - adjustedOffsetLocal
+                        handler.postDelayed({
+                            imageView.x = originX - adjustedOffsetLocal
+                            handler.postDelayed({
+                                imageView.x = originX
+                                handler.postDelayed({
+                                    imageView.y = originY
+                                }, 5)
+                            }, 5)
+                        }, 5)
+                    }, 5)
+                }, 5)
+            }, delayLocal)
 
-            while (counter < duration &&
-                remaining > offsetMin
-            ) {
+            timeSpent += 30
+            adjustedOffset = if (counter < 2) adjustedOffset - 15 else adjustedOffset - 1
+            delay +=30
+            counter ++
 
-                if (stopRequested) break
-
-                activity.findViewById<ImageView>(imageID).imageAlpha = 255
-                activity.findViewById<TextView>(textID).alpha = 0.05F
-
-                activity.findViewById<ImageView>(imageID).x = origin + remaining
-                delay(6)
-
-                activity.findViewById<ImageView>(imageID).y = origin + remaining
-                delay(6)
-
-                activity.findViewById<ImageView>(imageID).x = origin - remaining
-                delay(6)
-
-                activity.findViewById<ImageView>(imageID).y = origin - remaining
-                delay(6)
-
-                activity.findViewById<ImageView>(imageID).x = origin
-                delay(6)
-
-                activity.findViewById<ImageView>(imageID).y = origin
-
-                counter += 36
-                remaining -= 2
-
-            }
-            if (!stopRequested) {
-                delay(300)
-                activity.findViewById<ImageView>(imageID).imageAlpha = 120
-                activity.findViewById<TextView>(textID).alpha = .3F
-            }
         }
 
-        Log.i(TAG, "size before delete= ${animationManager.articulationArrays[articulationNumber - 1].size}")
-        animationManager.articulationArrays[articulationNumber - 1].remove(this)
-        Log.i(TAG, "size after delete= ${animationManager.articulationArrays[articulationNumber - 1].size}")
+        animationManager.articulationArrays[articulationNumber - 1].remove(currentIndex - 1)
+
         stopRequested = false
 
     }
+
 }
 

@@ -1,13 +1,13 @@
 package com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone
 
 import android.graphics.PointF
-import android.util.Log
 import com.tunepruner.fingerperc.instrument.ScreenDimensions
 
 class V1VelocityZone(
     private val zoneCount: Int,
     private val zoneIteration: Int,
-    private val layerIteration: Int,
+    private val reverseVelocityNumber: Int,
+    private val velocityNumber: Int,
     private val layerCountOfZone: Int,
     val screenDimensions: ScreenDimensions
 ) : VelocityZone {
@@ -42,7 +42,7 @@ class V1VelocityZone(
     }
 
     override fun getVelocityNumber(): Int {
-        return layerIteration
+        return velocityNumber
     }
 
     override fun getLimits(): ZoneLimits {
@@ -58,7 +58,7 @@ class V1VelocityZone(
         val thisLayerZoneHeight =
             thisArticulationZone / layerCountOfZone//TODO I don't yet account for remainders of the division, which might be causing crashes!
 //        Log.i(TAG, "thisLayerZoneHeight = $thisLayerZoneHeight")
-        val topLimit = articulationZoneTopLimit + thisLayerZoneHeight * (layerIteration - 1)
+        val topLimit = articulationZoneTopLimit + thisLayerZoneHeight * (reverseVelocityNumber - 1)
 
         val bottomLimit = topLimit + thisLayerZoneHeight
 
