@@ -18,6 +18,7 @@ class OboePlayer(
 ) : Player {
     private val jniPlayerAdapter = JNIPlayerAdapter()
     private val TAG = "Player"
+    private var testingCounter = 0
 
     init {
         prepare()
@@ -31,7 +32,12 @@ class OboePlayer(
             val sample = sampleManager.computeSample(zoneLayer)
             animationManager.animate(zoneLayer)
             jniPlayerAdapter.play(sample)
+
         }
+    }
+
+    override fun muteAll(){
+        jniPlayerAdapter.muteAll()
     }
 
     override fun tearDown() {
@@ -92,5 +98,9 @@ class JNIPlayerAdapter {
     external fun unloadWavAssetsNative()
 
     private external fun trigger(drumIndex: Int)
+
+    external fun muteAll()
+
+    private external fun triggerUp(drumIndex: Int)
 
 }

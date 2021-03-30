@@ -92,6 +92,17 @@ Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_teardownAudioStreamNa
     sDTPlayer.teardownAudioStream();
 }
 
-//#ifdef __cplusplus
 }
-//#endif
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_triggerUp(JNIEnv *env, jobject thiz,
+                                                                     jint drum_index) {
+
+    sDTPlayer.triggerUp(drum_index);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_tunepruner_fingerperc_instrument_JNIPlayerAdapter_muteAll(JNIEnv *env, jobject thiz) {
+    sDTPlayer.resetAll();
+}

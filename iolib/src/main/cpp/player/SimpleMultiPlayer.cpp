@@ -179,7 +179,9 @@ void SimpleMultiPlayer::triggerUp(int32_t index) {
 
 void SimpleMultiPlayer::resetAll() {
     for (int32_t bufferIndex = 0; bufferIndex < mNumSampleBuffers; bufferIndex++) {
+        mSampleSources[bufferIndex]->setGain(0);
         mSampleSources[bufferIndex]->setStopMode();
+        mSampleSources[bufferIndex]->setGain(1);
     }
 }
 

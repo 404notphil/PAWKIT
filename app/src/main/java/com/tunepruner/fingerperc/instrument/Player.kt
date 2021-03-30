@@ -5,4 +5,5 @@ import android.view.MotionEvent
 interface Player {
     fun play(event: MotionEvent)
     fun tearDown()
+    fun muteAll()
 }
