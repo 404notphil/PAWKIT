@@ -27,7 +27,7 @@ internal class V1ArticulationTest {
     fun setUp() {
         currentGroup = V1Articulation()
         screenDimensions = ScreenDimensions(100, 500)
-        velocityZone = V1VelocityZone(2, 1, 1, 6, screenDimensions)
+        velocityZone = V1VelocityZone(2, 1, 1, 6, 12, screenDimensions)
         roundRobinLogic = SimpleRoundRobinLogic()
         layerToAdd = V1VelocityLayer(1, roundRobinLogic)
         basicCoords = BasicCoords(1, 1, 1, 4, 4)

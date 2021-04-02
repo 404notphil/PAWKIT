@@ -21,7 +21,7 @@ class InstrumentGUI(private val activity: Activity, private val libraryName: Str
             topImage.setImageResource(R.mipmap.cajon_top_atrest_foreground)
             bottomImage.setImageResource(R.mipmap.cajon_center_atrest_foreground)
         }
-        if (libraryName == "bomboleguero") {
+        if (libraryName == "dancedrums") {
             topImage.setImageResource(R.mipmap.rim_png_foreground)
             bottomImage.setImageResource(R.mipmap.head_png_foreground)
             topImage.imageAlpha = 120

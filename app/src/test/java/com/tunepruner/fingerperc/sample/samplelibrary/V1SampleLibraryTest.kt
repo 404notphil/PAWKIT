@@ -32,7 +32,7 @@ internal class V1SampleLibraryTest {
         sampleLibrary = V1SampleLibrary()
         groupToAdd = V1Articulation()
         screenDimensions = ScreenDimensions(1000, 500)
-        velocityZoneToQuery = V1VelocityZone(2, 1, 1, 6, screenDimensions)
+        velocityZoneToQuery = V1VelocityZone(2, 1, 1, 6, 12, screenDimensions)
         roundRobinLogic = SimpleRoundRobinLogic()
         layerToAdd = V1VelocityLayer(1, roundRobinLogic)
         basicCoords = BasicCoords(1, 1, 1, 4, 4)

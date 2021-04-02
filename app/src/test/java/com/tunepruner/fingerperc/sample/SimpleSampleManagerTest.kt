@@ -34,7 +34,7 @@ internal class SimpleSampleManagerTest {
         sampleLibrary = V1SampleLibrary()
         articulationToAdd = V1Articulation()
         screenDimensions = ScreenDimensions(1000, 500)
-        velocityZoneToQuery = V1VelocityZone(2, 1, 1, 6, screenDimensions)
+        velocityZoneToQuery = V1VelocityZone(2, 1, 1, 6, 12, screenDimensions)
         roundRobinLogic = SimpleRoundRobinLogic()
         velocityLayerToAdd = V1VelocityLayer(1, roundRobinLogic)
         basicCoords = BasicCoords(1, 1, 1, 4, 4)

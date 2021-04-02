@@ -32,7 +32,7 @@ class AnimationOfTitle {
     }
 }
 
-class AnimationOfTitleRequest(val activity: Activity, val velocityZone: VelocityZone) {
+class AnimationOfTitleRequest(activity: Activity, val velocityZone: VelocityZone) {
     private val articulationNumber = velocityZone.getArticulationNumber()
     private val imageView: ImageView = if (velocityZone.getArticulationNumber() == 1) {
         activity.findViewById(R.id.articulation1image)

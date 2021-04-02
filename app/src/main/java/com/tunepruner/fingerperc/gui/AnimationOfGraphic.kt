@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.instrument.ResourceManager
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
+import kotlin.math.roundToInt
 
 class AnimationOfGraphic(
     private val animationManager: SimpleAnimationManager,
@@ -17,9 +18,8 @@ class AnimationOfGraphic(
     private val currentIndex: Int
 ) {
     val TAG: String = "AnimationOfGraphic.Class"
-    private val offsetMax = 50
-    private val offsetMin = 5
-    private val durationMax = 3000L
+    private val offsetMax = 30
+    private val durationMax = 700L
     private val articulationNumber = velocityZone.getArticulationNumber()
     private var stopRequested: Boolean = false
     private var originX: Float
@@ -33,7 +33,7 @@ class AnimationOfGraphic(
             resourceManager.getVelocityLayerCount(articulationNumber)
         val velocityNumber = velocityZone.getVelocityNumber()
 
-        val offset = (offsetMax / velocityCount) * velocityNumber
+        val offset = (offsetMax / velocityCount) * velocityNumber + 10
         val duration = (durationMax / velocityCount) * velocityNumber
 
         if (articulationNumber == 1) {
@@ -44,7 +44,7 @@ class AnimationOfGraphic(
             originY = instrumentGUI.bottomArticulationPosition.y
         }
 
-        startAnimation(offset, duration, imageID, textID, articulationNumber)
+        startAnimation(offset, duration, imageID, articulationNumber)
     }
 
     private fun findImageToAnimate(velocityZone: VelocityZone): Int {
@@ -71,14 +71,21 @@ class AnimationOfGraphic(
         offset: Int,
         duration: Long,
         imageID: Int,
-        textID: Int,
         articulationNumber: Int
     ) {
-        var timeSpent = 0
-        var adjustedOffset = offset
-        var delay = 0L
+        var cycleStart = 0L
         var counter = 0
+        var adjustedCoordsOffset = offset
+
         val imageView = activity.findViewById<ImageView>(imageID)
+        val delayPartial = 5
+        val cycleLength = delayPartial * 5
+        val totalCycles = duration / cycleLength
+        val constant = 100
+        val numeratorBase = 95
+        val numeratorIncrement: Long = (constant - numeratorBase) / totalCycles
+        /*As such, after the first cycle, the coords offset will be reset to itself multiplied by 95/100, the following cycle by 96/100, etc */
+        val ratio: Double = (numeratorBase + counter.times(numeratorIncrement).toDouble()) / constant
 
         imageView.scaleX = 1F + (velocityZone.getVelocityNumber() * 0.2F / velocityZone.getVelocityCount())
         imageView.scaleY = 1F + (velocityZone.getVelocityNumber() * 0.2F / velocityZone.getVelocityCount())
@@ -89,12 +96,12 @@ class AnimationOfGraphic(
         }, 50)
 
         while (
-            timeSpent < duration &&
-            adjustedOffset > offsetMin &&
+            cycleStart < duration &&
             !stopRequested
         ) {
-            val adjustedOffsetLocal = adjustedOffset
-            val delayLocal = delay
+            val adjustedOffsetLocal = adjustedCoordsOffset
+            val delayLocal = cycleStart
+
 
             handler.postDelayed({
                 imageView.x = originX + adjustedOffsetLocal
@@ -108,18 +115,16 @@ class AnimationOfGraphic(
                                 imageView.x = originX
                                 handler.postDelayed({
                                     imageView.y = originY
-                                }, 5)
-                            }, 5)
-                        }, 5)
-                    }, 5)
-                }, 5)
+                                }, delayPartial.toLong())
+                            }, delayPartial.toLong())
+                        }, delayPartial.toLong())
+                    }, delayPartial.toLong())
+                }, delayPartial.toLong())
             }, delayLocal)
 
-            timeSpent += 30
-            adjustedOffset = if (counter < 2) adjustedOffset - 15 else adjustedOffset - 1
-            delay += 30
+            cycleStart += cycleLength
             counter++
-
+            adjustedCoordsOffset = (adjustedCoordsOffset * ratio).roundToInt()
         }
 
         animationManager.articulationArrays[articulationNumber - 1].remove(currentIndex - 1)

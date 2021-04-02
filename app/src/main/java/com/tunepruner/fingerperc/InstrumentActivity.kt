@@ -24,7 +24,7 @@ class InstrumentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        libraryName = intent.extras?.getString("libraryName")!!
+        libraryName = intent.extras?.getString("libraryName") ?: ""
 
         usageReportingService = UsageReportingService(this)
         instrument = instrumentFactory(this, libraryName)
@@ -34,6 +34,7 @@ class InstrumentActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        instrument = instrumentFactory(this, libraryName)
         usageReportingService.startClock()
     }
 

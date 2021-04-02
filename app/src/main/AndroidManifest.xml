@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".LaunchScreenActivity"
+            android:name=".launchscreen.LaunchScreenActivity"
             android:label="@string/title_activity_launcher_screen"
             android:parentActivityName=".InstrumentActivity"
             android:theme="@style/NoActionBar">
@@ -24,7 +24,7 @@
         <activity
             android:name=".InstrumentActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".LaunchScreenActivity"/>
+            android:parentActivityName=".launchscreen.LaunchScreenActivity"/>
     </application>
 
 </manifest>

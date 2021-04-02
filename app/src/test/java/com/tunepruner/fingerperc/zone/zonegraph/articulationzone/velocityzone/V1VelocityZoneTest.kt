@@ -1,6 +1,7 @@
 package com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone
 
 import android.graphics.Point
+import android.graphics.PointF
 import com.tunepruner.fingerperc.instrument.ScreenDimensions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -18,17 +19,17 @@ internal class V1VelocityZoneTest {
 
     @Test
     fun calculateLimits() {
-        var zoneLayer = V1VelocityZone(2, 1, 1, 6, screenDimensions)
+        var zoneLayer = V1VelocityZone(2, 1, 1, 6, 12, screenDimensions)
 
     }
 
     @Test
     fun isMatch() {
-        var point = Point()
-        point.x = 100
-        point.y = 166
-        var zoneLayer = V1VelocityZone(2, 1, 2, 6, ScreenDimensions(1000, 500))
-        assertTrue(zoneLayer.isMatch(point))
+        var point = PointF()
+        point.x = 100F
+        point.y = 166F
+        var zoneLayer = V1VelocityZone(2, 1, 2, 6, 12, ScreenDimensions(1000, 500))
+        assertEquals(0, zoneLayer.isMatch(point))
     }
 
     @Test

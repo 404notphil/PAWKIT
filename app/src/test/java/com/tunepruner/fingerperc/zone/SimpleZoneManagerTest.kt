@@ -1,6 +1,7 @@
 package com.tunepruner.fingerperc.zone
 
 import android.graphics.Point
+import android.graphics.PointF
 import com.tunepruner.fingerperc.instrument.ScreenDimensions
 import com.tunepruner.fingerperc.zone.zonegraph.ZoneGraph
 import com.tunepruner.fingerperc.zone.zonegraph.V1ZoneGraph
@@ -19,7 +20,7 @@ internal class SimpleZoneManagerTest {
     lateinit var zoneGraph: ZoneGraph
     lateinit var triggerZone1ToAdd: V1ArticulationZone
     lateinit var triggerZone2ToAdd: V1ArticulationZone
-    lateinit var point: Point
+    lateinit var point: PointF
     lateinit var layerToAdd: V1VelocityZone
     lateinit var screenDimensions: ScreenDimensions
     @BeforeEach
@@ -31,16 +32,16 @@ internal class SimpleZoneManagerTest {
         triggerZone2ToAdd = V1ArticulationZone(2, 2, screenDimensions)
         zoneGraph.addArticulationZone(triggerZone1ToAdd)
         zoneGraph.addArticulationZone(triggerZone2ToAdd)
-        layerToAdd = V1VelocityZone(2, 1, 1, 2, screenDimensions)
+        layerToAdd = V1VelocityZone(2, 1, 1, 2, 12, screenDimensions)
         triggerZone1ToAdd.addLayer(layerToAdd)
         triggerZone2ToAdd.addLayer(layerToAdd)
-        point = Point()
-        point.x = 100
-        point.y = 100
+        point = PointF()
+        point.x = 100F
+        point.y = 100F
     }
 
     @Test
     fun computeZoneLayerReturnsNotNull() {
-        assertNotNull(triggerManager.computeZoneLayer(point))
+        assertNotNull(triggerManager.computeVelocityLayer(point))
     }
 }
