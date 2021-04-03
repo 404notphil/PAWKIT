@@ -1,5 +1,6 @@
 package com.tunepruner.fingerperc.launchscreen
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,14 +18,13 @@ import com.tunepruner.fingerperc.InstrumentActivity
 import com.tunepruner.fingerperc.R
 
 class LibraryListFragment : Fragment() {
+    private var imageView1: ImageView? = null
+    private var imageView2: ImageView? = null
     private val TAG = "LibraryListFragment.Class"
     private lateinit var viewModel: LibraryNameViewModel
-    var imageView1: ImageView? = null
-    var imageView2: ImageView? = null
-
 
     companion object {
-        fun newInstance (activity: AppCompatActivity): Fragment{
+        fun newInstance(): Fragment {
             val libraryListFragment = LibraryListFragment()
             return libraryListFragment
         }
@@ -36,6 +36,8 @@ class LibraryListFragment : Fragment() {
 
     ): View {
         val view: View = inflater.inflate(R.layout.launch_screen, container, false)
+        imageView1 = view.findViewById(R.id.bombo_button)
+        imageView2 = view.findViewById(R.id.cajon_button)
         setButtonHandlers()
         return view
     }
@@ -58,9 +60,8 @@ class LibraryListFragment : Fragment() {
     }
 
     private fun setButtonHandlers() {
-
         Log.i(tag, "${activity == null}")
-       imageView1?.setOnClickListener {
+        imageView1?.setOnClickListener {
             Log.i(tag, "Testing")
             fadeOut(imageView1)
             val intent = Intent(activity, InstrumentActivity::class.java).apply {
@@ -93,5 +94,13 @@ class LibraryListFragment : Fragment() {
             override fun onAnimationStart(animation: Animation?) {}
         })
         viewToFadeOut?.startAnimation(fadeOut)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        imageView1 = activity?.findViewById(R.id.cajon_button)
+        imageView2 = activity?.findViewById(R.id.bombo_button)
+        Log.i(tag, "${imageView1 == null}")
+        setButtonHandlers()
     }
 }

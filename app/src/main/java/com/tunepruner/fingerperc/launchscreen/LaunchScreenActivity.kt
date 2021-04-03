@@ -1,6 +1,9 @@
 package com.tunepruner.fingerperc.launchscreen
 
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.tunepruner.fingerperc.R
@@ -15,14 +18,14 @@ class LaunchScreenActivity : AppCompatActivity() {
 //
         actionBar?.hide()
         setContentView(R.layout.main_activity)
-//
+
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, LibraryListFragment.newInstance(this))
-                .commitNow()
+                .add(R.id.container, LibraryListFragment.newInstance())
+                .commit()
         }
     }
 
@@ -30,8 +33,8 @@ class LaunchScreenActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         System.loadLibrary("bomboleguero")
-//        findViewById<ImageView>(R.id.cajon_button).visibility = View.VISIBLE
-//        findViewById<ImageView>(R.id.bombo_button).visibility = View.VISIBLE
+        findViewById<ImageView>(R.id.cajon_button).visibility = View.VISIBLE
+        findViewById<ImageView>(R.id.bombo_button).visibility = View.VISIBLE
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
