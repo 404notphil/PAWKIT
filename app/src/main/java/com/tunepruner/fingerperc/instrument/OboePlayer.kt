@@ -1,5 +1,6 @@
 package com.tunepruner.fingerperc.instrument
 
+import android.app.Activity
 import android.util.Log
 import android.view.MotionEvent
 import com.tunepruner.fingerperc.gui.AnimationManager
@@ -25,12 +26,12 @@ class OboePlayer(
         jniPlayerAdapter.loadAllAssets(resourceManager)
     }
 
-    override fun play(event: MotionEvent) {
+    override fun play(event: MotionEvent, activity: Activity) {
         val pointF = touchLogic.reduceTouchEvent(event)
         if (pointF != null) {
             val zoneLayer = zoneManager.computeVelocityLayer(pointF)
             val sample = sampleManager.computeSample(zoneLayer)
-            animationManager.animate(zoneLayer)
+            animationManager.animate(zoneLayer, activity)
             jniPlayerAdapter.play(sample)
 
         }

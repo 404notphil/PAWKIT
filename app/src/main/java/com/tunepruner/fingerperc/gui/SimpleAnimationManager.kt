@@ -9,7 +9,6 @@ import kotlin.collections.HashMap
 
 class SimpleAnimationManager(
     val resourceManager: ResourceManager,
-    val activity: Activity,
     val instrumentGUI: InstrumentGUI
 ) :
     AnimationManager {
@@ -23,7 +22,7 @@ class SimpleAnimationManager(
     }
 
 
-    override fun animate(velocityZone: VelocityZone) {
+    override fun animate(velocityZone: VelocityZone, activity: Activity) {
         Log.i(TAG, "size 0 = ${articulationArrays[0].size}")
         Log.i(TAG, "size 1 = ${articulationArrays[1].size}")
 
@@ -31,7 +30,7 @@ class SimpleAnimationManager(
 
         val animationOfTitleRequest = AnimationOfTitleRequest(activity, velocityZone)
         val animationOfGraphic =
-            AnimationOfGraphic(this, velocityZone, resourceManager, activity, instrumentGUI, currentIndex)
+            AnimationOfGraphic(this, velocityZone, resourceManager, instrumentGUI, currentIndex, activity)
 
         articulationArrays[velocityZone.getArticulationNumber() - 1][currentIndex] = animationOfGraphic
         currentIndex++

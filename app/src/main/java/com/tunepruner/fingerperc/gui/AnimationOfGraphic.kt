@@ -13,9 +13,9 @@ class AnimationOfGraphic(
     private val animationManager: SimpleAnimationManager,
     val velocityZone: VelocityZone,
     resourceManager: ResourceManager,
-    private val activity: Activity,
     instrumentGUI: InstrumentGUI,
-    private val currentIndex: Int
+    private val currentIndex: Int,
+    activity: Activity
 ) {
     val TAG: String = "AnimationOfGraphic.Class"
     private val offsetMax = 30
@@ -44,7 +44,7 @@ class AnimationOfGraphic(
             originY = instrumentGUI.bottomArticulationPosition.y
         }
 
-        startAnimation(offset, duration, imageID, articulationNumber)
+        startAnimation(offset, duration, imageID, articulationNumber, activity)
     }
 
     private fun findImageToAnimate(velocityZone: VelocityZone): Int {
@@ -71,7 +71,8 @@ class AnimationOfGraphic(
         offset: Int,
         duration: Long,
         imageID: Int,
-        articulationNumber: Int
+        articulationNumber: Int,
+        activity: Activity
     ) {
         var cycleStart = 0L
         var counter = 0

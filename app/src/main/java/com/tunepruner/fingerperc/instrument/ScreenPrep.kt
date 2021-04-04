@@ -44,9 +44,8 @@ class ScreenPrep {
 //                Log.i(TAG, "screen height DIP= ${displayMetrics.heightPixels}")
 //                Log.i(TAG, "screen height raw= ${ceil(displayMetrics.heightPixels * (displayMetrics.densityDpi / displayMetrics.density)).toInt()}")
                 var density = displayMetrics.density
-                var scaledDestity = displayMetrics.scaledDensity
                 var densityDIP = displayMetrics.densityDpi
-                var heightPixels = displayMetrics.heightPixels
+                val heightPixels = displayMetrics.heightPixels
 
 //                var heightToReturn = ceil(displayMetrics.heightPixels * (displayMetrics.densityDpi / 160.0)).toInt()
 //                displayMetrics.heightPixels

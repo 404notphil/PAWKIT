@@ -20,7 +20,7 @@ class Instrument(activity: Activity, libraryName: String, instrumentGUI: Instrum
 
 
     init {
-        instrumentGUI.setupImages()
+        instrumentGUI.setupImages(activity)
         val touchLogic: TouchLogic = SimpleTouchLogic()
         val zoneGraph: ZoneGraph =
             ZoneFactory
@@ -34,14 +34,14 @@ class Instrument(activity: Activity, libraryName: String, instrumentGUI: Instrum
 
         val zoneManager: ZoneManager = SimpleZoneManager(zoneGraph)
         val sampleManager: SampleManager = SimpleSampleManager(sampleLibrary)
-        val animationManager: AnimationManager = SimpleAnimationManager(resourceManager, activity, instrumentGUI)
+        val animationManager: AnimationManager = SimpleAnimationManager(resourceManager, instrumentGUI)
 
         player = PlayerFactory.getInstance(touchLogic, zoneManager, sampleManager, animationManager, resourceManager)
 
     }
 
-    fun onTouch(event: MotionEvent) {
-        player.play(event)
+    fun onTouch(event: MotionEvent, activity: Activity) {
+        player.play(event, activity)
     }
 
     fun tearDownPlayer(){

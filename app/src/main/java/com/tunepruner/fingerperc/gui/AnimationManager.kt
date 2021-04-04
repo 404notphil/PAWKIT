@@ -1,5 +1,6 @@
 package com.tunepruner.fingerperc.gui
 
+import android.app.Activity
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 
 interface AnimationManager {
@@ -21,5 +22,5 @@ interface AnimationManager {
     //a function called startAnimation() which receives the trigger zone
     //resets all properties
     //based on layer level, it accesses zones and calls cycle on appropriate Cycle object
-    fun animate(velocityZone: VelocityZone)
+    fun animate(velocityZone: VelocityZone, activity: Activity)
 }

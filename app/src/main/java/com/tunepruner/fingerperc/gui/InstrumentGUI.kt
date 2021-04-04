@@ -6,12 +6,12 @@ import android.graphics.PointF
 import android.widget.ImageView
 import com.tunepruner.fingerperc.R
 
-class InstrumentGUI(private val activity: Activity, private val libraryName: String) {
+class InstrumentGUI(private val libraryName: String) {
     lateinit var topArticulationPosition: PointF
     lateinit var bottomArticulationPosition: PointF
 
 
-    fun setupImages() {
+    fun setupImages(activity: Activity) {
         activity.setContentView(R.layout.all_in_one_file)
 
         val topImage = activity.findViewById<ImageView>(R.id.articulation1image)

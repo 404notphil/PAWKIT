@@ -39,7 +39,7 @@ class InstrumentActivity : AppCompatActivity() {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        instrument.onTouch(event)
+        instrument.onTouch(event, this)
         return true
     }
 
@@ -77,6 +77,6 @@ class InstrumentActivity : AppCompatActivity() {
 }
 
 fun instrumentFactory(activity: Activity, libraryName: String): Instrument {
-    return Instrument(activity, libraryName, InstrumentGUI(activity, libraryName))
+    return Instrument(activity, libraryName, InstrumentGUI(libraryName))
 }
 

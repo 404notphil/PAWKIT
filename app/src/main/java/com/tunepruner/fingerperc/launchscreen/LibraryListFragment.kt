@@ -1,5 +1,6 @@
 package com.tunepruner.fingerperc.launchscreen
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -14,20 +15,28 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.common.base.Predicates.instanceOf
 import com.tunepruner.fingerperc.InstrumentActivity
 import com.tunepruner.fingerperc.R
 
 class LibraryListFragment : Fragment() {
-    private var imageView1: ImageView? = null
-    private var imageView2: ImageView? = null
+    var imageView1: ImageView? = null
+    var imageView2: ImageView? = null
     private val TAG = "LibraryListFragment.Class"
     private lateinit var viewModel: LibraryNameViewModel
+    private lateinit var mListener: FragmentListener
 
     companion object {
         fun newInstance(): Fragment {
             val libraryListFragment = LibraryListFragment()
             return libraryListFragment
         }
+    }
+
+    override fun onAttachFragment(childFragment: Fragment) {
+        super.onAttachFragment(childFragment)
+
+        if (context is FragmentListener) mListener = context as FragmentListener
     }
 
     override fun onCreateView(
@@ -60,7 +69,6 @@ class LibraryListFragment : Fragment() {
     }
 
     private fun setButtonHandlers() {
-        Log.i(tag, "${activity == null}")
         imageView1?.setOnClickListener {
             Log.i(tag, "Testing")
             fadeOut(imageView1)
@@ -98,9 +106,11 @@ class LibraryListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        imageView1 = activity?.findViewById(R.id.cajon_button)
-        imageView2 = activity?.findViewById(R.id.bombo_button)
         Log.i(tag, "${imageView1 == null}")
         setButtonHandlers()
+    }
+
+    interface FragmentListener{
+        fun onFragmentFinished()
     }
 }
