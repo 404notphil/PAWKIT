@@ -1,6 +1,7 @@
-package com.tunepruner.fingerperc.launchscreen
+package com.tunepruner.fingerperc.launchscreen.librarylist
 
 import android.app.Application
+import android.content.res.AssetManager
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.ktx.firestore
@@ -34,6 +35,11 @@ class LibraryNameRepository(val app: Application) {
                     for (element in libraryNames) {
                         Log.i(tag, "${element.libraryName}")
                     }
+
+                    updateInstallStatuses(libraryNames)
+//                    checkPurchases(libraryNames)
+
+                    libraryNameData.value = libraryNames
                 } else {
                     Log.d(tag, "No such document")
                 }
@@ -41,14 +47,42 @@ class LibraryNameRepository(val app: Application) {
             .addOnFailureListener { exception ->
                 Log.d(tag, "get failed with ", exception)
             }
+
+    }
+
+    private fun updateInstallStatuses(libraryNames: ArrayList<LibraryName>) {
+        val assetManager: AssetManager = app.assets
+        val filePaths = assetManager.list("audio/")
+            ?: error("AssetManager couldn't get filePaths")
+        for (i in 0..(libraryNames.lastIndex)) {
+            for (j in 0..filePaths.lastIndex) {
+                val libraryName = libraryNames[i].libraryID.toString()
+                if (filePaths[j].contains(libraryName)) {
+                    libraryNames[i].isInstalled = true
+                    break
+                }
+            }
+            if (libraryNames[i].isInstalled == null) libraryNames[i].isInstalled = false
+        }
+
+    }
+
+    fun updatePurchaseStatuses(libraryNames: ArrayList<LibraryName>) {
+
     }
 
 }
 
 data class LibraryName(
-    val imageUrl: String? = null,
     val index: Int? = null,
     val libraryName: String? = null,
+    val imageUrl: String? = null,
     @field:JvmField
-    val isPurchased: Boolean? = null
-    )
+    val isPurchased: Boolean? = null,
+    @field:JvmField
+    var isInstalled: Boolean? = null,
+    @field:JvmField
+    var isReleased: Boolean? = null,
+    val libraryID: String? = null
+)
+//changing this class might ruin firebase connection. Needs no-arguments constructor. But order of arguments doesn't matter

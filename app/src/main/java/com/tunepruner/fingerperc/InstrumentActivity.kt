@@ -1,40 +1,34 @@
 package com.tunepruner.fingerperc
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.tunepruner.fingerperc.gui.InstrumentGUI
 import com.tunepruner.fingerperc.instrument.Instrument
-import com.tunepruner.fingerperc.instrument.ScreenPrep
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 
 
 class InstrumentActivity : AppCompatActivity() {
     lateinit var instrument: Instrument
-    lateinit var libraryName: String
+    lateinit var libraryID: String
     private val TAG = "InstrumentActivity"
     private lateinit var usageReportingService: UsageReportingService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        libraryName = intent.extras?.getString("libraryName") ?: ""
+        libraryID = intent.extras?.getString("libraryID") ?: ""
 
         usageReportingService = UsageReportingService(this)
-        instrument = instrumentFactory(this, libraryName)
+        instrument = instrumentFactory(this, libraryID)
 
     }
 
     override fun onResume() {
         super.onResume()
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        instrument = instrumentFactory(this, libraryName)
+        instrument = instrumentFactory(this, libraryID)
         usageReportingService.startClock()
     }
 

@@ -18,7 +18,6 @@ class Instrument(activity: Activity, libraryName: String, instrumentGUI: Instrum
     private var player: Player
     private var resourceManager = ResourceManager(activity, libraryName)
 
-
     init {
         instrumentGUI.setupImages(activity)
         val touchLogic: TouchLogic = SimpleTouchLogic()
@@ -37,7 +36,6 @@ class Instrument(activity: Activity, libraryName: String, instrumentGUI: Instrum
         val animationManager: AnimationManager = SimpleAnimationManager(resourceManager, instrumentGUI)
 
         player = PlayerFactory.getInstance(touchLogic, zoneManager, sampleManager, animationManager, resourceManager)
-
     }
 
     fun onTouch(event: MotionEvent, activity: Activity) {

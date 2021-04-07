@@ -9,6 +9,7 @@ class ResourceManager(context: Context, private val libraryName: String) {
     private var counter: Int = 0
     val fileSnapshots = ArrayList<FileSnapshot>()
 
+
     init {
         analyzeFiles(context)
     }

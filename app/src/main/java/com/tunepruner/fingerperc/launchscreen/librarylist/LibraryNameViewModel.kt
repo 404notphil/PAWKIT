@@ -1,9 +1,10 @@
-package com.tunepruner.fingerperc.launchscreen
+package com.tunepruner.fingerperc.launchscreen.librarylist
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 
-class LibraryNameViewModel(app: Application): AndroidViewModel(app) {
+class LibraryNameViewModel(val app: Application) : AndroidViewModel(app) {
     private val dataRepo = LibraryNameRepository(app)
     val libraryNameData = dataRepo.libraryNameData
+
 }
