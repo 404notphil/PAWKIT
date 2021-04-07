@@ -3,26 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/launchScreenFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.tunepruner.fingerperc.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/launchScreenFragment"
+        android:name="com.tunepruner.fingerperc.launchscreen.librarylist.LibraryListRecyclerFragment"
+        android:label="launch_screen"
+        tools:layout="@layout/launch_screen2"/>
 
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.tunepruner.fingerperc.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/boomFragment"
+        android:name="com.tunepruner.fingerperc.BoomFragment"
+        android:label="boom_fragment"
+        tools:layout="@layout/boom_fragment" />
 
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+
 </navigation>

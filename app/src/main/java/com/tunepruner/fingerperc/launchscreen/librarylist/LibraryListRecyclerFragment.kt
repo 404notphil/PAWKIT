@@ -20,12 +20,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     private lateinit var recyclerView: RecyclerView
     private lateinit var navController: NavController
 
-    companion object {
-        fun newInstance(): Fragment {
-            return LibraryListRecyclerFragment()
-        }
-    }
-
     override fun onAttachFragment(childFragment: Fragment) {
         super.onAttachFragment(childFragment)
         if (context is FragmentListener) mListener = context as FragmentListener
@@ -39,7 +33,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.addItemDecoration(SpacesItemDecoration(50))
 //        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-//        navController = Navigation.findNavController(requireActivity(), R.id.nav_host)
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
         viewModel = ViewModelProvider(this).get(LibraryNameViewModel::class.java)
         viewModel.libraryNameData.observe(
@@ -58,6 +52,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
 
     override fun onLibraryItemClick(libraryName: LibraryName) {
 //        libraryName.libraryName?.let { Log.i(TAG, it) }
-        navController.navigate(R.id.library_item_detail)
+        navController.navigate(R.id.boomFragment)
     }
 }

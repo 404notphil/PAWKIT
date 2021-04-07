@@ -15,16 +15,9 @@ class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.Fr
         System.loadLibrary("bomboleguero")//TODO this is the JNI one, and shouldn't use the libraryName string. It should be refactored eventually!
 
         actionBar?.hide()
-        setContentView(R.layout.main_activity)
+        setContentView(R.layout.main_activity_testing_navhost)
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, LibraryListRecyclerFragment.newInstance())
-                .commitNow()
-        }
-
     }
 
     override fun onResume() {

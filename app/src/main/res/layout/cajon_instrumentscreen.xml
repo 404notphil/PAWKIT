@@ -9,7 +9,7 @@
         android:id="@+id/topLevelConstraint"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout="@layout/cajon_articulation1"
+        layout="@layout/cajon_articulation1"
         app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toTopOf="@id/bottomLevelConstraint"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
 
     <include
         android:id="@+id/bottomLevelConstraint"
-        android:layout="@layout/cajon_articulation2"
+        layout="@layout/cajon_articulation2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constrainedHeight="true"
