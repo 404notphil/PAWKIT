@@ -17,5 +17,17 @@
         android:label="boom_fragment"
         tools:layout="@layout/boom_fragment" />
 
+    <fragment
+        android:id="@+id/libraryDetailFragment"
+        android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragment"
+        android:label="detail_fragment"
+        tools:layout="@layout/library_detail_fragment" />
+
+    <fragment
+        android:id="@+id/appUpdateFragment"
+        android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.AppUpdateFragment"
+        android:label="update_fragment"
+        tools:layout="@layout/app_update_fragment" />
+
 
 </navigation>

@@ -5,6 +5,7 @@ import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryListRecyclerFragment
+import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryName
 
 class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.FragmentListener {
 
@@ -28,7 +29,7 @@ class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.Fr
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
-    override fun onFragmentFinished() {
+    override fun onFragmentFinished(libraryName: LibraryName) {
 
     }
 

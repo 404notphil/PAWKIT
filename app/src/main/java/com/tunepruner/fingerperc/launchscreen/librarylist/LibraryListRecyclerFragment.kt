@@ -1,7 +1,6 @@
 package com.tunepruner.fingerperc.launchscreen.librarylist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.tunepruner.fingerperc.R
 
-class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener{
+class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener {
     private val TAG = "LibraryListRecyclerFragment.Class"
     private lateinit var viewModel: LibraryNameViewModel
     private lateinit var mListener: FragmentListener
@@ -46,12 +44,21 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     }
     //Todo review the first chapter of this course (https://www.linkedin.com/learning/android-development-essential-training-manage-data-with-kotlin/share-data-with-livedata-objects-2?contextUrn=urn%3Ali%3AlyndaLearningPath%3A5a724cba498e9ec2d506035e)
 
-    interface FragmentListener{
-        fun onFragmentFinished()
+    interface FragmentListener {
+        fun onFragmentFinished(libraryName: LibraryName)
     }
 
     override fun onLibraryItemClick(libraryName: LibraryName) {
 //        libraryName.libraryName?.let { Log.i(TAG, it) }
-        navController.navigate(R.id.boomFragment)
+
+        if (libraryName.isReleased == true)
+            when {
+                libraryName.isPurchased == false ||
+                libraryName.isPurchased == null -> navController.navigate(R.id.libraryDetailFragment)
+                libraryName.isInstalled == false ||
+                libraryName.isInstalled == null -> navController.navigate(R.id.appUpdateFragment)
+//                else -> mListener.onFragmentFinished(libraryName)
+            }
+
     }
 }
