@@ -39,19 +39,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="5" />
 
-            <TextView
-                android:id="@+id/title_textview_paw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".01"
-                android:background="@drawable/background_launch_title_a"
-                android:fontFamily="@font/fingerperc_regular"
-                android:padding="10dp"
-                android:paddingStart="20dp"
-                android:text="PAWKIT"
-                android:textColor="#AAA"
-                android:textSize="45sp" />
 
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="269dp"
+                android:layout_height="116dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/launchscreen_title" />
 
             <View
                 android:id="@+id/view4"
@@ -59,55 +53,6 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:layout_weight="10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <View
-                android:id="@+id/view5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2" />
-
-            <TextView
-                android:id="@+id/title_textview_drums"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/background_launch_title_a"
-                android:fontFamily="@font/fingerperc_regular"
-                android:paddingStart="15dp"
-                android:text="drums"
-                android:textColor="#AAA"
-                android:textSize="35sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 
