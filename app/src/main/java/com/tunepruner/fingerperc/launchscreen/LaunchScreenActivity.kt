@@ -1,8 +1,10 @@
 package com.tunepruner.fingerperc.launchscreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
+import com.tunepruner.fingerperc.InstrumentActivity
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryListRecyclerFragment
 import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryName
@@ -30,6 +32,11 @@ class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.Fr
     }
 
     override fun onFragmentFinished(libraryName: LibraryName) {
+        val intent = Intent(this, InstrumentActivity::class.java).apply {
+            putExtra("libraryID", "${libraryName.libraryID}")
+        }
+        startActivity(intent)
+
 
     }
 

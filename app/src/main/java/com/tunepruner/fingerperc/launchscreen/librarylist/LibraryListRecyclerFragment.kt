@@ -20,13 +20,13 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
 
     override fun onAttachFragment(childFragment: Fragment) {
         super.onAttachFragment(childFragment)
-        if (context is FragmentListener) mListener = context as FragmentListener
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        if (context is FragmentListener) mListener = context as FragmentListener
         val view: View = inflater.inflate(R.layout.launch_screen2, container, false)
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.addItemDecoration(SpacesItemDecoration(50))
@@ -57,7 +57,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
                 libraryName.isPurchased == null -> navController.navigate(R.id.libraryDetailFragment)
                 libraryName.isInstalled == false ||
                 libraryName.isInstalled == null -> navController.navigate(R.id.appUpdateFragment)
-//                else -> mListener.onFragmentFinished(libraryName)
+                else -> mListener.onFragmentFinished(libraryName)
             }
 
     }
