@@ -54,7 +54,7 @@ class AnimationOfTitleRequest(activity: Activity, val velocityZone: VelocityZone
 
     private fun bringGraphicForward() {
         imageView.imageAlpha = 255
-        textView.alpha = 0.05F
+        textView.alpha = 0.0F
     }
 
     private fun sendGraphicToBack() {

@@ -27,6 +27,10 @@ class InstrumentGUI(private val libraryName: String) {
             topImage.imageAlpha = 120
             bottomImage.imageAlpha = 120
         }
+        if(libraryName == "bomboleguero"){
+            topImage.setImageResource(R.mipmap.rim_png_foreground)
+            bottomImage.setImageResource(R.mipmap.head_png_foreground)
+        }
 
         activity.findViewById<ImageView>(R.id.up_arrow_image)
             .setImageResource(R.mipmap.up_arrow_foreground)
