@@ -36,8 +36,6 @@ class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.Fr
             putExtra("libraryID", "${libraryName.libraryID}")
         }
         startActivity(intent)
-
-
     }
 
 }

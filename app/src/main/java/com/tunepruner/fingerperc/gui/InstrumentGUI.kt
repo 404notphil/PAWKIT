@@ -18,18 +18,20 @@ class InstrumentGUI(private val libraryName: String) {
         val bottomImage = activity.findViewById<ImageView>(R.id.articulation2image)
 
         if (libraryName == "cajon") {
-            topImage.setImageResource(R.mipmap.cajon_top_atrest_foreground)
-            bottomImage.setImageResource(R.mipmap.cajon_center_atrest_foreground)
+            topImage.setImageResource(R.drawable.cajon_top_atrest)
+            bottomImage.setImageResource(R.drawable.cajon_center_atrest)
         }
         if (libraryName == "dancedrums") {
-            topImage.setImageResource(R.mipmap.rim_png_foreground)
-            bottomImage.setImageResource(R.mipmap.head_png_foreground)
+            topImage.setImageResource(R.drawable.bomboleguero_top_atrest)
+            bottomImage.setImageResource(R.drawable.bomboleguero_center_atrest)
             topImage.imageAlpha = 120
             bottomImage.imageAlpha = 120
         }
         if(libraryName == "bomboleguero"){
-            topImage.setImageResource(R.mipmap.rim_png_foreground)
-            bottomImage.setImageResource(R.mipmap.head_png_foreground)
+            topImage.setImageResource(R.drawable.bomboleguero_top_atrest)
+            bottomImage.setImageResource(R.drawable.bomboleguero_center_atrest)
+            topImage.imageAlpha = 120
+            bottomImage.imageAlpha = 120
         }
 
         activity.findViewById<ImageView>(R.id.up_arrow_image)

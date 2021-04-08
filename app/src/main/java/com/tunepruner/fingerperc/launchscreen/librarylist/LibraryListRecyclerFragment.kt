@@ -51,14 +51,14 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     override fun onLibraryItemClick(libraryName: LibraryName) {
 //        libraryName.libraryName?.let { Log.i(TAG, it) }
 
-        if (libraryName.isReleased == true)
-            when {
-                libraryName.isPurchased == false ||
-                libraryName.isPurchased == null -> navController.navigate(R.id.libraryDetailFragment)
-                libraryName.isInstalled == false ||
-                libraryName.isInstalled == null -> navController.navigate(R.id.appUpdateFragment)
-                else -> mListener.onFragmentFinished(libraryName)
-            }
-
+        when {
+            libraryName.isReleased == false ||
+                    libraryName.isReleased == null -> navController.navigate(R.id.comingSoonFragment)
+            libraryName.isPurchased == false ||
+                    libraryName.isPurchased == null -> navController.navigate(R.id.libraryDetailFragment)
+            libraryName.isInstalled == false ||
+                    libraryName.isInstalled == null -> navController.navigate(R.id.appUpdateFragment)
+            else -> mListener.onFragmentFinished(libraryName)
+        }
     }
 }

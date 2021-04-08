@@ -11,10 +11,10 @@
         tools:layout="@layout/launch_screen2"/>
 
     <fragment
-        android:id="@+id/boomFragment"
-        android:name="com.tunepruner.fingerperc.BoomFragment"
-        android:label="boom_fragment"
-        tools:layout="@layout/boom_fragment" />
+        android:id="@+id/comingSoonFragment"
+        android:name="com.tunepruner.fingerperc.ComingSoonFragment"
+        android:label="coming_soon"
+        tools:layout="@layout/coming_soon_fragment" />
 
     <fragment
         android:id="@+id/libraryDetailFragment"

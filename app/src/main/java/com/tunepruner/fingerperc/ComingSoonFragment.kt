@@ -6,20 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.tunepruner.fingerperc.databinding.BoomFragmentBinding
+import com.tunepruner.fingerperc.databinding.ComingSoonFragmentBinding
 
-class BoomFragment : Fragment() {
+class ComingSoonFragment : Fragment() {
     private lateinit var viewModel: BoomViewModel
-    private lateinit var binding: BoomFragmentBinding
+    private lateinit var binding: ComingSoonFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = BoomFragmentBinding.inflate(inflater, container, false)
+        binding = ComingSoonFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(BoomViewModel::class.java)
-
-//        with(binding.)
 
         return binding.root
     }
