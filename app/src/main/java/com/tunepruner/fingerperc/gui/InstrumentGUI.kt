@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.tunepruner.fingerperc.R
 
-class InstrumentGUI(private val libraryName: String) {
+class InstrumentGUI(val libraryName: String) {
     lateinit var topArticulationPosition: PointF
     lateinit var bottomArticulationPosition: PointF
 

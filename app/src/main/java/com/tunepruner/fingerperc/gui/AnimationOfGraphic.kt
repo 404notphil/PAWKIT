@@ -13,7 +13,7 @@ class AnimationOfGraphic(
     private val animationManager: SimpleAnimationManager,
     val velocityZone: VelocityZone,
     resourceManager: ResourceManager,
-    instrumentGUI: InstrumentGUI,
+    val instrumentGUI: InstrumentGUI,
     private val currentIndex: Int,
     activity: Activity
 ) {
@@ -86,9 +86,11 @@ class AnimationOfGraphic(
         val numeratorBase = 95
         val numeratorIncrement: Long = (constant - numeratorBase) / totalCycles
         /*As such, after the first cycle, the coords offset will be reset to itself multiplied by 95/100, the following cycle by 96/100, etc */
-        val ratio: Double = (numeratorBase + counter.times(numeratorIncrement).toDouble()) / constant
+        val ratio: Double =
+            (numeratorBase + counter.times(numeratorIncrement).toDouble()) / constant
 
         val handler = Handler(Looper.getMainLooper())
+        onHitImageSwap(imageView, handler)
 
         while (
             cycleStart < duration &&
@@ -125,6 +127,43 @@ class AnimationOfGraphic(
         animationManager.articulationArrays[articulationNumber - 1].remove(currentIndex - 1)
 
         stopRequested = false
+    }
+
+    private fun onHitImageSwap(imageView: ImageView, handler: Handler) {
+        val onHitImage =
+            if (instrumentGUI.libraryName == "cajon") {
+                if (articulationNumber == 1) {
+                    R.drawable.cajon_high_onhit
+                } else R.drawable.cajon_low_onhit
+            }else if (instrumentGUI.libraryName == "bomboleguero"){
+                if (articulationNumber == 1) {
+                    R.drawable.bomboleguero_high_onhit
+                } else R.drawable.bomboleguero_low_onhit
+            }else {
+                if (articulationNumber == 1) {
+                    R.drawable.dancedrums_high_onhit
+                } else R.drawable.dancedrums_low_onhit
+            }
+
+        val atRestImage =
+            if (instrumentGUI.libraryName == "cajon") {
+                if (articulationNumber == 1) {
+                    R.drawable.cajon_high_atrest
+                } else R.drawable.cajon_low_atrest
+            }else if (instrumentGUI.libraryName == "bomboleguero"){
+                if (articulationNumber == 1) {
+                    R.drawable.bomboleguero_high_atrest
+                } else R.drawable.bomboleguero_low_atrest
+            }else {
+                if (articulationNumber == 1) {
+                    R.drawable.dancedrums_high_atrest
+                } else R.drawable.dancedrums_low_atrest
+            }
+
+            imageView.setImageResource(onHitImage)
+            handler.postDelayed({
+                imageView.setImageResource(atRestImage)
+            }, 50)
 
     }
 
