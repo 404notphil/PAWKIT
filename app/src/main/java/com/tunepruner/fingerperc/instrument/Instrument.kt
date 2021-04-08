@@ -20,6 +20,7 @@ class Instrument(activity: Activity, libraryName: String, instrumentGUI: Instrum
 
     init {
         instrumentGUI.setupImages(activity)
+        instrumentGUI.setUpTitles(activity)
         val touchLogic: TouchLogic = SimpleTouchLogic()
         val zoneGraph: ZoneGraph =
             ZoneFactory

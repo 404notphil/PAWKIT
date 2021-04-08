@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/cajon_top_atrest" />
+            app:srcCompat="@drawable/cajon_high_atrest" />
 
         <TextView
             android:id="@+id/articulation1title"
@@ -125,7 +125,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/cajon_center_atrest" />
+            app:srcCompat="@drawable/cajon_low_atrest" />
 
         <TextView
             android:id="@+id/articulation2title"

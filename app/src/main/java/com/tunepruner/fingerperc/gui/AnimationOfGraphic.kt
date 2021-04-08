@@ -18,7 +18,7 @@ class AnimationOfGraphic(
     activity: Activity
 ) {
     val TAG: String = "AnimationOfGraphic.Class"
-    private val offsetMax = 30
+    private val offsetMax = 40
     private val durationMax = 700L
     private val articulationNumber = velocityZone.getArticulationNumber()
     private var stopRequested: Boolean = false
@@ -88,13 +88,7 @@ class AnimationOfGraphic(
         /*As such, after the first cycle, the coords offset will be reset to itself multiplied by 95/100, the following cycle by 96/100, etc */
         val ratio: Double = (numeratorBase + counter.times(numeratorIncrement).toDouble()) / constant
 
-        imageView.scaleX = 1F + (velocityZone.getVelocityNumber() * 0.2F / velocityZone.getVelocityCount())
-        imageView.scaleY = 1F + (velocityZone.getVelocityNumber() * 0.2F / velocityZone.getVelocityCount())
         val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
-            imageView.scaleX = 1.0F
-            imageView.scaleY = 1.0F
-        }, 50)
 
         while (
             cycleStart < duration &&

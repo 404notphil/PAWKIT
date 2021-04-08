@@ -1,9 +1,9 @@
 package com.tunepruner.fingerperc.gui
 
 import android.app.Activity
-import android.graphics.Point
 import android.graphics.PointF
 import android.widget.ImageView
+import android.widget.TextView
 import com.tunepruner.fingerperc.R
 
 class InstrumentGUI(private val libraryName: String) {
@@ -18,18 +18,18 @@ class InstrumentGUI(private val libraryName: String) {
         val bottomImage = activity.findViewById<ImageView>(R.id.articulation2image)
 
         if (libraryName == "cajon") {
-            topImage.setImageResource(R.drawable.cajon_top_atrest)
-            bottomImage.setImageResource(R.drawable.cajon_center_atrest)
+            topImage.setImageResource(R.drawable.cajon_high_atrest)
+            bottomImage.setImageResource(R.drawable.cajon_low_atrest)
         }
         if (libraryName == "dancedrums") {
-            topImage.setImageResource(R.drawable.bomboleguero_top_atrest)
-            bottomImage.setImageResource(R.drawable.bomboleguero_center_atrest)
+            topImage.setImageResource(R.drawable.dancedrums_high_atrest)
+            bottomImage.setImageResource(R.drawable.dancedrums_low_atrest)
             topImage.imageAlpha = 120
             bottomImage.imageAlpha = 120
         }
         if(libraryName == "bomboleguero"){
-            topImage.setImageResource(R.drawable.bomboleguero_top_atrest)
-            bottomImage.setImageResource(R.drawable.bomboleguero_center_atrest)
+            topImage.setImageResource(R.drawable.bomboleguero_high_atrest)
+            bottomImage.setImageResource(R.drawable.bomboleguero_low_atrest)
             topImage.imageAlpha = 120
             bottomImage.imageAlpha = 120
         }
@@ -45,6 +45,25 @@ class InstrumentGUI(private val libraryName: String) {
 
         topArticulationPosition = PointF(topImage.x, topImage.y)
         bottomArticulationPosition = PointF(bottomImage.x, bottomImage.y)
+
+    }
+
+    fun setUpTitles(activity: Activity) {
+        val topTitle = activity.findViewById<TextView>(R.id.articulation1title)
+        val bottomTitle = activity.findViewById<TextView>(R.id.articulation2title)
+
+        if (libraryName == "cajon") {
+            topTitle.setText("Edge Sound")
+            bottomTitle.setText("Center Sound")
+        }
+        if (libraryName == "dancedrums") {
+            topTitle.setText("Snare")
+            bottomTitle.setText("Kick")
+        }
+        if(libraryName == "bomboleguero"){
+            topTitle.setText("Rim Sound")
+            bottomTitle.setText("Center Sound")
+        }
 
     }
 }
