@@ -28,5 +28,11 @@
         android:label="update_fragment"
         tools:layout="@layout/app_update_fragment" />
 
+    <fragment
+        android:id="@+id/loadingInstrumentFragment"
+        android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.LoadingInstrumentFragement"
+        android:label="loading_fragment"
+        tools:layout="@layout/loading_instrument_fragment" />
+
 
 </navigation>

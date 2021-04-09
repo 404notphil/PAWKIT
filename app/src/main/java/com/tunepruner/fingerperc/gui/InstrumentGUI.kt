@@ -20,6 +20,8 @@ class InstrumentGUI(val libraryName: String) {
         if (libraryName == "cajon") {
             topImage.setImageResource(R.drawable.cajon_high_atrest)
             bottomImage.setImageResource(R.drawable.cajon_low_atrest)
+            topImage.imageAlpha = 120
+            bottomImage.imageAlpha = 120
         }
         if (libraryName == "dancedrums") {
             topImage.setImageResource(R.drawable.dancedrums_high_atrest)

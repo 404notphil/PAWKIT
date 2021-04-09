@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -21,7 +22,7 @@ class LibraryListRecyclerAdapter(
         val recyclerButtonTitle: TextView = itemView.findViewById(R.id.recycler_button_title)
         val recyclerButtonSubtitle: TextView = itemView.findViewById(R.id.recycler_button_sub_title)
         val recyclerButtonImage: ImageView = itemView.findViewById(R.id.recycler_button_image)
-
+        val progressBar: ProgressBar = itemView.findViewById(R.id.progressBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,18 +42,20 @@ class LibraryListRecyclerAdapter(
                 if (library.isReleased == true)
                     if (library.isPurchased == true)
                         if (library.isInstalled == true)
-                            it.text = "Play            now"
-                        else it.text = "Tap to            install"
-                    else it.text = "Check it            out!"
-                else it.text = "Coming            soon!"
+                            it.text = "Tap to play!"
+                        else it.text = "Tap to install"
+                    else it.text = "Check it out!"
+                else it.text = "Coming soon!"
             }
+            progressBar.progress = 0
 //            val picasso = Picasso.get()
             Glide.with(context)
                 .load(library.imageUrl)
                 .into(recyclerButtonImage)
 //            recyclerButtonImage.setImageResource(R.mipmap.head_png_foreground)
+
             itemView.setOnClickListener {
-                mLibraryItemListener.onLibraryItemClick(library)
+                mLibraryItemListener.onLibraryItemClick(library, progressBar, recyclerButtonSubtitle)
             }
         }
     }
@@ -62,6 +65,10 @@ class LibraryListRecyclerAdapter(
     }
 
     interface LibraryItemListener {
-        fun onLibraryItemClick(libraryName: LibraryName)
+        fun onLibraryItemClick(
+            libraryName: LibraryName,
+            progressBar: ProgressBar,
+            recyclerButtonSubtitle: TextView
+        )
     }
 }

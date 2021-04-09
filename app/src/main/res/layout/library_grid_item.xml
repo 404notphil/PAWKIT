@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
+    android:id="@+id/grid_item_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_grid_item"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="10">
+
 
     <TextView
         android:id="@+id/recycler_button_title"
@@ -17,16 +22,15 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
+        android:layout_weight="9"
         android:alpha=".6"
-        android:fontFamily="@font/fingerperc_regular"
+        android:fontFamily="@font/kodchasan_regular"
         android:paddingTop="15dp"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/recycler_button_sub_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout"
         tools:text="Bombo Legüero" />
+
 
     <TextView
         android:id="@+id/recycler_button_sub_title"
@@ -36,14 +40,21 @@
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
         android:alpha=".6"
-        android:fontFamily="@font/fingerperc_regular"
-        android:text="Coming          soon!"
+        android:fontFamily="@font/kodchasan_regular"
+        android:text="Coming soon!"
         android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@id/recycler_button_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_button_title" />
+        android:textSize="15sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="60"
+        android:layout_weight="9"
+        android:visibility="visible"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp" />
 
     <ImageView
         android:id="@+id/recycler_button_image"
@@ -52,11 +63,8 @@
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
+        android:paddingBottom="10dp"/>
 
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_button_sub_title" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
