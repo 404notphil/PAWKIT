@@ -61,7 +61,7 @@ class AnimationOfTitleRequest(activity: Activity, val velocityZone: VelocityZone
         Handler(Looper.getMainLooper()).postDelayed({
             AnimationOfTitle.removeRequest(articulationNumber)
             if (AnimationOfTitle.isEmpty(articulationNumber)) {
-                imageView.imageAlpha = 90
+                imageView.imageAlpha = 50
                 textView.alpha = 0.3F
             }
         }, 2000)

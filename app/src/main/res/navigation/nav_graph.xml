@@ -8,7 +8,11 @@
         android:id="@+id/launchScreenFragment"
         android:name="com.tunepruner.fingerperc.launchscreen.librarylist.LibraryListRecyclerFragment"
         android:label="launch_screen"
-        tools:layout="@layout/launch_screen2"/>
+        tools:layout="@layout/launch_screen2">
+        <action
+            android:id="@+id/action_launchScreenFragment_to_libraryDetailFragment3"
+            app:destination="@id/libraryDetailFragment3" />
+    </fragment>
 
     <fragment
         android:id="@+id/comingSoonFragment"
@@ -17,10 +21,10 @@
         tools:layout="@layout/coming_soon_fragment" />
 
     <fragment
-        android:id="@+id/libraryDetailFragment"
-        android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragment"
-        android:label="detail_fragment"
-        tools:layout="@layout/library_detail_fragment" />
+        android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
+        android:id="@+id/youtube_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <fragment
         android:id="@+id/appUpdateFragment"
@@ -33,6 +37,21 @@
         android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.LoadingInstrumentFragement"
         android:label="loading_fragment"
         tools:layout="@layout/loading_instrument_fragment" />
+    <fragment
+        android:id="@+id/libraryDetailFragment3"
+        android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragment3"
+        android:label="fragment_library_detail3"
+        tools:layout="@layout/fragment_library_detail3" >
+        <argument
+            android:name="libraryname"
+            app:argType="string" />
+        <argument
+            android:name="libraryid"
+            app:argType="string" />
+        <argument
+            android:name="ispurchased"
+            app:argType="boolean" />
+    </fragment>
 
 
 </navigation>

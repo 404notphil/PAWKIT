@@ -20,20 +20,20 @@ class InstrumentGUI(val libraryName: String) {
         if (libraryName == "cajon") {
             topImage.setImageResource(R.drawable.cajon_high_atrest)
             bottomImage.setImageResource(R.drawable.cajon_low_atrest)
-            topImage.imageAlpha = 120
-            bottomImage.imageAlpha = 120
+            topImage.imageAlpha = 50
+            bottomImage.imageAlpha = 50
         }
         if (libraryName == "dancedrums") {
             topImage.setImageResource(R.drawable.dancedrums_high_atrest)
             bottomImage.setImageResource(R.drawable.dancedrums_low_atrest)
-            topImage.imageAlpha = 120
-            bottomImage.imageAlpha = 120
+            topImage.imageAlpha = 50
+            bottomImage.imageAlpha = 50
         }
         if(libraryName == "bomboleguero"){
             topImage.setImageResource(R.drawable.bomboleguero_high_atrest)
             bottomImage.setImageResource(R.drawable.bomboleguero_low_atrest)
-            topImage.imageAlpha = 120
-            bottomImage.imageAlpha = 120
+            topImage.imageAlpha = 50
+            bottomImage.imageAlpha = 50
         }
 
         activity.findViewById<ImageView>(R.id.up_arrow_image)

@@ -3,6 +3,7 @@ package com.tunepruner.fingerperc.gui
 import android.app.Activity
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.ImageView
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.instrument.ResourceManager
@@ -17,7 +18,7 @@ class AnimationOfGraphic(
     private val currentIndex: Int,
     activity: Activity
 ) {
-    val TAG: String = "AnimationOfGraphic.Class"
+    val TAG: String = "AnimOfGrphc.Class"
     private val offsetMax = 40
     private val durationMax = 700L
     private val articulationNumber = velocityZone.getArticulationNumber()
@@ -34,7 +35,7 @@ class AnimationOfGraphic(
         val velocityNumber = velocityZone.getVelocityNumber()
 
         val offset = (offsetMax / velocityCount) * velocityNumber + 10
-        val duration = (durationMax / velocityCount) * velocityNumber
+        val duration = (durationMax / velocityCount) * velocityNumber + 100
 
         if (articulationNumber == 1) {
             originX = instrumentGUI.topArticulationPosition.x
@@ -82,10 +83,11 @@ class AnimationOfGraphic(
         val delayPartial = 5
         val cycleLength = delayPartial * 5
         val totalCycles = duration / cycleLength
+        Log.i(TAG, "totalCycles = $totalCycles")
         val constant = 100
-        val numeratorBase = 95
+        val numeratorBase = 85
         val numeratorIncrement: Long = (constant - numeratorBase) / totalCycles
-        /*As such, after the first cycle, the coords offset will be reset to itself multiplied by 95/100, the following cycle by 96/100, etc */
+        /*As such, after the first cycle, the coords offset will be reset to itself multiplied by 70/100, the following cycle by 96/100, etc */
         val ratio: Double =
             (numeratorBase + counter.times(numeratorIncrement).toDouble()) / constant
 
@@ -105,7 +107,7 @@ class AnimationOfGraphic(
                 handler.postDelayed({
                     imageView.y = originY + adjustedOffsetLocal
                     handler.postDelayed({
-                        imageView.y = originY - adjustedOffsetLocal
+                        imageView.translationY = originY - adjustedOffsetLocal
                         handler.postDelayed({
                             imageView.x = originX - adjustedOffsetLocal
                             handler.postDelayed({
@@ -119,9 +121,11 @@ class AnimationOfGraphic(
                 }, delayPartial.toLong())
             }, delayLocal)
 
+            Log.i(TAG, "$adjustedCoordsOffset")
+
             cycleStart += cycleLength
             counter++
-            adjustedCoordsOffset = (adjustedCoordsOffset * ratio).roundToInt()
+            adjustedCoordsOffset = (adjustedCoordsOffset * ratio).toFloat().roundToInt()
         }
 
         animationManager.articulationArrays[articulationNumber - 1].remove(currentIndex - 1)
@@ -163,7 +167,7 @@ class AnimationOfGraphic(
             imageView.setImageResource(onHitImage)
             handler.postDelayed({
                 imageView.setImageResource(atRestImage)
-            }, 50)
+            }, 120)
 
     }
 

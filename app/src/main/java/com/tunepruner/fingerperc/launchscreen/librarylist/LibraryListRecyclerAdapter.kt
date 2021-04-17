@@ -55,6 +55,7 @@ class LibraryListRecyclerAdapter(
 //            recyclerButtonImage.setImageResource(R.mipmap.head_png_foreground)
 
             itemView.setOnClickListener {
+
                 mLibraryItemListener.onLibraryItemClick(library, progressBar, recyclerButtonSubtitle)
             }
         }

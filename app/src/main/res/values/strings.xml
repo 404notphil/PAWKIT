@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">FingerPerc</string>
     <string name="title_activity_launcher_screen">PAWKIT</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

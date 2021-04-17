@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.selects.select
 
 class LibraryNameRepository(val app: Application) {
     val libraryNameData = MutableLiveData<List<LibraryName>>()
@@ -39,7 +40,10 @@ class LibraryNameRepository(val app: Application) {
                     updateInstallStatuses(libraryNames)
 //                    checkPurchases(libraryNames)
 
-                    libraryNameData.value = libraryNames
+
+                    val libraryNamesSorted = sortByStatus(libraryNames)
+
+                    libraryNameData.value = libraryNamesSorted
                 } else {
                     Log.d(tag, "No such document")
                 }
@@ -64,11 +68,23 @@ class LibraryNameRepository(val app: Application) {
             }
             if (libraryNames[i].isInstalled == null) libraryNames[i].isInstalled = false
         }
-
     }
 
     fun updatePurchaseStatuses(libraryNames: ArrayList<LibraryName>) {
 
+    }
+
+    fun sortByStatus(libraryNames: ArrayList<LibraryName>): ArrayList<LibraryName> {
+//        val unsorted = ArrayList<LibraryName>()
+        val sorted = ArrayList<LibraryName>()
+//        for (element in libraryNames) {
+//            unsorted.add(element)
+//        }
+        for (element in libraryNames) {
+            sorted.add(element)
+        }
+        sorted.sortWith (compareByDescending { it.isPurchased })
+        return sorted
     }
 
 }

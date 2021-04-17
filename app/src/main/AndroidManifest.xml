@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,6 +28,15 @@
             android:name=".InstrumentActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".launchscreen.LaunchScreenActivity"/>
+        <activity
+            android:name=".launchscreen.librarylist.LibraryDetailActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".launchscreen.LaunchScreenActivity"/>
     </application>
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
 
 </manifest>

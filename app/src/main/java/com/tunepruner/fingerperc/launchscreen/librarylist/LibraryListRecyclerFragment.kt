@@ -1,5 +1,6 @@
 package com.tunepruner.fingerperc.launchscreen.librarylist
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerFragment
+import com.tunepruner.fingerperc.InstrumentActivity
 import com.tunepruner.fingerperc.R
 
 class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener {
@@ -73,48 +78,16 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         when {
             libraryName.isReleased == false ||
                     libraryName.isReleased == null -> navController.navigate(R.id.comingSoonFragment)
-            libraryName.isPurchased == false ||
-                    libraryName.isPurchased == null -> navController.navigate(R.id.libraryDetailFragment)
-            libraryName.isInstalled == false ||
-                    libraryName.isInstalled == null -> navController.navigate(R.id.appUpdateFragment)
+            libraryName.isInstalled == false &&
+                    libraryName.isPurchased == true -> navController.navigate(R.id.appUpdateFragment)
             else -> {
-                showLoadingInstrument(
-                    libraryName,
-                    progressBar,
-                    recyclerButtonSubtitle,
-                    10,
-                    100
-                )
+                val action = LibraryListRecyclerFragmentDirections.actionLaunchScreenFragmentToLibraryDetailFragment3(libraryName.libraryName?: "", libraryName.libraryID?: "", libraryName.isPurchased?: true)
+                navController.navigate(action)
             }
         }
 
     }
 
-    fun showLoadingInstrument(
-        libraryName: LibraryName,
-        progressBar: ProgressBar,
-        recyclerButtonSubtitle: TextView,
-        intervalLength: Int,
-        amountOfIntervals: Int
-    ) {
-        recyclerButtonSubtitle.text = "Loading..."
-        val handler = Handler(Looper.getMainLooper())
 
-        var intervalsAccumulated = intervalLength
-        for (i in 0..amountOfIntervals) {
-            handler.postDelayed(
-                {
-                    progressBar.progress += amountOfIntervals/100
-                }, intervalsAccumulated.toLong()
-            )
-            intervalsAccumulated += intervalLength
-            Log.i(TAG, "${intervalsAccumulated}")
-        }
-
-        handler.postDelayed({
-            recyclerButtonSubtitle.text = "Opening..."
-            mListener.onFragmentFinished(libraryName)
-        }, (intervalLength * amountOfIntervals).toLong())
-    }
 
 }
