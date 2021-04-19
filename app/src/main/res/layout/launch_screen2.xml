@@ -12,6 +12,7 @@
     tools:context=".launchscreen.LaunchScreenActivity">
 
 
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"

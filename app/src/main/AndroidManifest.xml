@@ -6,6 +6,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,6 +19,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".launchscreen.librarylist.UpdateDialogActivity"
+            android:label="@string/title_activity_update_dialog"
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".launchscreen.LaunchScreenActivity"
             android:label="@string/title_activity_launcher_screen"
@@ -26,17 +36,12 @@
         </activity>
         <activity
             android:name=".InstrumentActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".launchscreen.LaunchScreenActivity"/>
+            android:parentActivityName=".launchscreen.LaunchScreenActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".launchscreen.librarylist.LibraryDetailActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".launchscreen.LaunchScreenActivity"/>
+            android:parentActivityName=".launchscreen.LaunchScreenActivity"
+            android:screenOrientation="portrait" />
     </application>
-    <queries>
-        <intent>
-            <action android:name="com.google.android.youtube.api.service.START" />
-        </intent>
-    </queries>
 
 </manifest>

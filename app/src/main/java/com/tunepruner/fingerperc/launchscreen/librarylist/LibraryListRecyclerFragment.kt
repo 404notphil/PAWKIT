@@ -1,25 +1,23 @@
 package com.tunepruner.fingerperc.launchscreen.librarylist
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerFragment
-import com.tunepruner.fingerperc.InstrumentActivity
 import com.tunepruner.fingerperc.R
+
 
 class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener {
     private val TAG = "LibraryListRecyclerFragment.Class"
@@ -61,27 +59,46 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     }
 
     interface FragmentListener {
-        fun onFragmentFinished(libraryName: LibraryName)
+        fun onFragmentFinished(libraryDetails: LibraryDetails)
     }
 
     override fun onLibraryItemClick(
-        libraryName: LibraryName,
+        libraryDetails: LibraryDetails,
         progressBar: ProgressBar,
         recyclerButtonSubtitle: TextView
     ) {
-//        libraryName.libraryName?.let { Log.i(TAG, it) }
 
-
+//        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(context);
         val interval = 10
         val amountOfIntervals = 10
         val duration = interval * amountOfIntervals
         when {
-            libraryName.isReleased == false ||
-                    libraryName.isReleased == null -> navController.navigate(R.id.comingSoonFragment)
-            libraryName.isInstalled == false &&
-                    libraryName.isPurchased == true -> navController.navigate(R.id.appUpdateFragment)
+            libraryDetails.isReleased == false ||
+                    libraryDetails.isReleased == null -> {
+//                navController.navigate(R.id.comingSoonFragment)
+                val text = "Coming soon!"
+                val toastDuration = Toast.LENGTH_SHORT
+
+                val toast = Toast.makeText(context, text, toastDuration)
+                toast.show()
+            }
+            libraryDetails.isInstalled == false &&
+                    libraryDetails.isPurchased == true -> {
+
+//                    navController.navigate(R.id.appUpdateFragment)
+//                    alertDialogBuilder.create()
+//                UpdatePrompt().show(parentFragmentManager, "")
+                val intent = Intent(requireActivity(), UpdateDialogActivity::class.java)
+                startActivity(intent)
+            }
             else -> {
-                val action = LibraryListRecyclerFragmentDirections.actionLaunchScreenFragmentToLibraryDetailFragment3(libraryName.libraryName?: "", libraryName.libraryID?: "", libraryName.isPurchased?: true)
+                val action =
+                    LibraryListRecyclerFragmentDirections.actionLaunchScreenFragmentToLibraryDetailFragment3(
+                        libraryDetails.libraryName ?: "",
+                        libraryDetails.libraryID ?: "",
+                        libraryDetails.soundpackID ?: "",
+                        libraryDetails.isPurchased ?: true
+                    )
                 navController.navigate(action)
             }
         }
@@ -89,5 +106,18 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     }
 
 
+}
+
+class UpdatePrompt : DialogFragment() {
+    private val TAG: String = "UpdatePrompt.Class"
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        activity?.let {
+            val builder = AlertDialog.Builder(it)
+            val inflater = it.layoutInflater
+            builder.setView(inflater.inflate(R.layout.app_update_activity, null))
+            return builder.create()
+        } ?: throw IllegalStateException("Activity cannot be null")
+    }
 
 }

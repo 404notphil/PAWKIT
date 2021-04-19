@@ -21,16 +21,16 @@
         tools:layout="@layout/coming_soon_fragment" />
 
     <fragment
-        android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
         android:id="@+id/youtube_fragment"
+        android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <fragment
         android:id="@+id/appUpdateFragment"
         android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.AppUpdateFragment"
         android:label="update_fragment"
-        tools:layout="@layout/app_update_fragment" />
+        tools:layout="@layout/app_update_activity" />
 
     <fragment
         android:id="@+id/loadingInstrumentFragment"
@@ -39,14 +39,17 @@
         tools:layout="@layout/loading_instrument_fragment" />
     <fragment
         android:id="@+id/libraryDetailFragment3"
-        android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragment3"
+        android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragment"
         android:label="fragment_library_detail3"
-        tools:layout="@layout/fragment_library_detail3" >
+        tools:layout="@layout/fragment_library_detail">
         <argument
             android:name="libraryname"
             app:argType="string" />
         <argument
             android:name="libraryid"
+            app:argType="string" />
+        <argument
+            android:name="soundpackID"
             app:argType="string" />
         <argument
             android:name="ispurchased"

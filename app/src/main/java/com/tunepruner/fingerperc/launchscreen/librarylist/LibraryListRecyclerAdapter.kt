@@ -13,7 +13,7 @@ import com.tunepruner.fingerperc.R
 
 class LibraryListRecyclerAdapter(
     val context: Context,
-    val libraries: List<LibraryName>,
+    val libraries: List<LibraryDetails>,
     private val mLibraryItemListener: LibraryItemListener
 ) :
     RecyclerView.Adapter<LibraryListRecyclerAdapter.ViewHolder>() {
@@ -67,7 +67,7 @@ class LibraryListRecyclerAdapter(
 
     interface LibraryItemListener {
         fun onLibraryItemClick(
-            libraryName: LibraryName,
+            libraryDetails: LibraryDetails,
             progressBar: ProgressBar,
             recyclerButtonSubtitle: TextView
         )
