@@ -60,42 +60,42 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         billingClientWrapper = BillingClientWrapper.getInstance(this, requireContext())
 
-        binding.soundpackButton.setOnClickListener{
-
-            val action =
-                LibraryDetailFragmentDirections.actionLibraryDetailFragment3ToSoundpackFragment(
-                    args.libraryname ?: "",
-                    args.libraryid ?: "",
-                    args.soundpackID ?: "",
-                    args.imageUrl ?: "",
-                    args.ispurchased ?: false
-                )
-            navController.navigate(action)
-
-        }
+//        binding.soundpackButton.setOnClickListener{
+//
+//            val action =
+//                LibraryDetailFragmentDirections.actionLibraryDetailFragment3ToSoundpackFragment(
+//                    args.libraryname ?: "",
+//                    args.libraryid ?: "",
+//                    args.soundpackID ?: "",
+//                    args.imageUrl ?: "",
+//                    args.ispurchased ?: false
+//                )
+//            navController.navigate(action)
+//
+//        }
 
         //TODO change this to the play button
-//        binding.playButton.setOnClickListener {
-//            if (binding.youtubePlayerView.alpha == 1F)
-//                binding.youtubePlayerView.alpha = 0F
-//
-//            if (args.ispurchased) {
-//                val progressBarLength = 1000
-//                showLoadingInstrument(progressBarLength / 100, 100)
-//                val handler = Handler(Looper.getMainLooper())
-//                handler.postDelayed({
-//                    if (!stopRequested) {
-//                        val intent =
-//                            Intent(requireActivity(), InstrumentActivity::class.java).apply {
-//                                putExtra("libraryID", args.libraryid)
-//                            }
-//                        startActivity(intent)
-//                    }
-//                }, progressBarLength.toLong())
-//            } else {
-//                billingClientWrapper.querySkuDetails(requireActivity(), args.soundpackID)
-//            }
-//        }
+        binding.soundpackButton.setOnClickListener {
+            if (binding.youtubePlayerView.alpha == 1F)
+                binding.youtubePlayerView.alpha = 0F
+
+            if (args.ispurchased) {
+                val progressBarLength = 1000
+                showLoadingInstrument(progressBarLength / 100, 100)
+                val handler = Handler(Looper.getMainLooper())
+                handler.postDelayed({
+                    if (!stopRequested) {
+                        val intent =
+                            Intent(requireActivity(), InstrumentActivity::class.java).apply {
+                                putExtra("libraryID", args.libraryid)
+                            }
+                        startActivity(intent)
+                    }
+                }, progressBarLength.toLong())
+            } else {
+                billingClientWrapper.querySkuDetails(requireActivity(), args.soundpackID)
+            }
+        }
 
         binding.howToPlayButton.setOnClickListener {
             if (binding.youtubePlayerView.alpha == 0F)
