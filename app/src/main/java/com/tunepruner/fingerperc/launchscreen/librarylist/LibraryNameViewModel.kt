@@ -5,6 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 
 class LibraryNameViewModel(val app: Application) : AndroidViewModel(app) {
     private val dataRepo = LibraryNameRepository(app)
-    val libraryNameData = dataRepo.libraryNameData
+    val libraryNameData = dataRepo.libraryListLiveData
 
 }

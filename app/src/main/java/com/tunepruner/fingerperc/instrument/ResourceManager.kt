@@ -17,7 +17,7 @@ class ResourceManager(context: Context, private val libraryName: String) {
     private fun analyzeFiles(context: Context) {
 
         val assetManager: AssetManager = context.assets
-        val filePaths = assetManager.list("audio/")
+        val filePaths = assetManager.list("audio")
             ?: error("AssetManager couldn't get filePaths")
         val filePathsFiltered = ArrayList<String>()
         for (element in filePaths) {

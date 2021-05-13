@@ -135,11 +135,11 @@ class AnimationOfGraphic(
 
     private fun onHitImageSwap(imageView: ImageView, handler: Handler) {
         val onHitImage =
-            if (instrumentGUI.libraryName == "cajon") {
+            if (instrumentGUI.libraryID == "cajon") {
                 if (articulationNumber == 1) {
                     R.drawable.cajon_high_onhit
                 } else R.drawable.cajon_low_onhit
-            }else if (instrumentGUI.libraryName == "bomboleguero"){
+            }else if (instrumentGUI.libraryID == "bomboleguero"){
                 if (articulationNumber == 1) {
                     R.drawable.bomboleguero_high_onhit
                 } else R.drawable.bomboleguero_low_onhit
@@ -150,11 +150,11 @@ class AnimationOfGraphic(
             }
 
         val atRestImage =
-            if (instrumentGUI.libraryName == "cajon") {
+            if (instrumentGUI.libraryID == "cajon") {
                 if (articulationNumber == 1) {
                     R.drawable.cajon_high_atrest
                 } else R.drawable.cajon_low_atrest
-            }else if (instrumentGUI.libraryName == "bomboleguero"){
+            }else if (instrumentGUI.libraryID == "bomboleguero"){
                 if (articulationNumber == 1) {
                     R.drawable.bomboleguero_high_atrest
                 } else R.drawable.bomboleguero_low_atrest

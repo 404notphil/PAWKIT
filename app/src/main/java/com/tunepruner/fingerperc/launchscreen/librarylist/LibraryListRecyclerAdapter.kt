@@ -13,7 +13,7 @@ import com.tunepruner.fingerperc.R
 
 class LibraryListRecyclerAdapter(
     val context: Context,
-    val libraries: List<LibraryDetails>,
+    private val libraries: List<LibraryDetails>,
     private val mLibraryItemListener: LibraryItemListener
 ) :
     RecyclerView.Adapter<LibraryListRecyclerAdapter.ViewHolder>() {
@@ -22,7 +22,6 @@ class LibraryListRecyclerAdapter(
         val recyclerButtonTitle: TextView = itemView.findViewById(R.id.recycler_button_title)
         val recyclerButtonSubtitle: TextView = itemView.findViewById(R.id.recycler_button_sub_title)
         val recyclerButtonImage: ImageView = itemView.findViewById(R.id.recycler_button_image)
-        val progressBar: ProgressBar = itemView.findViewById(R.id.progressBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,16 +46,16 @@ class LibraryListRecyclerAdapter(
                     else it.text = "Check it out!"
                 else it.text = "Coming soon!"
             }
-            progressBar.progress = 0
 //            val picasso = Picasso.get()
+            recyclerButtonImage.transitionName = "${library.soundpackID}"
+
             Glide.with(context)
                 .load(library.imageUrl)
                 .into(recyclerButtonImage)
 //            recyclerButtonImage.setImageResource(R.mipmap.head_png_foreground)
 
             itemView.setOnClickListener {
-
-                mLibraryItemListener.onLibraryItemClick(library, progressBar, recyclerButtonSubtitle)
+                mLibraryItemListener.onLibraryItemClick(library, recyclerButtonSubtitle)
             }
         }
     }
@@ -68,7 +67,6 @@ class LibraryListRecyclerAdapter(
     interface LibraryItemListener {
         fun onLibraryItemClick(
             libraryDetails: LibraryDetails,
-            progressBar: ProgressBar,
             recyclerButtonSubtitle: TextView
         )
     }

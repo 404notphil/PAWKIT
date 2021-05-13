@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.launchscreen.librarydetail;
+package com.tunepruner.fingerperc.launchscreen.librarydetail
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 
-import com.tunepruner.fingerperc.databinding.LoadingInstrumentFragmentBinding;
+import com.tunepruner.fingerperc.databinding.LoadingInstrumentFragmentBinding
 
 class LoadingInstrumentFragement :Fragment(){
     private lateinit var viewModel:LoadingInstrumentViewModel
@@ -28,6 +28,4 @@ class LoadingInstrumentFragement :Fragment(){
 
 }
 
-class LoadingInstrumentViewModel :ViewModel(){
-
-}
+class LoadingInstrumentViewModel :ViewModel()

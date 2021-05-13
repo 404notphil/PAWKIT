@@ -12,7 +12,7 @@ import kotlin.properties.Delegates
 
 class SimpleTouchLogic : TouchLogic {
     private val returns: ConcurrentLinkedQueue<PointF> = ConcurrentLinkedQueue<PointF>()
-    var lastTime = Calendar.getInstance().timeInMillis;
+    var lastTime = Calendar.getInstance().timeInMillis
 
     override fun reduceTouchEvent(event: MotionEvent): PointF? {
 //        Log.i("SimpleTouchLogic", "${event.y}")
@@ -33,7 +33,7 @@ class SimpleTouchLogic : TouchLogic {
                 }
 
                 returns.add(pointF)
-                lastTime = Calendar.getInstance().timeInMillis;
+                lastTime = Calendar.getInstance().timeInMillis
 
                 return pointF
             }

@@ -33,6 +33,6 @@ internal class V1ArticulationZoneTest {
 
     @Test
     fun getZoneIterationCorrectNumber() {
-        assertEquals(triggerZone.invokeZone(point)!!.getArticulationNumber(), 1)
+        assertEquals(triggerZone.invokeZone(point).getArticulationNumber(), 1)
     }
 }

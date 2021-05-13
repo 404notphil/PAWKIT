@@ -10,9 +10,9 @@
         android:layout_height="0dp"
         android:background="@drawable/background_recycler"
         app:layout_constrainedHeight="true"
-        app:layout_constraintHeight_default="spread"
         app:layout_constraintBottom_toTopOf="@id/bottomLevelConstraint"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -20,11 +20,11 @@
             android:id="@+id/image_container1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/arrow_constraint1"
-            android:orientation="vertical">
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <ImageView
@@ -123,9 +123,9 @@
         android:layout_height="0dp"
         android:background="@drawable/background_general"
         app:layout_constrainedHeight="true"
-        app:layout_constraintHeight_default="spread"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topLevelConstraint">
 
@@ -133,11 +133,11 @@
             android:id="@+id/image_container2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/arrow_constraint2"
-            android:orientation="vertical">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/articulation2image"

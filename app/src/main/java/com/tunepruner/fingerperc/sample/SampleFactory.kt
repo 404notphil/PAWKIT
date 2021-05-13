@@ -37,11 +37,7 @@ class SampleFactory {
                             layerCount,
                             roundRobinCount
                         )
-                        val assetFileDescriptor = resourceManager.getAssetFileDescriptor(
-                            groupIteration,
-                            layerIteration,
-                            roundRobinIteration
-                        )//TODO delete this last call, the method it calls, and the property it sets after the transition to Oboe!
+
                         val fileSnapshot = resourceManager.getFileSnapshot(
                             groupIteration,
                             layerIteration,

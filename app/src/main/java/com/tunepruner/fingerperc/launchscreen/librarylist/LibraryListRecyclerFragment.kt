@@ -4,20 +4,24 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import com.tunepruner.fingerperc.R
-
 
 class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener {
     private val TAG = "LibraryListRecyclerFragment.Class"
@@ -64,7 +68,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
 
     override fun onLibraryItemClick(
         libraryDetails: LibraryDetails,
-        progressBar: ProgressBar,
         recyclerButtonSubtitle: TextView
     ) {
 
@@ -97,15 +100,16 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
                         libraryDetails.libraryName ?: "",
                         libraryDetails.libraryID ?: "",
                         libraryDetails.soundpackID ?: "",
-                        libraryDetails.isPurchased ?: true
+                        libraryDetails.imageUrl ?: "",
+                        libraryDetails.isPurchased ?: false
                     )
-                navController.navigate(action)
+                val recyclerButtonImage =  requireActivity().findViewById<ImageView>(R.id.recycler_button_image)
+                val extras = FragmentNavigatorExtras(recyclerButtonImage to "${libraryDetails.soundpackID}")
+                navController.navigate(action, extras)
+//                navController.navigate(R.id.action_launchScreenFragment_to_libraryDetailFragment3, null, null, extras)
             }
         }
-
     }
-
-
 }
 
 class UpdatePrompt : DialogFragment() {

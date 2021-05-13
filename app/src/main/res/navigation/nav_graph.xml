@@ -14,11 +14,6 @@
             app:destination="@id/libraryDetailFragment3" />
     </fragment>
 
-    <fragment
-        android:id="@+id/comingSoonFragment"
-        android:name="com.tunepruner.fingerperc.ComingSoonFragment"
-        android:label="coming_soon"
-        tools:layout="@layout/coming_soon_fragment" />
 
     <fragment
         android:id="@+id/youtube_fragment"
@@ -50,6 +45,33 @@
             app:argType="string" />
         <argument
             android:name="soundpackID"
+            app:argType="string" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+        <argument
+            android:name="ispurchased"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_libraryDetailFragment3_to_soundpackFragment"
+            app:destination="@id/soundpackFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/soundpackFragment"
+        android:name="com.tunepruner.fingerperc.SoundpackDetailFragment"
+        android:label="fragment_soundpack"
+        tools:layout="@layout/fragment_soundpack">
+        <argument
+            android:name="libraryname"
+            app:argType="string" />
+        <argument
+            android:name="libraryid"
+            app:argType="string" />
+        <argument
+            android:name="soundpackID"
+            app:argType="string" />
+        <argument
+            android:name="imageUrl"
             app:argType="string" />
         <argument
             android:name="ispurchased"
