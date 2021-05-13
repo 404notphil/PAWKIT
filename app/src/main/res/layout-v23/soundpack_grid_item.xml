@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grid_item_linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:background="@drawable/background_grid_item"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:weightSum="2">
+
+    <ImageView
+        android:id="@+id/recycler_button_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:paddingBottom="15dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"/>
+
+    <TextView
+        android:id="@+id/recycler_button_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha=".6"
+        android:fontFamily="@font/kodchasan_regular"
+        android:paddingStart="15dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="15dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        tools:text="Bombo Legüero" />
+
+
+    <TextView
+        android:id="@+id/recycler_button_sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:alpha=".6"
+        android:fontFamily="@font/kodchasan_regular"
+        android:text="Coming soon!"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"/>
+
+
+
+
+
+</LinearLayout>

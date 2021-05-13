@@ -11,43 +11,42 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.android.billingclient.api.*
+import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryDetails
 
-class SoundpackRepository(val app: Application) : BillingClientListener {
-    val soundpackListLiveData = MutableLiveData<List<SoundpackDetails>>()
-    var soundpackListPrimitive = ArrayList<SoundpackDetails>()
-    private val db = Firebase.firestore
-    private val TAG = "SoundpackRepo.Class"
+class SoundpackRepository(val app: Application, val filter: String) : BillingClientListener {
+    val libraryListLiveData = MutableLiveData<List<LibraryDetails>>()
+    var libraryListPrimitive = ArrayList<LibraryDetails>()
+    val db = Firebase.firestore
+    private val TAG = "SnpkRepo.Class"
     private lateinit var billingClientWrapper: BillingClientWrapper
+
+
 
     init {
         getData()
     }
 
     private fun getData() {
-        getSoundpackNamesFromFirebase()
+        getLibraryNamesFromFirebase()
     }
 
-    private fun getSoundpackNamesFromFirebase() {
-        val collectionRef = db.collection("soundpacks")
-        val soundpackDetails: ArrayList<SoundpackDetails> = ArrayList()
+    private fun getLibraryNamesFromFirebase() {
+        val collectionRef = db.collection("libraries")
+        val libraryDetails: ArrayList<LibraryDetails> = ArrayList()
 
         collectionRef.get()
             .addOnSuccessListener {
                 if (it != null) {
-                    val results: List<SoundpackDetails> = it.toObjects(SoundpackDetails::class.java)
+                    val results: List<LibraryDetails> = it.toObjects(LibraryDetails::class.java)
                     for (element in results) {
-                        soundpackDetails.add(element)
+                        libraryDetails.add(element)
                     }
 
-                    val soundpackDetailsListSorted = sortByStatus(soundpackDetails)
-                    val soundpackDetailsListWithInstalledStatus =
-                        updateInstallStatuses(soundpackDetailsListSorted)
-                    soundpackListPrimitive = soundpackDetailsListWithInstalledStatus
-
-                    for (element in soundpackListPrimitive) {
-                        Log.i(TAG, "getSoundpackNamesFromFirebase: $element")
-                    }
-                    
+//                    val libraryDetailsListSorted = sortByStatus(libraryDetails)
+                    val libraryDetailsThisSoundpack = filterToThisSoundpack(libraryDetails)
+                    val libraryDetailsListWithInstalledStatus =
+                        updateInstallStatuses(libraryDetailsThisSoundpack)
+                    libraryListPrimitive = libraryDetailsListWithInstalledStatus
                     billingClientWrapper =
                         BillingClientWrapper.getInstance(this, app.applicationContext)
 
@@ -60,51 +59,64 @@ class SoundpackRepository(val app: Application) : BillingClientListener {
             }
     }
 
+    private fun filterToThisSoundpack(libraryDetails: ArrayList<LibraryDetails>): ArrayList<LibraryDetails> {
+        val listThisSoundpack = ArrayList<LibraryDetails>()
+        for (element in libraryDetails) {
+            if (element.soundpackID == filter) {
+                listThisSoundpack.add(element)
+            }
+        }
+        return listThisSoundpack
+    }
+
     override fun onClientReady() {
         billingClientWrapper.queryPurchases()
     }
 
     override fun onPurchasesQueried(soundpacksPurchased: ArrayList<Purchase>) {
         updatePurchaseStatuses(soundpacksPurchased)
-        soundpackListLiveData.value = soundpackListPrimitive
+        libraryListLiveData.value = libraryListPrimitive
     }
 
-    private fun updateInstallStatuses(soundpackDetails: ArrayList<SoundpackDetails>): ArrayList<SoundpackDetails> {
+    private fun updateInstallStatuses(libraryDetails: ArrayList<LibraryDetails>): ArrayList<LibraryDetails> {
         val assetManager: AssetManager = app.assets
         val filePaths = assetManager.list("audio")
             ?: error("AssetManager couldn't get filePaths")
-        for (i in 0..(soundpackDetails.lastIndex)) {
+        for (i in 0..(libraryDetails.lastIndex)) {
             for (j in 0..filePaths.lastIndex) {
-                val soundpackName = soundpackDetails[i].soundpackID.toString()
-//                Log.i(TAG, filePaths[j])
-                if (filePaths[j].contains(soundpackName)) {
-                    soundpackDetails[i].isInstalled = true
-//                    Log.i(TAG, "${soundpackDetails[i].soundpackName} is installed!")
+                val libraryName = libraryDetails[i].libraryID.toString()
+                Log.i(TAG, filePaths[j])
+                if (filePaths[j].contains(libraryName)) {
+                    libraryDetails[i].isInstalled = true
+                    Log.i(TAG, "${libraryDetails[i].libraryName} is installed!")
                     break
                 }
             }
-            if (soundpackDetails[i].isInstalled == null) {
-                soundpackDetails[i].isInstalled = false
-                Log.i(TAG, "${soundpackDetails[i].soundpackName} is not installed...")
+            if (libraryDetails[i].isInstalled == null) {
+                libraryDetails[i].isInstalled = false
+                Log.i(TAG, "${libraryDetails[i].libraryName} is not installed...")
+
             }
         }
-        return soundpackDetails
+        return libraryDetails
     }
 
     private fun updatePurchaseStatuses(listOfPurchases: ArrayList<Purchase>) {
-        for (soundpackDetails in soundpackListPrimitive) {
-//            Log.i(TAG, "soundpackListPrimitive item # ${counter1++} = ${soundpackDetails}: ")
-            if (soundpackDetails.isPurchased == null &&
-                soundpackDetails.soundpackID != null
+        var counter1 = 1
+        for (libraryDetails in libraryListPrimitive) {
+//            Log.i(TAG, "libraryListPrimitive item # ${counter1++} = ${libraryDetails}: ")
+            if (libraryDetails.isPurchased == null &&
+                libraryDetails.soundpackID != null
             ) {
+                var counter = 1
                 for (purchase in listOfPurchases) {
 //                    Log.i(TAG, "listOfPurchases item # ${counter++} = ${purchase.sku}: ")
-                    if (purchase.sku == soundpackDetails.soundpackID) {
-//                        Log.i(TAG, "starting soundpack details: ")
-                        soundpackDetails.isPurchased = true
+                    if (purchase.sku == libraryDetails.soundpackID) {
+//                        Log.i(TAG, "starting library details: ")
+                        libraryDetails.isPurchased = true
 //                        Log.i(TAG, "changing ${purchase.sku} to true: ")
                     }else{
-//                        Log.i(TAG, "${purchase.sku} doesn't equal ${soundpackDetails.soundpackID}: ")
+//                        Log.i(TAG, "${purchase.sku} doesn't equal ${libraryDetails.soundpackID}: ")
                     }
                 }
             }
@@ -112,29 +124,15 @@ class SoundpackRepository(val app: Application) : BillingClientListener {
     }
 }
 
-private fun sortByStatus(soundpackDetails: ArrayList<SoundpackDetails>): ArrayList<SoundpackDetails> {
-//        val unsorted = ArrayList<SoundpackDetails>()
-    val sorted = ArrayList<SoundpackDetails>()
-//        for (element in soundpackDetails) {
+private fun sortByStatus(libraryDetails: ArrayList<LibraryDetails>): ArrayList<LibraryDetails> {
+//        val unsorted = ArrayList<LibraryDetails>()
+    val sorted = ArrayList<LibraryDetails>()
+//        for (element in libraryDetails) {
 //            unsorted.add(element)
 //        }
-    for (element in soundpackDetails) {
+    for (element in libraryDetails) {
         sorted.add(element)
     }
     sorted.sortWith(compareByDescending { it.isPurchased })
     return sorted
 }
-
-
-data class SoundpackDetails(
-    val soundpackName: String? = null,
-    val imageUrl: String? = null,
-    @field:JvmField
-    var isPurchased: Boolean? = null,
-    @field:JvmField
-    var isInstalled: Boolean? = null,
-    @field:JvmField
-    var isReleased: Boolean? = null,
-    val soundpackID: String? = null,
-)
-//changing this class might ruin firebase connection. Needs no-arguments constructor. But order of arguments doesn't matter

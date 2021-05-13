@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tunepruner.fingerperc.R
 
-class LibraryListRecyclerAdapter(
-    val context: Context,
+open class LibraryListRecyclerAdapter(
+    open val context: Context,
     private val libraries: List<LibraryDetails>,
     private val mLibraryItemListener: LibraryItemListener
 ) :
@@ -26,8 +26,12 @@ class LibraryListRecyclerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.library_grid_item, parent, false)
+        val view = inflate(inflater, parent)
         return ViewHolder(view)
+    }
+
+    open fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
+        return inflater.inflate(R.layout.library_grid_item, parent, false)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
