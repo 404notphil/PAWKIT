@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc
+package com.tunepruner.fingerperc.launchscreen.soundpackDetail
 
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryNameViewModel
-import com.tunepruner.fingerperc.launchscreen.soundpackDetail.SoundpackViewModel
+import com.tunepruner.fingerperc.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,7 +61,8 @@ class SoundpackDetailFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SoundpackDetailFragment().apply {
+            SoundpackDetailFragment()
+                .apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

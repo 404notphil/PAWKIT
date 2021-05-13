@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/soundpackFragment"
-        android:name="com.tunepruner.fingerperc.SoundpackDetailFragment"
+        android:name="com.tunepruner.fingerperc.launchscreen.soundpackDetail.SoundpackDetailFragment"
         android:label="fragment_soundpack"
         tools:layout="@layout/fragment_soundpack">
         <argument
