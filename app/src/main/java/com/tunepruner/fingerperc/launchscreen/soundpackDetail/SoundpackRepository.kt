@@ -43,6 +43,11 @@ class SoundpackRepository(val app: Application) : BillingClientListener {
                     val soundpackDetailsListWithInstalledStatus =
                         updateInstallStatuses(soundpackDetailsListSorted)
                     soundpackListPrimitive = soundpackDetailsListWithInstalledStatus
+
+                    for (element in soundpackListPrimitive) {
+                        Log.i(TAG, "getSoundpackNamesFromFirebase: $element")
+                    }
+                    
                     billingClientWrapper =
                         BillingClientWrapper.getInstance(this, app.applicationContext)
 
@@ -71,17 +76,16 @@ class SoundpackRepository(val app: Application) : BillingClientListener {
         for (i in 0..(soundpackDetails.lastIndex)) {
             for (j in 0..filePaths.lastIndex) {
                 val soundpackName = soundpackDetails[i].soundpackID.toString()
-                Log.i(TAG, filePaths[j])
+//                Log.i(TAG, filePaths[j])
                 if (filePaths[j].contains(soundpackName)) {
                     soundpackDetails[i].isInstalled = true
-                    Log.i(TAG, "${soundpackDetails[i].soundpackName} is installed!")
+//                    Log.i(TAG, "${soundpackDetails[i].soundpackName} is installed!")
                     break
                 }
             }
             if (soundpackDetails[i].isInstalled == null) {
                 soundpackDetails[i].isInstalled = false
                 Log.i(TAG, "${soundpackDetails[i].soundpackName} is not installed...")
-
             }
         }
         return soundpackDetails

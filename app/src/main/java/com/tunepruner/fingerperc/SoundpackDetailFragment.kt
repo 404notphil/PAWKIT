@@ -1,10 +1,15 @@
 package com.tunepruner.fingerperc
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
+import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryNameViewModel
+import com.tunepruner.fingerperc.launchscreen.soundpackDetail.SoundpackViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,8 +23,10 @@ private const val ARG_PARAM2 = "param2"
  */
 class SoundpackDetailFragment : Fragment() {
     // TODO: Rename and change types of parameters
+    private val TAG = "SnpkDetFgmt.Class"
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var viewModel: SoundpackViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +34,11 @@ class SoundpackDetailFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        viewModel = ViewModelProvider(this).get(SoundpackViewModel::class.java)
+        viewModel.soundpackData.observe(this, {
+
+        })
+        Log.i(TAG, "onCreate: ")
     }
 
     override fun onCreateView(
@@ -34,6 +46,7 @@ class SoundpackDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_soundpack, container, false)
     }
 

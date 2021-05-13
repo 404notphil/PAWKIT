@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -43,10 +44,11 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
 
         viewModel = ViewModelProvider(this).get(LibraryNameViewModel::class.java)
         viewModel.libraryNameData.observe(
-            viewLifecycleOwner, {
-                val adapter = LibraryListRecyclerAdapter(requireContext(), it, this)
-                recyclerView.adapter = adapter
-            })
+            viewLifecycleOwner
+        ) {
+            val adapter = LibraryListRecyclerAdapter(requireContext(), it, this)
+            recyclerView.adapter = adapter
+        }
         return view
     }
     //Todo review the first chapter of this course (https://www.linkedin.com/learning/android-development-essential-training-manage-data-with-kotlin/share-data-with-livedata-objects-2?contextUrn=urn%3Ali%3AlyndaLearningPath%3A5a724cba498e9ec2d506035e)
@@ -56,10 +58,11 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         /*The code below is duplicated here in order to refresh the views that were
         modified with the progress bar on the last click*/
         viewModel.libraryNameData.observe(
-            viewLifecycleOwner, {
-                val adapter = LibraryListRecyclerAdapter(requireContext(), it, this)
-                recyclerView.adapter = adapter
-            })
+            viewLifecycleOwner
+        ) {
+            val adapter = LibraryListRecyclerAdapter(requireContext(), it, this)
+            recyclerView.adapter = adapter
+        }
     }
 
     interface FragmentListener {
@@ -70,8 +73,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         libraryDetails: LibraryDetails,
         recyclerButtonSubtitle: TextView
     ) {
-
-//        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(context);
         val interval = 10
         val amountOfIntervals = 10
         val duration = interval * amountOfIntervals
@@ -87,10 +88,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
             }
             libraryDetails.isInstalled == false &&
                     libraryDetails.isPurchased == true -> {
-
-//                    navController.navigate(R.id.appUpdateFragment)
-//                    alertDialogBuilder.create()
-//                UpdatePrompt().show(parentFragmentManager, "")
                 val intent = Intent(requireActivity(), UpdateDialogActivity::class.java)
                 startActivity(intent)
             }
@@ -103,25 +100,12 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
                         libraryDetails.imageUrl ?: "",
                         libraryDetails.isPurchased ?: false
                     )
-                val recyclerButtonImage =  requireActivity().findViewById<ImageView>(R.id.recycler_button_image)
-                val extras = FragmentNavigatorExtras(recyclerButtonImage to "${libraryDetails.soundpackID}")
+                val recyclerButtonImage =
+                    requireActivity().findViewById<ImageView>(R.id.recycler_button_image)
+                val extras =
+                    FragmentNavigatorExtras(recyclerButtonImage to "${libraryDetails.soundpackID}")
                 navController.navigate(action, extras)
-//                navController.navigate(R.id.action_launchScreenFragment_to_libraryDetailFragment3, null, null, extras)
             }
         }
     }
-}
-
-class UpdatePrompt : DialogFragment() {
-    private val TAG: String = "UpdatePrompt.Class"
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        activity?.let {
-            val builder = AlertDialog.Builder(it)
-            val inflater = it.layoutInflater
-            builder.setView(inflater.inflate(R.layout.app_update_activity, null))
-            return builder.create()
-        } ?: throw IllegalStateException("Activity cannot be null")
-    }
-
 }

@@ -6,5 +6,5 @@ import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryNameRepository
 
 class SoundpackViewModel(val app: Application) : AndroidViewModel(app) {
     private val dataRepo = SoundpackRepository(app)
-    val libraryNameData = dataRepo.soundpackListLiveData
+    val soundpackData = dataRepo.soundpackListLiveData
 }
