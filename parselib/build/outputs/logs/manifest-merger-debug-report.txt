@@ -3,21 +3,9 @@ manifest
 ADDED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:1:1-2:41
 INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:1:1-2:41
 INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:1:1-2:41
-INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:1:1-2:41
-INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:1:1-2:41
-INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:1:1-2:41
-INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:1:1-2:41
 	package
 		ADDED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:2:5-38
 		INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml
-		INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml
-	android:versionName
-		INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml
-		ADDED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:1:1-2:41
-		INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml
-	android:versionCode
-		INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml
-		ADDED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:1:1-2:41
 		INJECTED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/philcarlson/Documents/AndroidStudioProjects/FingerPercRelated/FingerPerc/parselib/src/main/AndroidManifest.xml:1:11-69

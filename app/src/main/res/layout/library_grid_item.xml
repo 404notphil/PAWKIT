@@ -24,7 +24,7 @@
         android:paddingTop="15dp"
         android:paddingEnd="15dp"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/textColor"
         android:textSize="20sp"
         tools:text="Bombo Legüero" />
 
@@ -38,7 +38,7 @@
         android:alpha=".6"
         android:fontFamily="@font/kodchasan_regular"
         android:text="Coming soon!"
-        android:textColor="@color/white"
+        android:textColor="@color/textColor"
         android:textSize="15sp" />
 
 

@@ -26,7 +26,7 @@
                 android:gravity="center"
                 android:text="TextView"
                 android:textColor="#000"
-                android:shadowColor="@color/white"
+                android:shadowColor="@color/textColor"
                 android:shadowRadius="10.0"
                 android:textSize="60sp" />
 
@@ -45,7 +45,7 @@
                     android:alpha="0"
                     android:fontFamily="@font/kodchasan_regular"
                     android:text="TextView"
-                    android:textColor="@color/white"
+                    android:textColor="@color/textColor"
                     android:textSize="15dp"
 
                     />
@@ -81,7 +81,7 @@
                     <Button
                         android:id="@+id/soundpack_button"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/background_grid_item"
                         android:clickable="true"
@@ -93,7 +93,7 @@
                         android:paddingEnd="15dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/textColor"
                         android:textSize="18sp" />
 
                     <View
@@ -106,7 +106,7 @@
                     <Button
                         android:id="@+id/how_to_play_button"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/background_grid_item"
                         android:clickable="true"
@@ -118,7 +118,7 @@
                         android:paddingEnd="15dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/textColor"
                         android:textSize="18sp" />
 
                     <View

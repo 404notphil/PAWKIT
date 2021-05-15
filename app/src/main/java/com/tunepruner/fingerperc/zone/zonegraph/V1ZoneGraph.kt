@@ -7,7 +7,7 @@ import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.Ve
 import java.util.LinkedList
 
 class V1ZoneGraph : ZoneGraph {
-    private val articulationZones: ArrayList<ArticulationZone> = ArrayList<ArticulationZone>()
+    private val articulationZones: ArrayList<ArticulationZone> = ArrayList()
     private val TAG =  "V1ZoneGraph"
 
     override fun invokeZone(pointF: PointF): VelocityZone {

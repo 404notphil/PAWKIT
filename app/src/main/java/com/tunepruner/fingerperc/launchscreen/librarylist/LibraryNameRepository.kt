@@ -7,50 +7,49 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.android.billingclient.api.*
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.firebase.firestore.CollectionReference
 
 class LibraryNameRepository(val app: Application) : BillingClientListener {
+    private var libraryListPrimitive = ArrayList<LibraryDetails>()
     val libraryListLiveData = MutableLiveData<List<LibraryDetails>>()
-    var libraryListPrimitive = ArrayList<LibraryDetails>()
-    val db = Firebase.firestore
-    private val tag = "LibraryNameRepository.Class"
+    private var soundpackListPrimitive = ArrayList<SoundpackDetails>()
+    val soundpackListLiveData = MutableLiveData<List<SoundpackDetails>>()
+    private val db = Firebase.firestore
     private lateinit var billingClientWrapper: BillingClientWrapper
     private val TAG = "Repo.Class"
 
-
     init {
-        getData()
+        populateFromFirestore("libraries")
+        populateFromFirestore("soundpacks")
     }
 
-    private fun getData() {
-        getLibraryNamesFromFirebase()
-    }
-
-    private fun getLibraryNamesFromFirebase() {
-        val collectionRef = db.collection("libraries")
-        val libraryDetails: ArrayList<LibraryDetails> = ArrayList()
-
+    private fun populateFromFirestore(collectionName: String) {
+        val collectionRef = db.collection(collectionName)
         collectionRef.get()
-            .addOnSuccessListener {
+            .addOnSuccessListener { it ->
                 if (it != null) {
-                    val results: List<LibraryDetails> = it.toObjects(LibraryDetails::class.java)
-                    for (element in results) {
-                        libraryDetails.add(element)
+                    if (collectionName.contains("libraries")) {
+                        val results: List<LibraryDetails> = it.toObjects(LibraryDetails::class.java)
+                        for (element in results){
+                            libraryListPrimitive.add(element)
+                        }
+                        libraryListPrimitive.sortWith(compareByDescending { library -> library.isPurchased })
+                        updateInstallStatuses()
+                        billingClientWrapper =
+                            BillingClientWrapper.getInstance(this, app.applicationContext)
+                        libraryListLiveData.value = libraryListPrimitive
+                        soundpackListLiveData.value = soundpackListPrimitive
+                    } else {
+                        val results: List<SoundpackDetails> = it.toObjects(SoundpackDetails::class.java)
+                        for (element in results)
+                            soundpackListPrimitive.add(element)
                     }
-
-                    val libraryDetailsListSorted = sortByStatus(libraryDetails)
-                    val libraryDetailsListWithInstalledStatus =
-                        updateInstallStatuses(libraryDetailsListSorted)
-                    libraryListPrimitive = libraryDetailsListWithInstalledStatus
-                    billingClientWrapper =
-                        BillingClientWrapper.getInstance(this, app.applicationContext)
-
                 } else {
-                    Log.d(tag, "No such document")
+                    Log.d(TAG, "No such document")
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d(tag, "get failed with ", exception)
+                Log.d(TAG, "get failed with ", exception)
             }
     }
 
@@ -60,30 +59,28 @@ class LibraryNameRepository(val app: Application) : BillingClientListener {
 
     override fun onPurchasesQueried(soundpacksPurchased: ArrayList<Purchase>) {
         updatePurchaseStatuses(soundpacksPurchased)
-        libraryListLiveData.value = libraryListPrimitive
     }
 
-    private fun updateInstallStatuses(libraryDetails: ArrayList<LibraryDetails>): ArrayList<LibraryDetails> {
+    private fun updateInstallStatuses(){
         val assetManager: AssetManager = app.assets
         val filePaths = assetManager.list("audio")
             ?: error("AssetManager couldn't get filePaths")
-        for (i in 0..(libraryDetails.lastIndex)) {
+        for (i in 0..(libraryListPrimitive.lastIndex)) {
             for (j in 0..filePaths.lastIndex) {
-                val libraryName = libraryDetails[i].libraryID.toString()
-                Log.i(TAG, filePaths[j])
+                val libraryName = libraryListPrimitive[i].libraryID.toString()
+//                Log.i(TAG, filePaths[j])
                 if (filePaths[j].contains(libraryName)) {
-                    libraryDetails[i].isInstalled = true
-                    Log.i(TAG, "${libraryDetails[i].libraryName} is installed!")
+                    libraryListPrimitive[i].isInstalled = true
+//                    Log.i(TAG, "${libraryListPrimitive[i].libraryName} is installed!")
                     break
                 }
             }
-            if (libraryDetails[i].isInstalled == null) {
-                libraryDetails[i].isInstalled = false
-                Log.i(TAG, "${libraryDetails[i].libraryName} is not installed...")
+            if (libraryListPrimitive[i].isInstalled == null) {
+                libraryListPrimitive[i].isInstalled = false
+                Log.i(TAG, "${libraryListPrimitive[i].libraryName} is not installed...")
 
             }
         }
-        return libraryDetails
     }
 
     private fun updatePurchaseStatuses(listOfPurchases: ArrayList<Purchase>) {
@@ -100,7 +97,7 @@ class LibraryNameRepository(val app: Application) : BillingClientListener {
 //                        Log.i(TAG, "starting library details: ")
                         libraryDetails.isPurchased = true
 //                        Log.i(TAG, "changing ${purchase.sku} to true: ")
-                    }else{
+                    } else {
 //                        Log.i(TAG, "${purchase.sku} doesn't equal ${libraryDetails.soundpackID}: ")
                     }
                 }
@@ -109,18 +106,7 @@ class LibraryNameRepository(val app: Application) : BillingClientListener {
     }
 }
 
-private fun sortByStatus(libraryDetails: ArrayList<LibraryDetails>): ArrayList<LibraryDetails> {
-//        val unsorted = ArrayList<LibraryDetails>()
-    val sorted = ArrayList<LibraryDetails>()
-//        for (element in libraryDetails) {
-//            unsorted.add(element)
-//        }
-    for (element in libraryDetails) {
-        sorted.add(element)
-    }
-    sorted.sortWith(compareByDescending { it.isPurchased })
-    return sorted
-}
+
 
 
 data class LibraryDetails(
@@ -134,6 +120,22 @@ data class LibraryDetails(
     @field:JvmField
     var isReleased: Boolean? = null,
     val libraryID: String? = null,
-    val soundpackID: String? = null
+    val soundpackID: String? = null,
+    val soundpackName: String? = null
 )
 //changing this class might ruin firebase connection. Needs no-arguments constructor. But order of arguments doesn't matter
+
+data class SoundpackDetails(
+    val soundpackID: String? = null,
+    val soundpackName: String? = null,
+    val index: Int? = null,
+    val thumbnailImageUrl: String? = null,
+    val titleImageUrl: String? = null,
+    @field:JvmField
+    var isPurchased: Boolean? = null,
+    @field:JvmField
+    var isInstalled: Boolean? = null,
+    @field:JvmField
+    var isReleased: Boolean? = null,
+    val members: List<LibraryDetails>? = null,
+)

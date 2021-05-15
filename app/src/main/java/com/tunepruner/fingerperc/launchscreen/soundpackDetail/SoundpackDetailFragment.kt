@@ -7,9 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.core.view.marginTop
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -18,7 +17,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
 import com.tunepruner.fingerperc.R
+import com.tunepruner.fingerperc.databinding.FragmentLibraryDetailBinding
+import com.tunepruner.fingerperc.databinding.FragmentSoundpackDetailBinding
 import com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragmentArgs
 import com.tunepruner.fingerperc.launchscreen.librarylist.*
 
@@ -32,32 +36,54 @@ private const val ARG_PARAM2 = "param2"
  * Use the [SoundpackDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener {
+class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener, BillingClientListener  {
     private val args: LibraryDetailFragmentArgs by navArgs()
     private val TAG = "SnpkDetFgmt.Class"
-    private val viewModel: SoundpackViewModel by viewModels { MyViewModelFactory(requireActivity().application, args.soundpackID) }
+    private val viewModel = ViewModelProvider(this).get(LibraryNameViewModel::class.java)
     private lateinit var recyclerView: RecyclerView
     private lateinit var navController: NavController
+    private lateinit var binding: FragmentSoundpackDetailBinding
+    private lateinit var purchasesUpdatedListener: PurchasesUpdatedListener
+    lateinit var billingClientWrapper: BillingClientWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        viewModel.soundpackData.observe(this) {
-            val adapter = SoundpackRecyclerAdapter(requireContext(), it, this)
-            recyclerView.adapter = adapter
+
+        viewModel.libraryNameData.observe(
+            viewLifecycleOwner
+        ) { libraryNameData ->
+            viewModel.soundpackData.value?.let { soundpackNameData ->
+                val adapter = LibraryListRecyclerAdapter(
+                    requireContext(),
+                    libraryNameData,
+                    soundpackNameData,
+                    this
+                )
+                recyclerView.adapter = adapter
+            }
         }
+
+
         Log.i(TAG, "onCreate: ")
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.fragment_soundpack_detail, container, false)
-        recyclerView = view.findViewById(R.id.recyclerView)
+
+        binding = FragmentSoundpackDetailBinding.inflate(inflater, container, false)
+        recyclerView = binding.root.findViewById(R.id.recyclerView)
+
         recyclerView.addItemDecoration(SpacesItemDecoration(50))
-        return view
+        return binding.root
+
+//
+//        val view: View = inflater.inflate(R.layout.fragment_soundpack_detail, container, false)
+//        return view
     }
 
     companion object {
@@ -79,6 +105,23 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (args.ispurchased) {
+            requireActivity().findViewById<LinearLayout>(R.id.buttons_parent)
+                .removeView(requireActivity().findViewById<Button>(R.id.button2))
+        } else {
+            binding.button2.text = args.price
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        billingClientWrapper = BillingClientWrapper.getInstance(this, requireContext())
+        binding.button2.text  = args.price
+
     }
 
     override fun onLibraryItemClick(
@@ -110,7 +153,9 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
                         libraryDetails.libraryID ?: "",
                         libraryDetails.soundpackID ?: "",
                         libraryDetails.imageUrl ?: "",
-                        libraryDetails.isPurchased ?: false
+                        libraryDetails.isPurchased ?: false,
+                        "$0.99",
+                        libraryDetails.soundpackName?: "(unknown name)"
                     )
                 val recyclerButtonImage =
                     requireActivity().findViewById<ImageView>(R.id.recycler_button_image)
@@ -119,5 +164,13 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
                 navController.navigate(action, extras)
             }
         }
+    }
+
+    override fun onClientReady() {
+//        billingClientWrapper.querySkuDetails(requireActivity(), args.soundpackID)
+    }
+
+    override fun onPurchasesQueried(soundpacksPurchased: ArrayList<Purchase>) {
+        //do nothing
     }
 }

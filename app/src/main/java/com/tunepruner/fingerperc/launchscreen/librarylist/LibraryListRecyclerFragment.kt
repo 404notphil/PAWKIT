@@ -43,31 +43,39 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
         viewModel = ViewModelProvider(this).get(LibraryNameViewModel::class.java)
-        viewModel.libraryNameData.observe(
-            viewLifecycleOwner
-        ) {
-            val adapter = LibraryListRecyclerAdapter(requireContext(), it, this)
-            recyclerView.adapter = adapter
-        }
+        observeLiveData()
         return view
     }
+
     //Todo review the first chapter of this course (https://www.linkedin.com/learning/android-development-essential-training-manage-data-with-kotlin/share-data-with-livedata-objects-2?contextUrn=urn%3Ali%3AlyndaLearningPath%3A5a724cba498e9ec2d506035e)
 
     override fun onResume() {
         super.onResume()
         /*The code below is duplicated here in order to refresh the views that were
         modified with the progress bar on the last click*/
-        viewModel.libraryNameData.observe(
-            viewLifecycleOwner
-        ) {
-            val adapter = LibraryListRecyclerAdapter(requireContext(), it, this)
-            recyclerView.adapter = adapter
+//        viewModel.libraryNameData.observe(
+//            viewLifecycleOwner
+//        ) {
+//            val adapter = LibraryListRecyclerAdapter(requireContext(), it, this)
+//            recyclerView.adapter = adapter
+//        }
+        observeLiveData()
+    }
+
+    private fun observeLiveData() {
+        viewModel.libraryNameData.observe(viewLifecycleOwner) { libraryNameData ->
+            viewModel.soundpackData.observe(viewLifecycleOwner) { soundpackData ->
+                val adapter = LibraryListRecyclerAdapter(
+                    requireContext(),
+                    libraryNameData,
+                    soundpackData,
+                    this
+                )
+                recyclerView.adapter = adapter
+            }
         }
     }
 
-    interface FragmentListener {
-        fun onFragmentFinished(libraryDetails: LibraryDetails)
-    }
 
     override fun onLibraryItemClick(
         libraryDetails: LibraryDetails,
@@ -98,7 +106,9 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
                         libraryDetails.libraryID ?: "",
                         libraryDetails.soundpackID ?: "",
                         libraryDetails.imageUrl ?: "",
-                        libraryDetails.isPurchased ?: false
+                        libraryDetails.isPurchased ?: false,
+                        "$0.99",
+                        libraryDetails.soundpackName ?: "(unknown name)"
                     )
                 val recyclerButtonImage =
                     requireActivity().findViewById<ImageView>(R.id.recycler_button_image)
@@ -107,5 +117,9 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
                 navController.navigate(action, extras)
             }
         }
+    }
+
+    interface FragmentListener {
+        fun onFragmentFinished(libraryDetails: LibraryDetails)
     }
 }

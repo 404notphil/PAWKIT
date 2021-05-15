@@ -54,7 +54,17 @@
             app:argType="boolean" />
         <action
             android:id="@+id/action_libraryDetailFragment3_to_soundpackFragment"
-            app:destination="@id/soundpackFragment" />
+            app:destination="@id/soundpackFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"/>
+        <argument
+            android:name="price"
+            app:argType="string" />
+        <argument
+            android:name="soundpackname"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/soundpackFragment"
@@ -76,6 +86,13 @@
         <argument
             android:name="ispurchased"
             app:argType="boolean" />
+        <argument
+            android:name="price"
+            app:argType="string"
+            android:defaultValue="$0.99" />
+        <argument
+            android:name="soundpackname"
+            app:argType="string" />
     </fragment>
 
 

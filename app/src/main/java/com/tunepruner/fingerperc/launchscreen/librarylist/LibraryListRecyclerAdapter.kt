@@ -14,6 +14,7 @@ import com.tunepruner.fingerperc.R
 open class LibraryListRecyclerAdapter(
     open val context: Context,
     private val libraries: List<LibraryDetails>,
+    private val soundpacks: List<SoundpackDetails>?,
     private val mLibraryItemListener: LibraryItemListener
 ) :
     RecyclerView.Adapter<LibraryListRecyclerAdapter.ViewHolder>() {

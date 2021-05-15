@@ -56,9 +56,11 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         binding.titleOfLibraryDetail.text = args.libraryname
 
-        binding.soundpackButton.text = "${args.soundpackID}"
+        binding.soundpackButton.text = "Soundpack: ${args.soundpackname}"
 
         billingClientWrapper = BillingClientWrapper.getInstance(this, requireContext())
+
+        binding.soundpackButton
 
         binding.soundpackButton.setOnClickListener{
 
@@ -68,7 +70,9 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
                     args.libraryid ?: "",
                     args.soundpackID ?: "",
                     args.imageUrl ?: "",
-                    args.ispurchased ?: false
+                    args.ispurchased ?: false,
+                    "$0.99",
+                    args.soundpackname
                 )
             navController.navigate(action)
 

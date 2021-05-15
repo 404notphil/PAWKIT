@@ -26,7 +26,7 @@
                 android:fontFamily="@font/kodchasan_regular"
                 android:gravity="center"
                 android:text="TextView"
-                android:textColor="@color/white"
+                android:textColor="@color/textColor"
                 android:textSize="40sp" />
 
             <LinearLayout
@@ -44,7 +44,7 @@
                     android:alpha="0"
                     android:fontFamily="@font/kodchasan_regular"
                     android:text="TextView"
-                    android:textColor="@color/white"
+                    android:textColor="@color/textColor"
                     android:textSize="15dp"
 
                     />
@@ -88,7 +88,7 @@
                         android:gravity="center"
                         android:text="Play now!"
                         android:textAllCaps="false"
-                        android:textColor="@color/white"
+                        android:textColor="@color/textColor"
                         android:textSize="18sp" />
 
                     <Button
@@ -102,7 +102,7 @@
                         android:gravity="center"
                         android:text="Demo"
                         android:textAllCaps="false"
-                        android:textColor="@color/white"
+                        android:textColor="@color/textColor"
                         android:textSize="18sp" />
 
                     <View
