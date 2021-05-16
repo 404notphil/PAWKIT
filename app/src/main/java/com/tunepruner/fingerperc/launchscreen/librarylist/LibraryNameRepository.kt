@@ -1,15 +1,17 @@
 package com.tunepruner.fingerperc.launchscreen.librarylist
+
 import kotlin.collections.ArrayList
 import android.app.Application
 import android.content.res.AssetManager
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.android.billingclient.api.*
-import com.google.firebase.firestore.CollectionReference
 
-class LibraryNameRepository(val app: Application) : BillingClientListener {
+class LibraryNameRepository(val app: Application, val soundpackID: String) : BillingClientListener {
     private var libraryListPrimitive = ArrayList<LibraryDetails>()
     val libraryListLiveData = MutableLiveData<ArrayList<LibraryDetails>>()
     private var soundpackListPrimitive = ArrayList<SoundpackDetails>()
@@ -23,6 +25,7 @@ class LibraryNameRepository(val app: Application) : BillingClientListener {
         populateFromFirestore("soundpacks")
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun populateFromFirestore(collectionName: String) {
         val collectionRef = db.collection(collectionName)
         collectionRef.get()
@@ -30,17 +33,22 @@ class LibraryNameRepository(val app: Application) : BillingClientListener {
                 if (it != null) {
                     if (collectionName.contains("libraries")) {
                         val results: List<LibraryDetails> = it.toObjects(LibraryDetails::class.java)
-                        for (element in results){
+                        for (element in results) {
                             libraryListPrimitive.add(element)
                         }
-                        libraryListPrimitive.sortWith(compareByDescending { library -> library.isPurchased })
-                        updateInstallStatuses()
+                        var filtered = filterSoundpacks(libraryListPrimitive)
+                        Log.i(TAG, "populateFromFirestore: ${filtered.size}")
+                        filtered.sortWith(compareByDescending { library -> library.isPurchased })
+                        Log.i(TAG, "populateFromFirestore: ${filtered.size}")
+                        filtered = updateInstallStatuses(filtered)
+                        Log.i(TAG, "populateFromFirestore: ${filtered.size}")
                         billingClientWrapper =
                             BillingClientWrapper.getInstance(this, app.applicationContext)
-                        libraryListLiveData.value = libraryListPrimitive
+                        libraryListLiveData.value = filtered
                         soundpackListLiveData.value = soundpackListPrimitive
                     } else {
-                        val results: List<SoundpackDetails> = it.toObjects(SoundpackDetails::class.java)
+                        val results: List<SoundpackDetails> =
+                            it.toObjects(SoundpackDetails::class.java)
                         for (element in results)
                             soundpackListPrimitive.add(element)
                     }
@@ -61,26 +69,29 @@ class LibraryNameRepository(val app: Application) : BillingClientListener {
         updatePurchaseStatuses(soundpacksPurchased)
     }
 
-    private fun updateInstallStatuses(){
+    private fun updateInstallStatuses(list: ArrayList<LibraryDetails>): ArrayList<LibraryDetails> {
+        val listToReturn = ArrayList<LibraryDetails>()
+
         val assetManager: AssetManager = app.assets
         val filePaths = assetManager.list("audio")
             ?: error("AssetManager couldn't get filePaths")
-        for (i in 0..(libraryListPrimitive.lastIndex)) {
+        for (i in 0..(list.lastIndex)) {
             for (j in 0..filePaths.lastIndex) {
-                val libraryName = libraryListPrimitive[i].libraryID.toString()
+                val libraryName = list[i].libraryID.toString()
 //                Log.i(TAG, filePaths[j])
                 if (filePaths[j].contains(libraryName)) {
-                    libraryListPrimitive[i].isInstalled = true
-//                    Log.i(TAG, "${libraryListPrimitive[i].libraryName} is installed!")
+                    list[i].isInstalled = true
                     break
                 }
             }
-            if (libraryListPrimitive[i].isInstalled == null) {
-                libraryListPrimitive[i].isInstalled = false
-                Log.i(TAG, "${libraryListPrimitive[i].libraryName} is not installed...")
+            if (list[i].isInstalled == null) {
+                list[i].isInstalled = false
+                Log.i(TAG, "${list[i].libraryName} is not installed...")
 
             }
         }
+
+        return list
     }
 
     private fun updatePurchaseStatuses(listOfPurchases: ArrayList<Purchase>) {
@@ -104,9 +115,23 @@ class LibraryNameRepository(val app: Application) : BillingClientListener {
             }
         }
     }
+
+    private fun filterSoundpacks(list: ArrayList<LibraryDetails>): ArrayList<LibraryDetails> {
+        val listToReturn = ArrayList<LibraryDetails>()
+        for (element in list) listToReturn.add(element)
+
+        if (soundpackID.isNotEmpty()) {
+            for (element in list) {
+                element.soundpackID?.let { library ->
+                    if (!library.contains(soundpackID)) {
+                        listToReturn.remove(element)
+                    }
+                }
+            }
+        }
+        return listToReturn
+    }
 }
-
-
 
 
 data class LibraryDetails(

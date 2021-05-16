@@ -45,7 +45,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
 val viewModel: LibraryNameViewModel by viewModels {
     LibraryNameViewModelFactory(
         requireActivity().application,
-        "perc_soundpack_1"
+        args.soundpackID
     )
 }
     private lateinit var recyclerView: RecyclerView
@@ -56,24 +56,6 @@ val viewModel: LibraryNameViewModel by viewModels {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
-//        viewModel.libraryNameData.observe(
-//            viewLifecycleOwner
-//        ) { libraryNameData ->
-//            viewModel.soundpackData.value?.let { soundpackNameData ->
-//                val adapter = SoundpackRecyclerAdapter(
-//                    requireContext(),
-//                    libraryNameData,
-//                    soundpackNameData,
-//                    this,
-//                    args.soundpackID
-//                )
-//                recyclerView.adapter = adapter
-//            }
-//        }
-
 
         Log.i(TAG, "onCreate: ")
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
@@ -90,8 +72,6 @@ val viewModel: LibraryNameViewModel by viewModels {
 
         recyclerView.addItemDecoration(SpacesItemDecoration(50))
 
-//        viewModel = ViewModelProvider(this).get(LibraryNameViewModel::class.java)
-
         viewModel.libraryNameData.observe(viewLifecycleOwner) { libraryNameData ->
             viewModel.soundpackData.observe(viewLifecycleOwner) { soundpackData ->
                 val adapter = SoundpackRecyclerAdapter(
@@ -105,23 +85,9 @@ val viewModel: LibraryNameViewModel by viewModels {
             }
         }
         return binding.root
-
-//
-//        val view: View = inflater.inflate(R.layout.fragment_soundpack_detail, container, false)
-//        return view
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SoundpackFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
         fun newInstance(param1: String, param2: String) =
             SoundpackDetailFragment()
                 .apply {

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 
 
 class LibraryNameViewModel(val app: Application, val soundpackID: String) : AndroidViewModel(app) {
-    private val dataRepo = LibraryNameRepository(app)
+    private val dataRepo = LibraryNameRepository(app, soundpackID)
     val libraryNameData = dataRepo.libraryListLiveData
     val soundpackData = dataRepo.soundpackListLiveData
 }

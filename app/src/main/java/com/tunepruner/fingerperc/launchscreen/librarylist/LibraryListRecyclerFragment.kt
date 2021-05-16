@@ -23,7 +23,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
    val viewModel: LibraryNameViewModel by viewModels {
             LibraryNameViewModelFactory(
                 requireActivity().application,
-                "perc_soundpack_1"
+                ""
             )
         }
     private lateinit var mListener: FragmentListener
