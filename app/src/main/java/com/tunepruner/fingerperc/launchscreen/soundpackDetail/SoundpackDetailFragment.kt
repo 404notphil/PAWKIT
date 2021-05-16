@@ -41,7 +41,13 @@ private const val ARG_PARAM2 = "param2"
 class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener, BillingClientListener  {
     private val args: LibraryDetailFragmentArgs by navArgs()
     private val TAG = "SnpkDetFgmt.Class"
-    private lateinit var viewModel: LibraryNameViewModel
+//    private lateinit var viewModel: LibraryNameViewModel
+val viewModel: LibraryNameViewModel by viewModels {
+    LibraryNameViewModelFactory(
+        requireActivity().application,
+        "perc_soundpack_1"
+    )
+}
     private lateinit var recyclerView: RecyclerView
     private lateinit var navController: NavController
     private lateinit var binding: FragmentSoundpackDetailBinding
@@ -84,7 +90,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
 
         recyclerView.addItemDecoration(SpacesItemDecoration(50))
 
-        viewModel = ViewModelProvider(this).get(LibraryNameViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(LibraryNameViewModel::class.java)
 
         viewModel.libraryNameData.observe(viewLifecycleOwner) { libraryNameData ->
             viewModel.soundpackData.observe(viewLifecycleOwner) { soundpackData ->
