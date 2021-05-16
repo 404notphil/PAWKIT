@@ -1,5 +1,6 @@
 package com.tunepruner.fingerperc.launchscreen.soundpackDetail
 
+import kotlin.collections.ArrayList
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.marginTop
 import androidx.fragment.app.viewModels
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
@@ -39,7 +41,7 @@ private const val ARG_PARAM2 = "param2"
 class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener, BillingClientListener  {
     private val args: LibraryDetailFragmentArgs by navArgs()
     private val TAG = "SnpkDetFgmt.Class"
-    private val viewModel = ViewModelProvider(this).get(LibraryNameViewModel::class.java)
+    private lateinit var viewModel: LibraryNameViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var navController: NavController
     private lateinit var binding: FragmentSoundpackDetailBinding
@@ -47,22 +49,24 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
     lateinit var billingClientWrapper: BillingClientWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
-        viewModel.libraryNameData.observe(
-            viewLifecycleOwner
-        ) { libraryNameData ->
-            viewModel.soundpackData.value?.let { soundpackNameData ->
-                val adapter = LibraryListRecyclerAdapter(
-                    requireContext(),
-                    libraryNameData,
-                    soundpackNameData,
-                    this
-                )
-                recyclerView.adapter = adapter
-            }
-        }
+
+
+//        viewModel.libraryNameData.observe(
+//            viewLifecycleOwner
+//        ) { libraryNameData ->
+//            viewModel.soundpackData.value?.let { soundpackNameData ->
+//                val adapter = SoundpackRecyclerAdapter(
+//                    requireContext(),
+//                    libraryNameData,
+//                    soundpackNameData,
+//                    this,
+//                    args.soundpackID
+//                )
+//                recyclerView.adapter = adapter
+//            }
+//        }
 
 
         Log.i(TAG, "onCreate: ")
@@ -79,6 +83,21 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
         recyclerView = binding.root.findViewById(R.id.recyclerView)
 
         recyclerView.addItemDecoration(SpacesItemDecoration(50))
+
+        viewModel = ViewModelProvider(this).get(LibraryNameViewModel::class.java)
+
+        viewModel.libraryNameData.observe(viewLifecycleOwner) { libraryNameData ->
+            viewModel.soundpackData.observe(viewLifecycleOwner) { soundpackData ->
+                val adapter = SoundpackRecyclerAdapter(
+                    requireContext(),
+                    libraryNameData,
+                    soundpackData,
+                    this,
+                    args.soundpackID
+                )
+                recyclerView.adapter = adapter
+            }
+        }
         return binding.root
 
 //

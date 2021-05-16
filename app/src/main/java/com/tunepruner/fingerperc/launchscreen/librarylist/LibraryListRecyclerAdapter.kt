@@ -13,11 +13,12 @@ import com.tunepruner.fingerperc.R
 
 open class LibraryListRecyclerAdapter(
     open val context: Context,
-    private val libraries: List<LibraryDetails>,
-    private val soundpacks: List<SoundpackDetails>?,
+    val libraries: ArrayList<LibraryDetails>,
+    private val soundpacks: ArrayList<SoundpackDetails>?,
     private val mLibraryItemListener: LibraryItemListener
 ) :
     RecyclerView.Adapter<LibraryListRecyclerAdapter.ViewHolder>() {
+
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val recyclerButtonTitle: TextView = itemView.findViewById(R.id.recycler_button_title)

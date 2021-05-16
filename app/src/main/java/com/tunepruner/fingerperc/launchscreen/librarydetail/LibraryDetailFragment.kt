@@ -1,5 +1,5 @@
 package com.tunepruner.fingerperc.launchscreen.librarydetail
-
+import kotlin.collections.ArrayList
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -63,7 +63,6 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         binding.soundpackButton
 
         binding.soundpackButton.setOnClickListener{
-
             val action =
                 LibraryDetailFragmentDirections.actionLibraryDetailFragment3ToSoundpackFragment(
                     args.libraryname ?: "",
@@ -75,7 +74,6 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
                     args.soundpackname
                 )
             navController.navigate(action)
-
         }
 
         //TODO change this to the play button

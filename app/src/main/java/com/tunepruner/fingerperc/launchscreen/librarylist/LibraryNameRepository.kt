@@ -1,5 +1,5 @@
 package com.tunepruner.fingerperc.launchscreen.librarylist
-
+import kotlin.collections.ArrayList
 import android.app.Application
 import android.content.res.AssetManager
 import android.util.Log
@@ -11,9 +11,9 @@ import com.google.firebase.firestore.CollectionReference
 
 class LibraryNameRepository(val app: Application) : BillingClientListener {
     private var libraryListPrimitive = ArrayList<LibraryDetails>()
-    val libraryListLiveData = MutableLiveData<List<LibraryDetails>>()
+    val libraryListLiveData = MutableLiveData<ArrayList<LibraryDetails>>()
     private var soundpackListPrimitive = ArrayList<SoundpackDetails>()
-    val soundpackListLiveData = MutableLiveData<List<SoundpackDetails>>()
+    val soundpackListLiveData = MutableLiveData<ArrayList<SoundpackDetails>>()
     private val db = Firebase.firestore
     private lateinit var billingClientWrapper: BillingClientWrapper
     private val TAG = "Repo.Class"
