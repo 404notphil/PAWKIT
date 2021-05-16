@@ -18,6 +18,10 @@
     <string name="bomboBottomArticulationTitle">Center Sound</string>
     <string name="drumTopArticulationTitle">Snare</string>
     <string name="drumBottomArticulationTitle">Kick</string>
+    <string name="play_now">Play now!</string>
+    <string name="soundpack">Soundpack</string>
+    <string name="demo">Demo</string>
+    <string name="main_menu">Main menu</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

@@ -65,6 +65,9 @@
         <argument
             android:name="soundpackname"
             app:argType="string" />
+        <action
+            android:id="@+id/action_libraryDetailFragment3_to_loadingInstrumentFragment3"
+            app:destination="@id/launchScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/soundpackFragment"
@@ -93,6 +96,9 @@
         <argument
             android:name="soundpackname"
             app:argType="string" />
+        <action
+            android:id="@+id/action_soundpackFragment_to_libraryDetailFragment3"
+            app:destination="@id/libraryDetailFragment3" />
     </fragment>
 
 

@@ -20,7 +20,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="left"
         android:orientation="vertical"
         android:paddingEnd="15dp"
         android:paddingStart="40dp">
@@ -34,7 +34,6 @@
             android:id="@+id/recycler_button_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha=".6"
             android:fontFamily="@font/kodchasan_regular"
             android:textAlignment="center"
             android:textColor="@color/textColor"
@@ -47,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:alpha=".6"
             android:fontFamily="@font/kodchasan_regular"
 
             android:paddingBottom="15dp"

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryDetails
 import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryListRecyclerAdapter
@@ -20,6 +21,7 @@ class SoundpackRecyclerAdapter(
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
         return inflater.inflate(R.layout.soundpack_grid_item, parent, false)
     }
+
 
 
 }

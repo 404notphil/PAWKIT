@@ -23,38 +23,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
 
+            <TextView
+                android:id="@+id/soundpack_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:orientation="horizontal"
-                android:paddingTop="30dp">
+                android:layout_marginTop="20dp"
+                android:layout_weight="10"
+                android:text="Soundpack Title"
+                android:textColor="@color/textColor"
+                android:textSize="40sp" />
 
-                <Space
+                <TextView
+                    android:id="@+id/soundpack_subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="10" />
+                    android:layout_weight="15"
+                    android:textSize="20sp"
+                    android:textColor="@color/textColor"
+                    android:text="soundpack" />
 
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:paddingStart="15dp"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingEnd="15dp"
-                    app:srcCompat="@drawable/launchscreen_title" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="10" />
-
-            </LinearLayout>
 
             <Button
                 android:id="@+id/button2"

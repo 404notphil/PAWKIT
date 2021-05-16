@@ -84,6 +84,9 @@ val viewModel: LibraryNameViewModel by viewModels {
                 recyclerView.adapter = adapter
             }
         }
+
+        binding.soundpackTitle.text = args.soundpackname
+
         return binding.root
     }
 
@@ -139,7 +142,7 @@ val viewModel: LibraryNameViewModel by viewModels {
             }
             else -> {
                 val action =
-                    LibraryListRecyclerFragmentDirections.actionLaunchScreenFragmentToLibraryDetailFragment3(
+                    SoundpackDetailFragmentDirections.actionSoundpackFragmentToLibraryDetailFragment3(
                         libraryDetails.libraryName ?: "",
                         libraryDetails.libraryID ?: "",
                         libraryDetails.soundpackID ?: "",
