@@ -2,17 +2,26 @@ package com.tunepruner.fingerperc.launchscreen.librarydetail
 
 
 class Soundbank(val libraries: ArrayList<Library>, val soundpacks: ArrayList<Soundpack>) {
-    private val functions = HashMap<CheckType, (library: Library) -> Boolean>()
+    private val checkTypeFunctions = HashMap<CheckType, (library: Library) -> Boolean>()
+    private val setTypeFunctions = HashMap<SetType, (value: Boolean, library: Library) -> Unit>()
+
 
     init {
-        functions[CheckType.IS_RELEASED] = { getSoundpack(it)?.isReleased ?: false }
-        functions[CheckType.IS_PURCHASED] = { getSoundpack(it)?.isPurchased ?: false }
-        functions[CheckType.IS_INSTALLED] = { getSoundpack(it)?.isInstalled ?: false }
+        checkTypeFunctions[CheckType.IS_RELEASED] = { getSoundpack(it)?.isReleased ?: false }
+        checkTypeFunctions[CheckType.IS_PURCHASED] = { getSoundpack(it)?.isPurchased ?: false }
+        checkTypeFunctions[CheckType.IS_INSTALLED] = { getSoundpack(it)?.isInstalled ?: false }
+        setTypeFunctions[SetType.IS_RELEASED] = { value, library ->  getSoundpack(library)?.isReleased = value }
+        setTypeFunctions[SetType.IS_PURCHASED] = {  value, library ->  getSoundpack(library)?.isPurchased = value }
+        setTypeFunctions[SetType.IS_INSTALLED] = {  value, library ->  getSoundpack(library)?.isInstalled = value }
     }
 
     fun check(checkType: CheckType, library: Library): Boolean {
-        val result = functions[checkType]?.invoke(library)
+        val result = checkTypeFunctions[checkType]?.invoke(library)
         return result ?: false
+    }
+
+    fun set(setType: SetType, value: Boolean, library: Library) {
+        setTypeFunctions[setType]?.invoke(value, library)
     }
 
     private fun getSoundpack(library: Library): Soundpack?{
@@ -27,6 +36,12 @@ class Soundbank(val libraries: ArrayList<Library>, val soundpacks: ArrayList<Sou
     }
 
     enum class CheckType {
+        IS_RELEASED,
+        IS_PURCHASED,
+        IS_INSTALLED
+    }
+
+    enum class SetType {
         IS_RELEASED,
         IS_PURCHASED,
         IS_INSTALLED

@@ -17,7 +17,7 @@ import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundpack
 class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClientListener {
     private lateinit var soundbankPrimitive: Soundbank
     val soundbank = MutableLiveData<Soundbank>()
-    val libraries = ArrayList<Library>()
+    var libraries = ArrayList<Library>()
     val soundpacks = ArrayList<Soundpack>()
     private val db = Firebase.firestore
     private lateinit var billingClientWrapper: BillingClientWrapper
@@ -55,10 +55,10 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                             }
                         }
 
-                        filterSoundpacks(libraries)
+                        libraries = filterSoundpacks(libraries)
                         libraries.sortWith(compareByDescending { it.isPurchased })
-                        updateInstallStatuses(libraries)
                         soundbankPrimitive = Soundbank(libraries, soundpacks)
+                        updateInstallStatuses(soundbankPrimitive)
                         soundbank.value = soundbankPrimitive
                         billingClientWrapper =
                             BillingClientWrapper.getInstance(this, app.applicationContext)
@@ -81,21 +81,23 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
         updatePurchaseStatuses(soundpacksPurchased)
     }
 
-    private fun updateInstallStatuses(list: ArrayList<Library>) {
+    private fun updateInstallStatuses(soundbankPrimitive: Soundbank) {
         val assetManager: AssetManager = app.assets
         val filePaths = assetManager.list("audio")
             ?: error("AssetManager couldn't get filePaths")
-        for (i in 0..(list.lastIndex)) {
+        for (i in 0..(soundbankPrimitive.libraries.lastIndex)) {
             for (j in 0..filePaths.lastIndex) {
-                val libraryName = list[i].libraryID.toString()
+                val libraryName = soundbankPrimitive.libraries[i].libraryID.toString()
                 if (filePaths[j].contains(libraryName)) {
-                    list[i].isInstalled = true
+//                    soundbankPrimitive.libraries[i].isInstalled = true
+//                    val testing = soundbank.value
+                    soundbankPrimitive.set(Soundbank.SetType.IS_INSTALLED, true, soundbankPrimitive.libraries[i])
                     break
                 }
             }
-            if (list[i].isInstalled == null) {
-                list[i].isInstalled = false
-                Log.i(TAG, "${list[i].libraryName} is not installed...")
+            if (soundbankPrimitive.libraries[i].isInstalled == null) {
+                soundbankPrimitive.libraries[i].isInstalled = false
+                Log.i(TAG, "${soundbankPrimitive.libraries[i].libraryName} is not installed...")
 
             }
         }
@@ -104,12 +106,12 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
 
     private fun updatePurchaseStatuses(listOfPurchases: ArrayList<Purchase>) {
         for (library in soundbankPrimitive.libraries) {
-            if (library.isPurchased == true &&
+            if (soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library) == true &&
                 library.soundpackID != null
             ) {
                 for (purchase in listOfPurchases) {
                     if (purchase.sku == library.soundpackID) {
-                        library.isPurchased = true
+                        soundbank.value?.set(Soundbank.SetType.IS_PURCHASED, true, library)
                     }
                 }
             }
@@ -117,7 +119,7 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
 
     }
 
-    private fun filterSoundpacks(list: ArrayList<Library>) {
+    private fun filterSoundpacks(list: ArrayList<Library>): ArrayList<Library> {
         val listToReturn = ArrayList<Library>()
         for (element in list) listToReturn.add(element)
 
@@ -130,6 +132,7 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                 }
             }
         }
+        return listToReturn
     }
 }
 

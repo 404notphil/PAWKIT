@@ -17,11 +17,10 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
+import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
 
 class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener {
     private val TAG = "LibraryListRecyclerFragment.Class"
-
-    //    private lateinit var viewModel: LibraryNameViewModel
     private val viewModel: SoundbankViewModel by viewModels {
         SoundbankViewModelFactory(
             requireActivity().application,
@@ -40,7 +39,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         val view: View = inflater.inflate(R.layout.launch_screen2, container, false)
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.addItemDecoration(SpacesItemDecoration(50))
-//        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
         observeLiveData()
@@ -75,16 +73,16 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         val amountOfIntervals = 10
         val duration = interval * amountOfIntervals
         when {
-            library.isReleased == false ||
-                    library.isReleased == null -> {
+            viewModel.soundbank.value?.check(Soundbank.CheckType.IS_RELEASED, library) == false ||
+                    viewModel.soundbank.value?.check(Soundbank.CheckType.IS_RELEASED, library) == null -> {
 //                navController.navigate(R.id.comingSoonFragment)
                 val text = "Coming soon!"
                 val toastDuration = Toast.LENGTH_SHORT
 
                 val toast = Toast.makeText(context, text, toastDuration)
                 toast.show() }
-            library.isInstalled == false &&
-                    library.isPurchased == true -> {
+            viewModel.soundbank.value?.check(Soundbank.CheckType.IS_INSTALLED, library) == false &&
+                    viewModel.soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library) == true -> {
                 val intent = Intent(requireActivity(), UpdateDialogActivity::class.java)
                 startActivity(intent)
             }
@@ -95,7 +93,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
                         library.libraryID ?: "",
                         library.soundpackID ?: "",
                         library.imageUrl ?: "",
-                        library.isPurchased?: false,
+                        viewModel.soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library)?: false,
                         "$0.99",
                         library.soundpackName ?: "(unknown name)"
                     )

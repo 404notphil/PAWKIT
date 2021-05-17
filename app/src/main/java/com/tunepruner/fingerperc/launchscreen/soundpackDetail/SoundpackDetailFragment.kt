@@ -23,24 +23,13 @@ import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.databinding.FragmentSoundpackDetailBinding
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragmentArgs
+import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
 import com.tunepruner.fingerperc.launchscreen.librarylist.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SoundpackDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener,
     BillingClientListener {
     private val args: LibraryDetailFragmentArgs by navArgs()
     private val TAG = "SnpkDetFgmt.Class"
-
-    //    private lateinit var viewModel: LibraryNameViewModel
     private val viewModel: SoundbankViewModel by viewModels {
         SoundbankViewModelFactory(
             requireActivity().application,
@@ -87,16 +76,6 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
         return binding.root
     }
 
-    companion object {
-        fun newInstance(param1: String, param2: String) =
-            SoundpackDetailFragment()
-                .apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -120,8 +99,8 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
         recyclerButtonSubtitle: TextView
     ) {
         when {
-            library.isReleased == false ||
-                    library.isReleased == null -> {
+            viewModel.soundbank.value?.check(Soundbank.CheckType.IS_RELEASED, library) == false ||
+                    viewModel.soundbank.value?.check(Soundbank.CheckType.IS_RELEASED, library) == null -> {
 //                navController.navigate(R.id.comingSoonFragment)
                 val text = "Coming soon!"
                 val toastDuration = Toast.LENGTH_SHORT
@@ -129,7 +108,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
                 val toast = Toast.makeText(context, text, toastDuration)
                 toast.show()
             }
-            library.isInstalled == false && library.isPurchased == true -> {
+            viewModel.soundbank.value?.check(Soundbank.CheckType.IS_INSTALLED, library) == false && viewModel.soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library) == true -> {
                 val intent = Intent(requireActivity(), UpdateDialogActivity::class.java)
                 startActivity(intent)
             }
@@ -140,7 +119,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
                         library.libraryID ?: "",
                         library.soundpackID ?: "",
                         library.imageUrl ?: "",
-                        library.isPurchased?: false,
+                        viewModel.soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library)?: false,
                         "$0.99",
                         library.soundpackName ?: "(unknown name)"
                     )

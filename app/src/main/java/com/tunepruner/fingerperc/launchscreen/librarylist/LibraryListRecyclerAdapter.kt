@@ -43,9 +43,9 @@ open class LibraryListRecyclerAdapter(
                 it.contentDescription = library.libraryName
             }
             recyclerButtonSubtitle.let {
-                if (library.isReleased == true)
-                    if (library.isPurchased == true)
-                        if (library.isInstalled == true)
+                if (soundbank.check(Soundbank.CheckType.IS_RELEASED, library))
+                    if (soundbank.check(Soundbank.CheckType.IS_PURCHASED, library))
+                        if (soundbank.check(Soundbank.CheckType.IS_INSTALLED, library))
                             it.text = "Tap to play!"
                         else it.text = "Tap to install"
                     else it.text = "Check it out!"
