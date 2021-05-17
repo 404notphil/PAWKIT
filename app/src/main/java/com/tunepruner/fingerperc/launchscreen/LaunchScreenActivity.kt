@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.tunepruner.fingerperc.InstrumentActivity
 import com.tunepruner.fingerperc.R
+import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryListRecyclerFragment
-import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryDetails
 
 class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.FragmentListener {
 
@@ -30,9 +30,9 @@ class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.Fr
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
-    override fun onFragmentFinished(libraryDetails: LibraryDetails) {
+    override fun onFragmentFinished(library: Library) {
         val intent = Intent(this, InstrumentActivity::class.java).apply {
-            putExtra("libraryID", "${libraryDetails.libraryID}")
+            putExtra("libraryID", "${library.libraryID}")
         }
         startActivity(intent)
     }

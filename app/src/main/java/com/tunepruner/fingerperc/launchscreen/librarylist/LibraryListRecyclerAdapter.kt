@@ -9,15 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tunepruner.fingerperc.R
+import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
+import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
 
 open class LibraryListRecyclerAdapter(
     open val context: Context,
-    val libraries: ArrayList<LibraryDetails>,
-    private val soundpacks: ArrayList<SoundpackDetails>?,
+    val soundbank: Soundbank,
     private val mLibraryItemListener: LibraryItemListener
 ) :
     RecyclerView.Adapter<LibraryListRecyclerAdapter.ViewHolder>() {
-
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val recyclerButtonTitle: TextView = itemView.findViewById(R.id.recycler_button_title)
@@ -36,7 +36,7 @@ open class LibraryListRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val library = libraries[position]
+        val library = soundbank.libraries[position]
         with(holder) {
             recyclerButtonTitle.let {
                 it.text = library.libraryName
@@ -57,22 +57,20 @@ open class LibraryListRecyclerAdapter(
             Glide.with(context)
                 .load(library.imageUrl)
                 .into(recyclerButtonImage)
-//            recyclerButtonImage.setImageResource(R.mipmap.head_png_foreground)
 
             itemView.setOnClickListener {
                 mLibraryItemListener.onLibraryItemClick(library, recyclerButtonSubtitle)
             }
-
         }
     }
 
     override fun getItemCount(): Int {
-        return libraries.size
+        return soundbank.libraries.size
     }
 
     interface LibraryItemListener {
         fun onLibraryItemClick(
-            libraryDetails: LibraryDetails,
+            library: Library,
             recyclerButtonSubtitle: TextView
         )
     }

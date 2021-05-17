@@ -30,18 +30,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_weight="10"
+                android:fontFamily="@font/kodchasan_regular"
                 android:text="Soundpack Title"
                 android:textColor="@color/textColor"
                 android:textSize="40sp" />
 
-                <TextView
-                    android:id="@+id/soundpack_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="15"
-                    android:textSize="20sp"
-                    android:textColor="@color/textColor"
-                    android:text="soundpack" />
+            <TextView
+                android:id="@+id/soundpack_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="15"
+                android:fontFamily="@font/kodchasan_regular"
+                android:text="soundpack"
+                android:textColor="@color/textColor"
+                android:textSize="20sp" />
 
 
 

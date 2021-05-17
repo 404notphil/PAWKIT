@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.tunepruner.fingerperc"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 14
         versionName "14.0"

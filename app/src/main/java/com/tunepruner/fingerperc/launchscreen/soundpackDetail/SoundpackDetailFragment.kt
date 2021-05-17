@@ -9,22 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.view.marginTop
 import androidx.fragment.app.viewModels
 
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.TransitionInflater
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.tunepruner.fingerperc.R
-import com.tunepruner.fingerperc.databinding.FragmentLibraryDetailBinding
 import com.tunepruner.fingerperc.databinding.FragmentSoundpackDetailBinding
+import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragmentArgs
 import com.tunepruner.fingerperc.launchscreen.librarylist.*
 
@@ -38,16 +35,18 @@ private const val ARG_PARAM2 = "param2"
  * Use the [SoundpackDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener, BillingClientListener  {
+class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener,
+    BillingClientListener {
     private val args: LibraryDetailFragmentArgs by navArgs()
     private val TAG = "SnpkDetFgmt.Class"
-//    private lateinit var viewModel: LibraryNameViewModel
-val viewModel: LibraryNameViewModel by viewModels {
-    LibraryNameViewModelFactory(
-        requireActivity().application,
-        args.soundpackID
-    )
-}
+
+    //    private lateinit var viewModel: LibraryNameViewModel
+    private val viewModel: SoundbankViewModel by viewModels {
+        SoundbankViewModelFactory(
+            requireActivity().application,
+            args.soundpackID
+        )
+    }
     private lateinit var recyclerView: RecyclerView
     private lateinit var navController: NavController
     private lateinit var binding: FragmentSoundpackDetailBinding
@@ -72,18 +71,16 @@ val viewModel: LibraryNameViewModel by viewModels {
 
         recyclerView.addItemDecoration(SpacesItemDecoration(50))
 
-        viewModel.libraryNameData.observe(viewLifecycleOwner) { libraryNameData ->
-            viewModel.soundpackData.observe(viewLifecycleOwner) { soundpackData ->
+        viewModel.soundbank.observe(viewLifecycleOwner) { soundbank ->
                 val adapter = SoundpackRecyclerAdapter(
                     requireContext(),
-                    libraryNameData,
-                    soundpackData,
+                    soundbank,
                     this,
                     args.soundpackID
                 )
                 recyclerView.adapter = adapter
             }
-        }
+
 
         binding.soundpackTitle.text = args.soundpackname
 
@@ -114,20 +111,17 @@ val viewModel: LibraryNameViewModel by viewModels {
     override fun onResume() {
         super.onResume()
         billingClientWrapper = BillingClientWrapper.getInstance(this, requireContext())
-        binding.button2.text  = args.price
+        binding.button2.text = args.price
 
     }
 
     override fun onLibraryItemClick(
-        libraryDetails: LibraryDetails,
+        library: Library,
         recyclerButtonSubtitle: TextView
     ) {
-        val interval = 10
-        val amountOfIntervals = 10
-        val duration = interval * amountOfIntervals
         when {
-            libraryDetails.isReleased == false ||
-                    libraryDetails.isReleased == null -> {
+            library.isReleased == false ||
+                    library.isReleased == null -> {
 //                navController.navigate(R.id.comingSoonFragment)
                 val text = "Coming soon!"
                 val toastDuration = Toast.LENGTH_SHORT
@@ -135,26 +129,25 @@ val viewModel: LibraryNameViewModel by viewModels {
                 val toast = Toast.makeText(context, text, toastDuration)
                 toast.show()
             }
-            libraryDetails.isInstalled == false &&
-                    libraryDetails.isPurchased == true -> {
+            library.isInstalled == false && library.isPurchased == true -> {
                 val intent = Intent(requireActivity(), UpdateDialogActivity::class.java)
                 startActivity(intent)
             }
             else -> {
                 val action =
                     SoundpackDetailFragmentDirections.actionSoundpackFragmentToLibraryDetailFragment3(
-                        libraryDetails.libraryName ?: "",
-                        libraryDetails.libraryID ?: "",
-                        libraryDetails.soundpackID ?: "",
-                        libraryDetails.imageUrl ?: "",
-                        libraryDetails.isPurchased ?: false,
+                        library.libraryName ?: "",
+                        library.libraryID ?: "",
+                        library.soundpackID ?: "",
+                        library.imageUrl ?: "",
+                        library.isPurchased?: false,
                         "$0.99",
-                        libraryDetails.soundpackName?: "(unknown name)"
+                        library.soundpackName ?: "(unknown name)"
                     )
                 val recyclerButtonImage =
                     requireActivity().findViewById<ImageView>(R.id.recycler_button_image)
                 val extras =
-                    FragmentNavigatorExtras(recyclerButtonImage to "${libraryDetails.soundpackID}")
+                    FragmentNavigatorExtras(recyclerButtonImage to "${library.soundpackID}")
                 navController.navigate(action, extras)
             }
         }
