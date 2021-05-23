@@ -31,7 +31,7 @@ class UsageReportingService(val app: InstrumentActivity) {
             file.readText()
         } else "0"
 
-        val previousTotal = textFromFile.toInt()
+        val previousTotal = if (textFromFile.isEmpty()) 0 else textFromFile.toInt()
 
         val sessionDuration = Calendar.getInstance().timeInMillis - startTime
 
