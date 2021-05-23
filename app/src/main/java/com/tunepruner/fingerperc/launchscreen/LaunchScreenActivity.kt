@@ -2,13 +2,12 @@ package com.tunepruner.fingerperc.launchscreen
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.text.TextUtils
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -16,6 +15,7 @@ import com.tunepruner.fingerperc.InstrumentActivity
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryListRecyclerFragment
+import java.io.File
 import java.util.*
 
 class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.FragmentListener {
@@ -35,8 +35,6 @@ class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.Fr
         setContentView(R.layout.main_activity_testing_navhost)
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
-
     }
 
     override fun onResume() {
@@ -44,41 +42,8 @@ class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.Fr
         System.loadLibrary("bomboleguero")
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
-        val separator = "\n________________________________\n"
-        val answer = "\n-->\n\n$separator"
-        val androidVersion = "Android version: ${android.os.Build.VERSION.SDK_INT}"
-        val modelVersion = "Phone model: ${capitalize(getDeviceName()?: "")}"
-        val questionQuitUnexp = "How many times has PAWKIT closed unexpectedly for you?"
-        val questionSound = "Did the instruments sound clear, like in the demo video?"
-        val otherProblems = "Has anything else gone wrong in the app?"
-        val anySuggestions = "Any suggestions about the design, layout, or anything else?"
-
-        findViewById<Button>(R.id.send_phil_feedback).setOnClickListener{
-            val i = Intent(Intent.ACTION_SENDTO)
-            i.data = Uri.parse("mailto:");
-            i.putExtra(Intent.EXTRA_EMAIL, arrayOf("philcarlson.developer@gmail.com"))
-            i.putExtra(Intent.EXTRA_SUBJECT, "TesterFeedback")
-            i.putExtra(
-                Intent.EXTRA_TEXT,
-                "($androidVersion\n$modelVersion)" +
-                        "$separator" +
-                        "$questionQuitUnexp$answer" +
-                        "$questionSound$answer" +
-                        "$otherProblems$answer" +
-                        "$anySuggestions$answer" +
-                        "THANK YOU!!! : D")
-            try {
-                startActivity(Intent.createChooser(i, "Send email to Phil..."))
-            } catch (ex: ActivityNotFoundException) {
-                Toast.makeText(
-                    this,
-                    "There are no email clients installed.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
+        setupDeveloperContactButton()
     }
-
 
     fun getDeviceName(): String? {
         val manufacturer: String = Build.MANUFACTURER
@@ -113,5 +78,57 @@ class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.Fr
             putExtra("libraryID", "${library.libraryID}")
         }
         startActivity(intent)
+    }
+
+    private fun setupDeveloperContactButton() {
+        val file = File(application.filesDir, "is_beta")
+        val textFromFile: String = if (file.exists()) {
+            file.readText()
+        } else "null"
+        var isBeta = when {/*this will potentially be changed by the database check*/
+            textFromFile.contains("true") -> true
+            textFromFile.contains("false") -> false
+            else -> null
+        }
+        if (isBeta == false) {
+            val buttonParent = findViewById<LinearLayout>(R.id.linearLayout2)
+            val button = findViewById<Button>(R.id.send_phil_feedback)
+            buttonParent.removeView(button)
+        } else {
+            val separator = "\n________________________________\n"
+            val answer = "\n-->\n\n$separator"
+            val androidVersion = "Android version: ${android.os.Build.VERSION.SDK_INT}"
+            val modelVersion = "Phone model: ${capitalize(getDeviceName() ?: "")}"
+            val questionQuitUnexp = "How many times has PAWKIT closed unexpectedly for you?"
+            val questionSound = "Did the instruments sound clear, like in the demo video?"
+            val otherProblems = "Has anything else gone wrong in the app?"
+            val anySuggestions = "Any suggestions about the design, layout, or anything else?"
+
+            findViewById<Button>(R.id.send_phil_feedback).setOnClickListener {
+                val i = Intent(Intent.ACTION_SENDTO)
+                i.data = Uri.parse("mailto:");
+                i.putExtra(Intent.EXTRA_EMAIL, arrayOf("philcarlson.developer@gmail.com"))
+                i.putExtra(Intent.EXTRA_SUBJECT, "TesterFeedback")
+                i.putExtra(
+                    Intent.EXTRA_TEXT,
+                    "($androidVersion\n$modelVersion)" +
+                            "$separator" +
+                            "$questionQuitUnexp$answer" +
+                            "$questionSound$answer" +
+                            "$otherProblems$answer" +
+                            "$anySuggestions$answer" +
+                            "THANK YOU!!! : D"
+                )
+                try {
+                    startActivity(Intent.createChooser(i, "Send email to Phil..."))
+                } catch (ex: ActivityNotFoundException) {
+                    Toast.makeText(
+                        this,
+                        "There are no email clients installed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 }

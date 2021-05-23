@@ -2,6 +2,8 @@ package com.tunepruner.fingerperc.launchscreen.librarylist
 
 import kotlin.collections.ArrayList
 import android.app.Application
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import android.os.Build
 import android.util.Log
@@ -13,6 +15,7 @@ import com.android.billingclient.api.*
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundpack
+import java.io.File
 
 class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClientListener {
     private lateinit var soundbankPrimitive: Soundbank
@@ -138,6 +141,56 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
         }
         return listToReturn
     }
+
+    fun isBeta() {
+
+        //first, get the persisted version of the story.
+        val file = File(app.filesDir, "is_beta")
+        val textFromFile: String = if (file.exists()) {
+            file.readText()
+        } else "null"
+
+        var isBeta = when {/*this will potentially be changed by the database check*/
+            textFromFile.contains("true") -> true
+            textFromFile.contains("false") -> false
+            else -> null
+        }
+
+        if (isBeta != false) {
+            var verCode: Int? = null
+            try {
+                val pInfo: PackageInfo =
+                    app.applicationContext.packageManager.getPackageInfo(
+                        app.applicationContext.packageName,
+                        0
+                    )
+                verCode = pInfo.versionCode
+            } catch (e: PackageManager.NameNotFoundException) {
+                e.printStackTrace()
+            }
+
+            //next see if the remote database agrees with the persisted story (remote takes precedence)
+            val collectionRef = db.collection("betaLaunches")
+
+            collectionRef.get()
+                .addOnSuccessListener {
+                    val results: List<BetaLaunch> = it.toObjects(BetaLaunch::class.java)
+                    loop@ for (element in results) {
+                        if (element.versionNumber == verCode) {
+                            isBeta = element.isCurrent
+                            file.writeText(isBeta.toString(), Charsets.UTF_8) //Todo double check the toString method to make sure it creates a simple "true" or "false"
+                            break@loop
+                        }
+                    }
+                }
+        }
+
+    }
+
+    data class BetaLaunch(
+        val versionNumber: Int? = null,
+        val isCurrent: Boolean? = null
+    )
 }
 
 
