@@ -24,6 +24,10 @@ class Soundbank(val libraries: ArrayList<Library>, val soundpacks: ArrayList<Sou
         setTypeFunctions[setType]?.invoke(value, library)
     }
 
+    fun isEmpty(): Boolean{
+        return libraries.isNullOrEmpty()
+    }
+
     private fun getSoundpack(library: Library): Soundpack?{
         for (soundpack in soundpacks) {
             for (member in soundpack.members) {

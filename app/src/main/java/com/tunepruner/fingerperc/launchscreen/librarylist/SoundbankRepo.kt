@@ -27,6 +27,10 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
         populateFromFirestore("libraries")
     }
 
+    companion object {
+
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     private fun populateFromFirestore(collectionName: String) {
         val collectionRef = db.collection(collectionName)

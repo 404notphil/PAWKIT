@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 class SoundbankViewModel(val app: Application, val soundpackID: String) : AndroidViewModel(app) {
     private val dataRepo = SoundbankRepo(app, soundpackID)
     val soundbank = dataRepo.soundbank
+    val connectionAchieved = false
 }
 
 class SoundbankViewModelFactory(

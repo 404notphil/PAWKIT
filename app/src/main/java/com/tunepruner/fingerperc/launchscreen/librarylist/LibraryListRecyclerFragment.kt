@@ -1,13 +1,20 @@
 package com.tunepruner.fingerperc.launchscreen.librarylist
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -18,9 +25,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
+import java.net.InetAddress
+
 
 class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener {
     private val TAG = "LibraryListRecyclerFragment.Class"
+    private val wasSet = false
     private val viewModel: SoundbankViewModel by viewModels {
         SoundbankViewModelFactory(
             requireActivity().application,
@@ -42,8 +52,32 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
         observeLiveData()
+
         return view
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+//            Log.i(TAG, "internetAvail: ${isInternetAvailable()}")
+//        if (!isInternetAvailable()) {
+//            val parent: LinearLayout = requireActivity().findViewById(R.id.recycler_parent)
+//            parent.removeAllViews()
+//
+//            val textView = TextView(requireContext())
+//            with(textView) {
+//                text = "An internet connection is needed to run PAWKIT for the first time. Please connect to the internet, and restart the app!"
+//                setTextColor(Color.WHITE)
+//                textSize = 20F
+//                gravity = Gravity.CENTER
+//                textAlignment = View.TEXT_ALIGNMENT_CENTER
+//                parent.addView(this)
+//            }
+//
+//        }
+    }
+
 
     //Todo review the first chapter of this course (https://www.linkedin.com/learning/android-development-essential-training-manage-data-with-kotlin/share-data-with-livedata-objects-2?contextUrn=urn%3Ali%3AlyndaLearningPath%3A5a724cba498e9ec2d506035e)
 
@@ -51,6 +85,16 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         super.onResume()
         observeLiveData()
     }
+
+//    fun isInternetAvailable(): Boolean {
+//        return try {
+//            val ipAddr: InetAddress = InetAddress.getByName("https://google.com")
+//            //You can replace it with your name
+//            !ipAddr.equals("")
+//        } catch (e: Exception) {
+//            false
+//        }
+//    }
 
     private fun observeLiveData() {
         viewModel.soundbank.observe(viewLifecycleOwner) { soundbank ->

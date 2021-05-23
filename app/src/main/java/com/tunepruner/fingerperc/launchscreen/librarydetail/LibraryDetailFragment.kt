@@ -148,13 +148,12 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val buttonParent = requireActivity().findViewById<LinearLayout>(R.id.library_detail_main)
-        val button = requireActivity().findViewById<Button>(R.id.play_button)
-        val progressBar = requireActivity().findViewById<ProgressBar>(R.id.progressBar2)
-        val loadingText = requireActivity().findViewById<TextView>(R.id.loading_status_text)
+        val buttonParent = requireActivity().findViewById<LinearLayout>(R.id.play_now_layout)
+        val buttonToRemove = requireActivity().findViewById<LinearLayout>(R.id.play_button_parent)
 
-        buttonParent.removeView(progressBar)
-        buttonParent.removeView(loadingText)
+        if (!args.ispurchased || args.libraryid.contains("djembe")) { //ToDo remove djembe condition once samples are done!
+            buttonParent.removeView(buttonToRemove)
+        }
 
         Glide.with(requireContext())
             .load(args.imageUrl)
@@ -178,7 +177,6 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         val progressBar = requireActivity().findViewById<ProgressBar>(R.id.progressBar2)
         val loadingText = requireActivity().findViewById<TextView>(R.id.loading_status_text)
-
 
         onProgressStarted(parent, titleOfLibrary, progressBarLayout)
 
