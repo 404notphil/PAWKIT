@@ -30,12 +30,9 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
         populateFromFirestore("libraries")
     }
 
-    companion object {
-
-    }
-
     @RequiresApi(Build.VERSION_CODES.N)
     private fun populateFromFirestore(collectionName: String) {
+        isBeta()
         val collectionRef = db.collection(collectionName)
 
         collectionRef.get()
@@ -189,6 +186,7 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
 
     data class BetaLaunch(
         val versionNumber: Int? = null,
+        @field:JvmField
         val isCurrent: Boolean? = null
     )
 }
