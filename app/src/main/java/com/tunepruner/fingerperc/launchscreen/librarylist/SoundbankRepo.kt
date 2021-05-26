@@ -139,7 +139,7 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
         return listToReturn
     }
 
-    fun isBeta() {
+    private fun isBeta() {
 
         //first, get the persisted version of the story.
         val file = File(app.filesDir, "is_beta")
@@ -181,6 +181,7 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                     }
                 }
         }
+
 
     }
 

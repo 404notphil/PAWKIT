@@ -1,20 +1,19 @@
 package com.tunepruner.fingerperc.launchscreen.librarylist
 
+import android.app.ActivityManager
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothHeadset
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.net.ConnectivityManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -25,8 +24,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
-import java.net.InetAddress
-
+import java.io.File
+import java.text.DecimalFormat
 
 class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener {
     private val TAG = "LibraryListRecyclerFragment.Class"
@@ -56,45 +55,13 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-//            Log.i(TAG, "internetAvail: ${isInternetAvailable()}")
-//        if (!isInternetAvailable()) {
-//            val parent: LinearLayout = requireActivity().findViewById(R.id.recycler_parent)
-//            parent.removeAllViews()
-//
-//            val textView = TextView(requireContext())
-//            with(textView) {
-//                text = "An internet connection is needed to run PAWKIT for the first time. Please connect to the internet, and restart the app!"
-//                setTextColor(Color.WHITE)
-//                textSize = 20F
-//                gravity = Gravity.CENTER
-//                textAlignment = View.TEXT_ALIGNMENT_CENTER
-//                parent.addView(this)
-//            }
-//
-//        }
-    }
-
-
     //Todo review the first chapter of this course (https://www.linkedin.com/learning/android-development-essential-training-manage-data-with-kotlin/share-data-with-livedata-objects-2?contextUrn=urn%3Ali%3AlyndaLearningPath%3A5a724cba498e9ec2d506035e)
 
     override fun onResume() {
         super.onResume()
         observeLiveData()
+        setupDeveloperContactButton()
     }
-
-//    fun isInternetAvailable(): Boolean {
-//        return try {
-//            val ipAddr: InetAddress = InetAddress.getByName("https://google.com")
-//            //You can replace it with your name
-//            !ipAddr.equals("")
-//        } catch (e: Exception) {
-//            false
-//        }
-//    }
 
     private fun observeLiveData() {
         viewModel.soundbank.observe(viewLifecycleOwner) { soundbank ->
@@ -148,6 +115,129 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
                 navController.navigate(action, extras)
             }
         }
+    }
+
+    private fun setupDeveloperContactButton() {
+        val file = File(requireActivity().application.filesDir, "is_beta")
+        val textFromFile: String = if (file.exists()) {
+            file.readText()
+        } else "null"
+        var isBeta = when {/*this will potentially be changed by the database check*/
+            textFromFile.contains("true") -> true
+            textFromFile.contains("false") -> false
+            else -> null
+        }
+        if (isBeta == false) {
+            val buttonParent = requireActivity().findViewById<LinearLayout>(R.id.linearLayout2)
+            val button = requireActivity().findViewById<Button>(R.id.send_phil_feedback)
+            buttonParent.removeView(button)
+        } else {
+            //get device memory
+            val actManager: ActivityManager =
+                requireContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val memInfo: ActivityManager.MemoryInfo = ActivityManager.MemoryInfo()
+            actManager.getMemoryInfo(memInfo)
+
+            //setup all the substrings for email
+            val separator = "\n________________________________\n"
+            val answer = "\n▼\n\n\n\n▲$separator"
+            val androidVersion = "Android version: ${android.os.Build.VERSION.SDK_INT}"
+            val modelVersion = "Phone model: ${capitalize(getDeviceName() ?: "")}"
+            val totalRAM = "Total RAM: ${bytesToHuman(memInfo.totalMem.toDouble())}"
+            val availableRam = "RAM available: ${bytesToHuman(memInfo.availMem.toDouble())}"
+            val bluetoothConnected = "Bluetooth connected: ${isBluetoothHeadsetConnected()}"
+            val questionQuitUnexp = "How many times has PAWKIT closed unexpectedly for you?"
+            val questionSound = "Did the instruments sound clear, like in the demo video?"
+            val otherProblems = "Has anything else gone wrong in the app?"
+            val anySuggestions = "Any suggestions about the design, layout, or anything else?"
+
+            requireActivity().findViewById<Button>(R.id.send_phil_feedback).setOnClickListener {
+                val i = Intent(Intent.ACTION_SENDTO)
+                i.data = Uri.parse("mailto:");
+                i.putExtra(Intent.EXTRA_EMAIL, arrayOf("philcarlson.developer@gmail.com"))
+                i.putExtra(Intent.EXTRA_SUBJECT, "*TesterFeedback*")
+                i.putExtra(
+                    Intent.EXTRA_TEXT,
+                    "" +
+                            "$separator" +
+                            "$questionQuitUnexp$answer" +
+                            "$questionSound$answer" +
+                            "$otherProblems$answer" +
+                            "$anySuggestions$answer" +
+                            "THANK YOU!!! : D" +
+                            "$separator" +
+                            "$separator" +
+                            "($androidVersion\n" +
+                            "$modelVersion\n" +
+                            "$totalRAM\n" +
+                            "$availableRam\n" +
+                            "$bluetoothConnected)" +
+                            "$separator" +
+                            "$separator"
+                )
+                try {
+                    startActivity(Intent.createChooser(i, "Email to developer..."))
+                } catch (ex: ActivityNotFoundException) {
+                    Toast.makeText(
+                        requireActivity(),
+                        "There are no email clients installed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun bytesToHuman(size: Double): String? {
+        val Kb: Double= 1024.0
+        val Mb: Double = Kb * 1024.0
+        val Gb: Double = Mb * 1024.0
+        val Tb: Double = Gb * 1024.0
+        val Pb: Double = Tb * 1024.0
+        val Eb: Double = Pb * 1024.0
+        val f = DecimalFormat("##.00")
+
+        if (size < Kb) return "$size byte"
+        if (size > Kb && size < Mb ) return f.format(size / Kb).toString() + " KB"
+        if (size > Mb && size < Gb ) return f.format(size / Mb).toString() + " MB"
+        if (size > Gb && size < Tb ) return f.format(size / Gb).toString() + " GB"
+        if (size > Tb && size < Pb ) return f.format(size / Tb).toString() + " TB"
+        if (size > Pb && size < Eb ) return f.format(size / Pb).toString() + " Pb"
+        return if (size >= Eb) ((size / Eb)).toString() + " Eb" else "0"
+    }
+
+    fun getDeviceName(): String? {
+        val manufacturer: String = Build.MANUFACTURER
+        val model: String = Build.MODEL
+        return if (model.startsWith(manufacturer)) {
+            capitalize(model)
+        } else capitalize(manufacturer) + " " + model
+    }
+
+    private fun capitalize(str: String): String {
+        if (TextUtils.isEmpty(str)) {
+            return str
+        }
+        val arr = str.toCharArray()
+        var capitalizeNext = true
+        val phrase = StringBuilder()
+        for (c in arr) {
+            if (capitalizeNext && Character.isLetter(c)) {
+                phrase.append(Character.toUpperCase(c))
+                capitalizeNext = false
+                continue
+            } else if (Character.isWhitespace(c)) {
+                capitalizeNext = true
+            }
+            phrase.append(c)
+        }
+        return phrase.toString()
+    }
+
+    fun isBluetoothHeadsetConnected(): Boolean {
+        val mBluetoothAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        return (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled
+                && mBluetoothAdapter.getProfileConnectionState(BluetoothHeadset.HEADSET) === BluetoothHeadset.STATE_CONNECTED)
     }
 
     interface FragmentListener {

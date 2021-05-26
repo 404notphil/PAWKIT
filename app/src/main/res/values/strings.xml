@@ -22,6 +22,7 @@
     <string name="soundpack">Soundpack</string>
     <string name="demo">Demo</string>
     <string name="main_menu">Main menu</string>
+    <string name="send_feedback_to_developer">Send feedback to developer</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

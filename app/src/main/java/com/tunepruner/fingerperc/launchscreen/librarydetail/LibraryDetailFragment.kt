@@ -37,7 +37,6 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
     private val TAG = "LibraryDetailFragment.class"
     private lateinit var navController: NavController
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inflater = TransitionInflater.from(requireContext())
@@ -61,6 +60,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         binding.soundpackButton
 
         binding.soundpackButton.setOnClickListener {
+            Log.i(TAG, "clicked: ")
             stopLoadingRequested = true
             val action =
                 LibraryDetailFragmentDirections.actionLibraryDetailFragment3ToSoundpackFragment(
@@ -82,12 +82,8 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
             navController.navigate(action)
         }
 
-
-
         binding.playButton?.setOnClickListener {
-
-//            val progressBarLayout = LinearLayout(requireContext(), )
-
+            stopLoadingRequested = false
             if (binding.youtubePlayerView.alpha == 1F)
                 binding.youtubePlayerView.alpha = 0F
 
@@ -119,7 +115,6 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
                 binding.youtubePlayerView.alpha = 0F
             }
         }
-
 
         val youTubePlayerView: YouTubePlayerView = binding.youtubePlayerView
         youTubePlayerView.enterFullScreen()
@@ -166,6 +161,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
     }
 
     private fun showLoadingInstrument(progressBarDuration: Int) {
+        Log.i(TAG, "showLoadingInstrument: ")
         val intervalLength = 10
         val amountOfIntervals = progressBarDuration / intervalLength
 
@@ -185,12 +181,11 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         val handler = Handler(Looper.getMainLooper())
 
         var intervalsAccumulated = intervalLength
-        for (i in 0..amountOfIntervals) {
+        loop@for (i in 0..amountOfIntervals) {
             handler.postDelayed(
                 {
                     if (!stopLoadingRequested) {
                         progressBar.progress += amountOfIntervals / 100
-                        Log.i(logTag, "progressing")
                     } else {
                         onProgressFinished(parent, titleOfLibrary, progressBarLayout)
                     }
@@ -218,6 +213,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         titleOfLibrary: TextView,
         progressBarLayout: LinearLayout
     ) {
+        Log.i(TAG, "onProgressStarted: ")
         buttonParent.removeView(titleOfLibrary)
         buttonParent.removeView(progressBarLayout)
         buttonParent.addView(progressBarLayout, 0)
@@ -228,7 +224,9 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         titleOfLibrary: TextView,
         progressBarLayout: LinearLayout
     ) {
+        Log.i(TAG, "onProgressFinished: ")
         buttonParent.removeView(progressBarLayout)
+        buttonParent.removeView(titleOfLibrary)
         buttonParent.addView(titleOfLibrary, 0)
         binding.titleOfLibraryDetail?.text = "..."
     }
