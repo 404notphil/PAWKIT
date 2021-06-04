@@ -19,6 +19,7 @@ those two sounds are 1) a hit on the wooden rim of the drum and 2) a hit in the 
 (membrane, that is). In the case of a drum kit, the two zones correspond to the snare drum and the kick drum.
 The dynamic level of each hit
 (the volume, basically) is determined by where you tap on the Y axis.
+If you'd like a more detailed overview of the app, along with a demo, [watch this video!](https://youtu.be/RQXtMMSJ8G4)
 
 
 # Under the hood
@@ -37,7 +38,8 @@ I recorded up to 10 of them for each velocity layer.
 When a user triggers the exact same zone multiple times in a row, programming logic
 chooses any round robin from those available, excluding the last one played, and submits its choice to the Player service.
 The reason that RoundRobins are used is to avoid the dreaded "machine gun effect" that happens in
-virtual instruments of lower quality.
+virtual instruments of lower quality. I provide a more detailed look at technical details of the app
+in [this video.](https://youtu.be/6Hf7qcKE2H8)
 
 # Status
 
