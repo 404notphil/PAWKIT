@@ -1,6 +1,6 @@
-<h1 align="center">FingerPerc</h1>
+<h1 align="center">PAWKIT</h1>
 <p align="center">
- A touchscreen percussion instrument <br> that can <em>actually</em> make expressive music.<br><br><br><br>
+ An interface for playing drums and percussion on a touchscreen <br> that enables <em>highly dynamic control</em> and follows <br> industry standard techniques for audio sampling .<br><br><br><br>
  <img src="gifOfDemo.gif" width="200" alt="Screen recording of app"></p>
 
 
@@ -11,7 +11,7 @@ _____
 
 # Abstract
 
-FingerPerc is a musical instrument in the form of an Android app. It's a dynamic, zone-based percussion interface,
+PAWKIT is a musical instrument in the form of an Android app. It's a dynamic, zone-based percussion interface,
 packaged with deep-sampled acoustic percussion instruments and drum kits. A user can load an instrument and then
 create sound by tapping the screen. For each instrument, there are two zones on the screen which represent the
 primary sounds that the instrument can make. For example, in the case of the Bombo Legüero,
@@ -23,7 +23,7 @@ The dynamic level of each hit
 
 # Under the hood
 
-FingerPerc installs with hundreds of audio samples which are
+PAWKIT installs with hundreds of audio samples which are
 individually triggered when a user touches various zones on the screen. As mentioned above,
 each instrument has two principal sounds, often referred to as "articulations", and each corresponding
 to a zone which occupies half of the device's screen. Within each articulation zone, there are many
@@ -44,15 +44,17 @@ virtual instruments of lower quality.
 The first test build of the app is complete and has been released for internal testing.
 
 # Tech used/dependencies
+- In-app updates
+- In-app purchases
 - Firebase
 - Google Analytics
-- Gradle
 - [Google Oboe](https://github.com/google/oboe)
 - CMake
 - JNI
 - JUnit
 - Mockito
 - PlantUML for docs
+- [YouTube library by PierFranciscoSoffriti](https://github.com/PierfrancescoSoffritti/android-youtube-player)
 
 # Architecture
 
