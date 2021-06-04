@@ -14,8 +14,8 @@ android {
         applicationId "com.tunepruner.fingerperc"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 17
-        versionName "17.0"
+        versionCode 18
+        versionName "1.0.0-beta.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -11,15 +11,14 @@ _____
 
 # Abstract
 
-FingerPerc is a musical instrument in the form of an Android app. The sounds it makes correspond to two different percussion
-instruments: 1) Bombo Legüero, a traditional Andean folk music drum typically made of
-wood and alpaca skins or cowhide 2) Cajón Flamenco, the popular Spanish variation of a box drum,
-containing snares. A user can play these sounds by tapping the screen, and the dynamic level
-(the volume, basically) is determined by where you tap. For each instrument, there are two zones
-on the screen which represent the primary sounds that the instrument can make. In the case of the
-Bombo Legüero, those two sounds are 1) a hit on the wooden rim of the drum and 2) a hit in the
-center of the drum head (membrane, that is). With the Cajón Flamenco, the two sounds are 1) a
-hit on the top edge and 2) a hit in the front center.
+FingerPerc is a musical instrument in the form of an Android app. It's a dynamic, zone-based percussion interface,
+packaged with deep-sampled acoustic percussion instruments and drum kits. A user can load an instrument and then
+create sound by tapping the screen. For each instrument, there are two zones on the screen which represent the
+primary sounds that the instrument can make. For example, in the case of the Bombo Legüero,
+those two sounds are 1) a hit on the wooden rim of the drum and 2) a hit in the center of the drum head
+(membrane, that is). In the case of a drum kit, the two zones correspond to the snare drum and the kick drum.
+The dynamic level of each hit
+(the volume, basically) is determined by where you tap on the Y axis.
 
 
 # Under the hood
@@ -36,7 +35,7 @@ where I played the drum at an identical volume, but allowed human imperfection.
 These repetitions are called "Round Robins" in the audio sample industry, and
 I recorded up to 10 of them for each velocity layer.
 When a user triggers the exact same zone multiple times in a row, programming logic
-chooses any RoundRobin, excluding the last one played, and submits its choice to the Player service.
+chooses any round robin from those available, excluding the last one played, and submits its choice to the Player service.
 The reason that RoundRobins are used is to avoid the dreaded "machine gun effect" that happens in
 virtual instruments of lower quality.
 
@@ -44,8 +43,9 @@ virtual instruments of lower quality.
 
 The first test build of the app is complete and has been released for internal testing.
 
-# Tech used
-
+# Tech used/dependencies
+- Firebase
+- Google Analytics
 - Gradle
 - [Google Oboe](https://github.com/google/oboe)
 - CMake

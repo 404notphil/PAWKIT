@@ -105,7 +105,6 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
 
             }
         }
-
     }
 
     private fun updatePurchaseStatuses(listOfPurchases: ArrayList<Purchase>) {
@@ -120,7 +119,6 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                 }
             }
         }
-
     }
 
     private fun filterSoundpacks(list: ArrayList<Library>): ArrayList<Library> {

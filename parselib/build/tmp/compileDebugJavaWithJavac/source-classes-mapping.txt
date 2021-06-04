@@ -1,2 +1,0 @@
-com/google/oboe/samples/BuildConfig.java
- com.google.oboe.samples.BuildConfig
