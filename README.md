@@ -4,8 +4,8 @@
  <p align="center">
  [<img src="google-play-badge.png" width="200" alt="Screen recording of app">](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
  <p align="center">
- <img src="gifOfDemo.gif" width="200" alt="Screen recording of app"></p>†
-
+ <img src="gifOfDemo.gif" width="200" alt="Screen recording of app"></p>
+[![Foo](google-play-badge.png)](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
 
 
 
