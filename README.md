@@ -2,17 +2,10 @@
 <p align="center">
  An interface for playing drums and percussion on a touchscreen <br> that enables <em>highly dynamic control</em> and follows <br> industry standard techniques for audio sampling .<br><br><br><br></p>
  <p align="center">
- [<img src="google-play-badge.png" width="200" alt="Screen recording of app">](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
- <p align="center">
  <img src="gifOfDemo.gif" width="200" alt="Screen recording of app">
- <p align="center">
-[![Foo](google-play-badge.png)](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
-[![testing](https://github.com/tunepruner/PAWKIT/blob/master/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
-
-</p>
 
  <p align="center">
-<a href="https://www.w3schools.com/" target="_blank"><img src="google-play-badge.png" width="200" alt="Screen recording of app"></a>
+<a href="https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US" target="_blank"><img src="google-play-badge.png" width="200" alt="Screen recording of app"></a>
 </p>
 
 
