@@ -6,6 +6,7 @@
  <p align="center">
  <img src="gifOfDemo.gif" width="200" alt="Screen recording of app"></p>
 [![Foo](google-play-badge.png)](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
+[![testing](google-play-badge.png)](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
 
 
 
