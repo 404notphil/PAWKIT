@@ -5,7 +5,7 @@
  [<img src="google-play-badge.png" width="200" alt="Screen recording of app">](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
  <p align="center">
  <img src="gifOfDemo.gif" width="200" alt="Screen recording of app">
- <p
+ <p align="center">
 [![Foo](google-play-badge.png)](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
 [![testing](https://github.com/tunepruner/PAWKIT/blob/master/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
 
