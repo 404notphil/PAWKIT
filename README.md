@@ -12,7 +12,7 @@
 </p>
 
  <p align="center">
-<a href="https://www.w3schools.com/" target="_blank">Visit W3Schools!</a>
+<a href="https://www.w3schools.com/" target="_blank"><img src="google-play-badge.png" width="200" alt="Screen recording of app"></a>
 </p>
 
 
