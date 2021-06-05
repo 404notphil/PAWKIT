@@ -1,7 +1,8 @@
 <h1 align="center">PAWKIT</h1>
 <p align="center">
  An interface for playing drums and percussion on a touchscreen <br> that enables <em>highly dynamic control</em> and follows <br> industry standard techniques for audio sampling .<br><br><br><br>
- <img src="gifOfDemo.gif" width="200" alt="Screen recording of app"></p>
+ [<img src="google-play-badge.png" width="200" alt="Screen recording of app"></p>](https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US)
+ <img src="gifOfDemo.gif" width="200" alt="Screen recording of app"></p>†
 
 
 
