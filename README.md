@@ -1,6 +1,6 @@
 <h1 align="center">PAWKIT</h1>
 <p align="center">
- An interface for playing drums and percussion on a touchscreen <br> that enables <em>highly dynamic control</em> and follows <br> industry standard techniques for audio sampling .<br><br></p>
+ An interface for playing drums and percussion on a touchscreen <br> that enables <em>highly dynamic control</em> and follows <br> industry standard techniques for audio sampling.<br><br></p>
 
  <p align="center">
 <a href="https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US" target="_blank"><img src="google-play-badge.png" width="200" alt="Screen recording of app"></a>
@@ -8,10 +8,6 @@
 <br><br>
  <p align="center">
  <img src="gifOfDemo.gif" width="200" alt="Screen recording of app">
-
-
-
-
 
 _____
 
@@ -50,7 +46,7 @@ in [this video.](https://youtu.be/6Hf7qcKE2H8)
 
 # Status
 
-The first test build of the app is complete and has been released for internal testing.
+PAWKIT is currently in beta.
 
 # Tech used/dependencies
 - In-app updates
@@ -69,4 +65,4 @@ The first test build of the app is complete and has been released for internal t
 
 [On this page, ](./app/Documentation/RenderedImages/RenderedImages.md) I've provided some 
 notes and diagrams that describe how the whole project works, and it should
-greatly help anyone who wants to dig in.  
+greatly help anyone who wants to dig in.
