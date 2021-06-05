@@ -2,46 +2,13 @@
 <p align="center">
  An interface for playing drums and percussion on a touchscreen <br> that enables <em>highly dynamic control</em> and follows <br> industry standard techniques for audio sampling.<br><br></p>
 
- <p align="right">
+ <p align="center">
 <a href="https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US" target="_blank"><img src="google-play-badge.png" width="200" alt="Screen recording of app"></a>
 </p>
 <br><br>
- <p align="left">
+ <p align="center">
  <img src="gifOfDemo.gif" width="200" alt="Screen recording of app">
 
-
-<html>
- <head>
-    <style>
-    {
-        box-sizing: border-box;
-    }
-    /* Set additional styling options for the columns*/
-    .column {
-    float: left;
-    width: 50%;
-    }
-
-    .row:after {
-    content: "";
-    display: table;
-    clear: both;
-    }
-    </style>
- </head>
- <body>
-    <div class="row">
-        <div class="column" style="background-color:#FFB695;">
-            <h2>Column 1</h2>
-            <p>Data..</p>
-        </div>
-        <div class="column" style="background-color:#96D1CD;">
-            <h2>Column 2</h2>
-            <p>Data..</p>
-        </div>
-    </div>
- </body>
-</html>
 _____
 
 
