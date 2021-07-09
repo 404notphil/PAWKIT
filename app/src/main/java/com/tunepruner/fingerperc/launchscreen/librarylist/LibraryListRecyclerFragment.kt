@@ -153,7 +153,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
 
             requireActivity().findViewById<Button>(R.id.send_phil_feedback).setOnClickListener {
                 val i = Intent(Intent.ACTION_SENDTO)
-                i.data = Uri.parse("mailto:");
+                i.data = Uri.parse("mailto:")
                 i.putExtra(Intent.EXTRA_EMAIL, arrayOf("philcarlson.developer@gmail.com"))
                 i.putExtra(Intent.EXTRA_SUBJECT, "*TesterFeedback*")
                 i.putExtra(

@@ -3,7 +3,6 @@ package com.tunepruner.fingerperc.instrument
 import android.content.Context
 import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
-import android.util.Log
 
 class ResourceManager(context: Context, private val libraryName: String) {
     private var counter: Int = 0
@@ -29,7 +28,6 @@ class ResourceManager(context: Context, private val libraryName: String) {
                 assetManager.openFd(filename)
             val fileSnapshot = filenameToSnapshot(filename, afd, assetManager)
             fileSnapshots.add(fileSnapshot)
-//            Log.i("ResourceManager = ", element)
         }
     }
 

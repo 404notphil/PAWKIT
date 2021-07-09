@@ -6,11 +6,11 @@ import com.tunepruner.fingerperc.sample.samplelibrary.V1SampleLibrary
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.Articulation
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.V1Articulation
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.RoundRobinLogic
-import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.VelocityLayer
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.SimpleRoundRobinLogic
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.V1VelocityLayer
-import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.Sample
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.VelocityLayer
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.BasicCoords
+import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.Sample
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.SampleCoords
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.V1Sample
 import com.tunepruner.fingerperc.zone.zonegraph.ZoneGraph

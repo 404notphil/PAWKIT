@@ -1,5 +1,4 @@
 package com.tunepruner.fingerperc.launchscreen.librarylist
-import kotlin.collections.ArrayList
 import android.app.Activity
 import android.content.Context
 import android.util.Log
@@ -25,7 +24,6 @@ class BillingClientWrapper {
             } else {
                 BillingClientWrapper()
             }
-//            clientToReturn.soundpackID = soundpackID
             clientToReturn.prepareBillingClient(context)
             clientToReturn.repoListener = billingClientListener
             return clientToReturn
@@ -75,16 +73,6 @@ class BillingClientWrapper {
     }
 
     fun queryPurchases() {
-//        billingClient.queryPurchaseHistoryAsync(
-//            "inapp"
-//        ) { _, purchaseHistoryRecords ->
-//            if (purchaseHistoryRecords != null) {
-//                for (element in purchaseHistoryRecords) {
-//                    purchaseHistoryRecords1.add(element)
-//                }
-//            }
-//            repoListener.onPurchaseHistoryReady(purchaseHistoryRecords1)
-//        }
         Log.i(TAG, "queryPurchases started")
         val purchasesResultObject = billingClient.queryPurchases(BillingClient.SkuType.INAPP)
 

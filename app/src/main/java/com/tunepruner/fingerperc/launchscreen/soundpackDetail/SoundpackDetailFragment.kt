@@ -1,16 +1,14 @@
 package com.tunepruner.fingerperc.launchscreen.soundpackDetail
 
-import kotlin.collections.ArrayList
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -47,7 +45,6 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
 
         Log.i(TAG, "onCreate: ")
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-
     }
 
     override fun onCreateView(
@@ -61,14 +58,14 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
         recyclerView.addItemDecoration(SpacesItemDecoration(50))
 
         viewModel.soundbank.observe(viewLifecycleOwner) { soundbank ->
-                val adapter = SoundpackRecyclerAdapter(
-                    requireContext(),
-                    soundbank,
-                    this,
-                    args.soundpackID
-                )
-                recyclerView.adapter = adapter
-            }
+            val adapter = SoundpackRecyclerAdapter(
+                requireContext(),
+                soundbank,
+                this,
+                args.soundpackID
+            )
+            recyclerView.adapter = adapter
+        }
 
 
         binding.soundpackTitle.text = args.soundpackname
@@ -91,7 +88,6 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
         super.onResume()
         billingClientWrapper = BillingClientWrapper.getInstance(this, requireContext())
         binding.button2.text = args.price
-
     }
 
     override fun onLibraryItemClick(
@@ -100,7 +96,10 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
     ) {
         when {
             viewModel.soundbank.value?.check(Soundbank.CheckType.IS_RELEASED, library) == false ||
-                    viewModel.soundbank.value?.check(Soundbank.CheckType.IS_RELEASED, library) == null -> {
+                    viewModel.soundbank.value?.check(
+                        Soundbank.CheckType.IS_RELEASED,
+                        library
+                    ) == null -> {
 //                navController.navigate(R.id.comingSoonFragment)
                 val text = "Coming soon!"
                 val toastDuration = Toast.LENGTH_SHORT
@@ -108,7 +107,13 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
                 val toast = Toast.makeText(context, text, toastDuration)
                 toast.show()
             }
-            viewModel.soundbank.value?.check(Soundbank.CheckType.IS_INSTALLED, library) == false && viewModel.soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library) == true -> {
+            viewModel.soundbank.value?.check(
+                Soundbank.CheckType.IS_INSTALLED,
+                library
+            ) == false && viewModel.soundbank.value?.check(
+                Soundbank.CheckType.IS_PURCHASED,
+                library
+            ) == true -> {
                 val intent = Intent(requireActivity(), UpdateDialogActivity::class.java)
                 startActivity(intent)
             }
@@ -119,7 +124,8 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
                         library.libraryID ?: "",
                         library.soundpackID ?: "",
                         library.imageUrl ?: "",
-                        viewModel.soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library)?: false,
+                        viewModel.soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library)
+                            ?: false,
                         "$0.99",
                         library.soundpackName ?: "(unknown name)"
                     )

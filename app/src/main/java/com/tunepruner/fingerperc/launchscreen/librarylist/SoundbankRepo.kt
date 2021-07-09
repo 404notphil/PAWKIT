@@ -1,6 +1,5 @@
 package com.tunepruner.fingerperc.launchscreen.librarylist
 
-import kotlin.collections.ArrayList
 import android.app.Application
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -9,11 +8,11 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import com.android.billingclient.api.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.android.billingclient.api.*
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
+import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundpack
 import java.io.File
 

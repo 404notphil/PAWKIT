@@ -1,6 +1,5 @@
 package com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer
 
-import android.util.Log
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.Sample
 import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.SampleCoords
 import java.util.concurrent.ConcurrentLinkedQueue

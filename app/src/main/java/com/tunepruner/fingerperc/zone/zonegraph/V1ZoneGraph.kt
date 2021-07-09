@@ -1,10 +1,8 @@
 package com.tunepruner.fingerperc.zone.zonegraph
 
 import android.graphics.PointF
-import android.util.Log
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.ArticulationZone
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
-import java.util.LinkedList
 
 class V1ZoneGraph : ZoneGraph {
     private val articulationZones: ArrayList<ArticulationZone> = ArrayList()

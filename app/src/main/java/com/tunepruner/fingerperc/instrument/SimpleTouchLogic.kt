@@ -2,13 +2,9 @@ package com.tunepruner.fingerperc.instrument
 
 import android.graphics.PointF
 import android.os.Build
-import android.util.Log
 import android.view.MotionEvent
 import java.util.*
 import java.util.concurrent.ConcurrentLinkedQueue
-import kotlin.math.pow
-import kotlin.math.sqrt
-import kotlin.properties.Delegates
 
 class SimpleTouchLogic : TouchLogic {
     private val returns: ConcurrentLinkedQueue<PointF> = ConcurrentLinkedQueue<PointF>()

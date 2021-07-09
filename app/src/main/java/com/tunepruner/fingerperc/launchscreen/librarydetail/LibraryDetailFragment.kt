@@ -1,6 +1,5 @@
 package com.tunepruner.fingerperc.launchscreen.librarydetail
 
-import kotlin.collections.ArrayList
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -51,7 +50,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         binding.youtubePlayerView.alpha = 0F
 
-        binding.titleOfLibraryDetail?.text = args.libraryname
+        binding.titleOfLibraryDetail.text = args.libraryname
 
         binding.soundpackButton.text = "View soundpack: \"${args.soundpackname}\""
 
@@ -64,25 +63,25 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
             stopLoadingRequested = true
             val action =
                 LibraryDetailFragmentDirections.actionLibraryDetailFragment3ToSoundpackFragment(
-                    args.libraryname ?: "",
-                    args.libraryid ?: "",
-                    args.soundpackID ?: "",
-                    args.imageUrl ?: "",
-                    args.ispurchased ?: false,
+                    args.libraryname,
+                    args.libraryid,
+                    args.soundpackID,
+                    args.imageUrl,
+                    args.ispurchased,
                     "$0.99",
                     args.soundpackname
                 )
             navController.navigate(action)
         }
 
-        binding.mainMenu?.setOnClickListener {
+        binding.mainMenu.setOnClickListener {
             stopLoadingRequested = true
             val action =
                 LibraryDetailFragmentDirections.actionLibraryDetailFragment3ToLoadingInstrumentFragment3()/*This action is incorrectly named but can't be edited*/
             navController.navigate(action)
         }
 
-        binding.playButton?.setOnClickListener {
+        binding.playButton.setOnClickListener {
             stopLoadingRequested = false
             if (binding.youtubePlayerView.alpha == 1F)
                 binding.youtubePlayerView.alpha = 0F
@@ -167,7 +166,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         val parent = requireActivity().findViewById<LinearLayout>(R.id.library_detail_main)
         val titleOfLibrary = requireActivity().findViewById<TextView>(R.id.title_of_library_detail)
-        layoutInflater.inflate(R.layout.progress_bar_layout, parent, true);
+        layoutInflater.inflate(R.layout.progress_bar_layout, parent, true)
         val progressBarLayout =
             requireActivity().findViewById<LinearLayout>(R.id.progress_bar_layout)
 
@@ -228,7 +227,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         buttonParent.removeView(progressBarLayout)
         buttonParent.removeView(titleOfLibrary)
         buttonParent.addView(titleOfLibrary, 0)
-        binding.titleOfLibraryDetail?.text = "..."
+        binding.titleOfLibraryDetail.text = "..."
     }
 
     override fun onClientReady() {

@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
-import kotlin.collections.ArrayDeque
 
 class AnimationOfTitle {
     companion object {

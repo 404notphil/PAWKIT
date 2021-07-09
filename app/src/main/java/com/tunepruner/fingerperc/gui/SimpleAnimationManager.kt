@@ -4,8 +4,6 @@ import android.app.Activity
 import android.util.Log
 import com.tunepruner.fingerperc.instrument.ResourceManager
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class SimpleAnimationManager(
     val resourceManager: ResourceManager,

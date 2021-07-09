@@ -1,10 +1,9 @@
 package com.tunepruner.fingerperc.zone
 
-import android.util.Log
 import com.tunepruner.fingerperc.instrument.ResourceManager
 import com.tunepruner.fingerperc.instrument.ScreenDimensions
-import com.tunepruner.fingerperc.zone.zonegraph.ZoneGraph
 import com.tunepruner.fingerperc.zone.zonegraph.V1ZoneGraph
+import com.tunepruner.fingerperc.zone.zonegraph.ZoneGraph
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.ArticulationZone
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.V1ArticulationZone
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.V1VelocityZone

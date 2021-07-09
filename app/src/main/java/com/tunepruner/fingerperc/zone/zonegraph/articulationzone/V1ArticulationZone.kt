@@ -1,7 +1,6 @@
 package com.tunepruner.fingerperc.zone.zonegraph.articulationzone
 
 import android.graphics.PointF
-import android.util.Log
 import com.tunepruner.fingerperc.instrument.ScreenDimensions
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.ZoneLimits

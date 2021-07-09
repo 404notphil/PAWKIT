@@ -1,13 +1,9 @@
 package com.tunepruner.fingerperc.instrument
 
 import android.app.Activity
-import android.app.Application
-import android.content.Context
 import android.graphics.Insets
 import android.os.Build
 import android.util.DisplayMetrics
-import android.util.Log
-import android.view.Display
 import android.view.WindowInsets
 
 class ScreenPrep {
