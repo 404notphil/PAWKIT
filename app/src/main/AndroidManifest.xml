@@ -40,10 +40,6 @@
             android:name=".InstrumentActivity"
             android:parentActivityName=".launchscreen.LaunchScreenActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".launchscreen.librarylist.LibraryDetailActivity"
-            android:parentActivityName=".launchscreen.LaunchScreenActivity"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
