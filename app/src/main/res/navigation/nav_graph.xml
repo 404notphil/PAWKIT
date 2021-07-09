@@ -16,23 +16,6 @@
 
 
     <fragment
-        android:id="@+id/youtube_fragment"
-        android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <fragment
-        android:id="@+id/appUpdateFragment"
-        android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.AppUpdateFragment"
-        android:label="update_fragment"
-        tools:layout="@layout/app_update_activity" />
-
-    <fragment
-        android:id="@+id/loadingInstrumentFragment"
-        android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.LoadingInstrumentFragement"
-        android:label="loading_fragment"
-        tools:layout="@layout/loading_instrument_fragment" />
-    <fragment
         android:id="@+id/libraryDetailFragment3"
         android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragment"
         android:label="fragment_library_detail3"
@@ -73,7 +56,7 @@
         android:id="@+id/soundpackFragment"
         android:name="com.tunepruner.fingerperc.launchscreen.soundpackDetail.SoundpackDetailFragment"
         android:label="fragment_soundpack"
-        tools:layout="@layout/fragment_soundpack">
+        tools:layout="@layout/fragment_soundpack_detail">
         <argument
             android:name="libraryname"
             app:argType="string" />
