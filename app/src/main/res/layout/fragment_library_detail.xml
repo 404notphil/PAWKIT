@@ -7,8 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_general"
-        android:orientation="vertical"
-        tools:context="com.tunepruner.fingerperc.launchscreen.librarylist.LibraryDetailActivity">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/library_detail_main"
@@ -16,8 +15,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/background_general"
-            android:orientation="vertical"
-            tools:context="com.tunepruner.fingerperc.launchscreen.librarylist.LibraryDetailActivity">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title_of_library_detail"
