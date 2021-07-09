@@ -4,9 +4,9 @@ import android.app.Activity
 import android.util.Log
 import android.view.MotionEvent
 import com.tunepruner.fingerperc.gui.AnimationManager
-import com.tunepruner.fingerperc.sample.SampleManager
-import com.tunepruner.fingerperc.sample.samplelibrary.articulation.velocitylayer.sample.Sample
-import com.tunepruner.fingerperc.zone.ZoneManager
+import com.tunepruner.fingerperc.instrument.sample.SampleManager
+import com.tunepruner.fingerperc.instrument.sample.samplelibrary.articulation.velocitylayer.sample.Sample
+import com.tunepruner.fingerperc.instrument.zone.ZoneManager
 import java.io.IOException
 
 class OboePlayer(

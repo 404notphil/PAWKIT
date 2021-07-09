@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.ImageView
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.instrument.ResourceManager
-import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
+import com.tunepruner.fingerperc.instrument.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 import kotlin.math.roundToInt
 
 class AnimationOfGraphic(

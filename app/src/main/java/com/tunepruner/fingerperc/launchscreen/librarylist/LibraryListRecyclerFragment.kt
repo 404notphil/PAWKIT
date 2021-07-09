@@ -234,10 +234,9 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         return phrase.toString()
     }
 
-    fun isBluetoothHeadsetConnected(): Boolean {
+    private fun isBluetoothHeadsetConnected(): Boolean {
         val mBluetoothAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        return (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled
-                && mBluetoothAdapter.getProfileConnectionState(BluetoothHeadset.HEADSET) === BluetoothHeadset.STATE_CONNECTED)
+        return (mBluetoothAdapter.isEnabled && mBluetoothAdapter.getProfileConnectionState(BluetoothHeadset.HEADSET) === BluetoothHeadset.STATE_CONNECTED)
     }
 
     interface FragmentListener {

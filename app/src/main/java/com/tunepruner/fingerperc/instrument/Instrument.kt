@@ -5,14 +5,14 @@ import android.view.MotionEvent
 import com.tunepruner.fingerperc.gui.AnimationManager
 import com.tunepruner.fingerperc.gui.InstrumentGUI
 import com.tunepruner.fingerperc.gui.SimpleAnimationManager
-import com.tunepruner.fingerperc.sample.SampleFactory
-import com.tunepruner.fingerperc.sample.SampleManager
-import com.tunepruner.fingerperc.sample.SimpleSampleManager
-import com.tunepruner.fingerperc.sample.samplelibrary.SampleLibrary
-import com.tunepruner.fingerperc.zone.SimpleZoneManager
-import com.tunepruner.fingerperc.zone.ZoneFactory
-import com.tunepruner.fingerperc.zone.ZoneManager
-import com.tunepruner.fingerperc.zone.zonegraph.ZoneGraph
+import com.tunepruner.fingerperc.instrument.sample.SampleFactory
+import com.tunepruner.fingerperc.instrument.sample.SampleManager
+import com.tunepruner.fingerperc.instrument.sample.SimpleSampleManager
+import com.tunepruner.fingerperc.instrument.sample.samplelibrary.SampleLibrary
+import com.tunepruner.fingerperc.instrument.zone.SimpleZoneManager
+import com.tunepruner.fingerperc.instrument.zone.ZoneFactory
+import com.tunepruner.fingerperc.instrument.zone.ZoneManager
+import com.tunepruner.fingerperc.instrument.zone.zonegraph.ZoneGraph
 
 class Instrument(activity: Activity, libraryName: String, instrumentGUI: InstrumentGUI) {
     private var player: Player

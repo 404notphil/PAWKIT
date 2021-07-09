@@ -6,7 +6,7 @@ import android.os.Looper
 import android.widget.ImageView
 import android.widget.TextView
 import com.tunepruner.fingerperc.R
-import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
+import com.tunepruner.fingerperc.instrument.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 
 class AnimationOfTitle {
     companion object {

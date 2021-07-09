@@ -1,7 +1,6 @@
-package com.tunepruner.fingerperc.instrument
+package com.tunepruner.fingerperc.instrument.sample
 
-import android.graphics.Point
-import com.tunepruner.fingerperc.instrument.sample.SimpleSampleManager
+import com.tunepruner.fingerperc.instrument.ScreenDimensions
 import com.tunepruner.fingerperc.instrument.sample.samplelibrary.SampleLibrary
 import com.tunepruner.fingerperc.instrument.sample.samplelibrary.V1SampleLibrary
 import com.tunepruner.fingerperc.instrument.sample.samplelibrary.articulation.Articulation
@@ -12,53 +11,26 @@ import com.tunepruner.fingerperc.instrument.sample.samplelibrary.articulation.ve
 import com.tunepruner.fingerperc.instrument.sample.samplelibrary.articulation.velocitylayer.V1VelocityLayer
 import com.tunepruner.fingerperc.instrument.sample.samplelibrary.articulation.velocitylayer.sample.BasicCoords
 import com.tunepruner.fingerperc.instrument.sample.samplelibrary.articulation.velocitylayer.sample.SampleCoords
-import com.tunepruner.fingerperc.instrument.zone.SimpleZoneManager
-import com.tunepruner.fingerperc.instrument.zone.zonegraph.ZoneGraph
-import com.tunepruner.fingerperc.instrument.zone.zonegraph.V1ZoneGraph
-import com.tunepruner.fingerperc.instrument.zone.zonegraph.articulationzone.V1ArticulationZone
 import com.tunepruner.fingerperc.instrument.zone.zonegraph.articulationzone.velocityzone.V1VelocityZone
 import com.tunepruner.fingerperc.instrument.zone.zonegraph.articulationzone.velocityzone.VelocityZone
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-internal class OboePlayerTest {
-
-    lateinit var player: OboePlayer
-    lateinit var triggerManager: SimpleZoneManager
-    lateinit var zoneGraph: ZoneGraph
-    lateinit var triggerZone1ToAdd: V1ArticulationZone
-    lateinit var triggerZone2ToAdd: V1ArticulationZone
-    lateinit var point: Point
-    lateinit var layerToAdd: V1VelocityZone
-    lateinit var screenDimensions: ScreenDimensions
-
+internal class SimpleSampleManagerTest {
     lateinit var sampleManager: SimpleSampleManager
+    lateinit var screenDimensions: ScreenDimensions
     lateinit var sampleLibrary: SampleLibrary
     lateinit var articulationToAdd: Articulation
     lateinit var velocityZoneToQuery: VelocityZone
     lateinit var velocityLayerToAdd: VelocityLayer
     lateinit var basicCoords: SampleCoords
     lateinit var roundRobinLogic: RoundRobinLogic
-
-    @BeforeAll
-    fun setUpTriggerManager() {
-        screenDimensions = ScreenDimensions(1000, 500)
-        zoneGraph = V1ZoneGraph()
-        triggerManager = SimpleZoneManager(zoneGraph)
-        triggerZone1ToAdd = V1ArticulationZone(2, 1, screenDimensions)
-        triggerZone2ToAdd = V1ArticulationZone(2, 2, screenDimensions)
-        zoneGraph.addArticulationZone(triggerZone1ToAdd)
-        zoneGraph.addArticulationZone(triggerZone2ToAdd)
-        layerToAdd = V1VelocityZone(2, 1, 1, 2, 12, screenDimensions)
-        triggerZone1ToAdd.addLayer(layerToAdd)
-        triggerZone2ToAdd.addLayer(layerToAdd)
-        point = Point()
-        point.x = 10
-        point.y = 10
-
+    @BeforeEach
+    fun setUp() {
         sampleLibrary = V1SampleLibrary()
         articulationToAdd = V1Articulation()
         screenDimensions = ScreenDimensions(1000, 500)
@@ -77,11 +49,10 @@ internal class OboePlayerTest {
         articulationToAdd.addLayer(velocityZoneToQuery, velocityLayerToAdd)
         sampleLibrary.addSampleGroup(articulationToAdd)
         sampleManager = SimpleSampleManager(sampleLibrary)
-//        player = OboePlayer(triggerManager, sampleManager)
     }
 
     @Test
-    fun play() {
-//        assertNotNull(player.play(point))
+    fun computeSample() {
+        assertNotNull(sampleManager.computeSample(velocityZoneToQuery))
     }
 }

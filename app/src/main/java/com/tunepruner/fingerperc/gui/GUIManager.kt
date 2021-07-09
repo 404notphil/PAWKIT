@@ -1,6 +1,6 @@
 package com.tunepruner.fingerperc.gui
 
-import com.tunepruner.fingerperc.zone.zonegraph.articulationzone.velocityzone.VelocityZone
+import com.tunepruner.fingerperc.instrument.zone.zonegraph.articulationzone.velocityzone.VelocityZone
 
 interface GUIManager {
 
