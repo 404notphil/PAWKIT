@@ -57,6 +57,15 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         binding.soundpackButton
 
+        binding.libraryDetailImage.apply {
+            alpha = 0f
+            visibility = View.VISIBLE
+            animate()
+                .alpha(1f)
+                .setDuration(500)
+                .setListener(null)
+        }
+
         binding.soundpackButton.setOnClickListener {
             Log.i(TAG, "clicked: ")
             stopLoadingRequested = true

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -61,6 +62,15 @@ open class LibraryListRecyclerAdapter(
             itemView.setOnClickListener {
                 mLibraryItemListener.onLibraryItemClick(library, recyclerButtonSubtitle)
             }
+        }
+
+        holder.itemView.apply {
+            alpha = 0f
+            visibility = View.VISIBLE
+            animate()
+                .alpha(1f)
+                .setDuration(500)
+                .setListener(null)
         }
     }
 
