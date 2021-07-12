@@ -10,7 +10,7 @@ class BillingClientWrapper {
     var purchaseHistoryRecords1: ArrayList<PurchaseHistoryRecord> = ArrayList()
     lateinit var repoListener: BillingClientListener
     var clientSetupFinished = false
-    val TAG = "BillCliWrapper.Class"
+    val LOG_TAG = "BillCliWrapper.Class"
 
     companion object {
         var billingClientWrapperStored: BillingClientWrapper? = null
@@ -31,6 +31,7 @@ class BillingClientWrapper {
     }
 
     private fun prepareBillingClient(context: Context) {
+        Log.d(LOG_TAG, "prepareBillingClient() called with: context = $context")
         val purchasesUpdatedListener =
             PurchasesUpdatedListener { billingResult, purchases ->
                 val purchasesNotNull = purchases != null
@@ -56,48 +57,49 @@ class BillingClientWrapper {
     }
 
     private fun initBilling() {
+        Log.d(LOG_TAG, "initBilling() called")
         billingClient.startConnection(
             object : BillingClientStateListener {
                 override fun onBillingSetupFinished(billingResult: BillingResult) {
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        Log.i(LOG_TAG, "clientSetupFinished! billingResult.responseCode == ok!")
                         clientSetupFinished = true
                         repoListener.onClientReady()
                     }
                 }
 
                 override fun onBillingServiceDisconnected() {
-                    // Try to restart the connection on the next request to
-                    // Google Play by calling the startConnection() method.
+                    Log.i(LOG_TAG, "onBillingServiceDisconnected: ")
+                    //initBilling() /*maybe?*/
                 }
             })
     }
 
     fun queryPurchases() {
-        Log.i(TAG, "queryPurchases started")
+        Log.i(LOG_TAG, "queryPurchases started")
         val purchasesResultObject = billingClient.queryPurchases(BillingClient.SkuType.INAPP)
 
         val listNotNull: ArrayList<Purchase> = ArrayList()
-        Log.i(TAG, "listNotNull = $listNotNull")
+        Log.i(LOG_TAG, "listNotNull = $listNotNull")
 
         purchasesResultObject.purchasesList.let { purchasesList ->
-            Log.i(TAG, "purchasesResult isn't null.: ")
+            Log.i(LOG_TAG, "purchasesResult isn't null.: ")
             if (purchasesList != null) {
-                Log.i(TAG, "purchasesList isn't null: ")
+                Log.i(LOG_TAG, "purchasesList isn't null: ")
                 for (purchase in purchasesList) {
                     listNotNull.add(purchase)
-                    Log.i(TAG, "purchase sku: ${purchase.sku}")
+                    Log.i(LOG_TAG, "purchase sku: ${purchase.sku}")
                 }
                 repoListener.onPurchasesQueried(listNotNull)
-                Log.i(TAG, "listNotNull = $listNotNull")
-
+                Log.i(LOG_TAG, "listNotNull = $listNotNull")
             }
         }
 
     }
 
     fun querySkuDetails(activity: Activity, soundpackID: String) {
-        Log.i(TAG, "startingQuery")
-        Log.i(TAG, "soundpackID =  $soundpackID")
+        Log.i(LOG_TAG, "startingQuery")
+        Log.i(LOG_TAG, "soundpackID =  $soundpackID")
         val skuList = ArrayList<String>()
         skuList.add(soundpackID)
         val params = SkuDetailsParams.newBuilder()
@@ -108,7 +110,7 @@ class BillingClientWrapper {
         billingClient.querySkuDetailsAsync(params.build()) { billingResult, skuDetailsList ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && !skuDetailsList.isNullOrEmpty()) {
                 skuDetails = skuDetailsList[0]
-                Log.i(TAG, "skuDetails: $skuDetails")
+                Log.i(LOG_TAG, "skuDetails: $skuDetails")
                 flow(activity, skuDetails)
             }
         }
@@ -116,8 +118,8 @@ class BillingClientWrapper {
 
 
     private fun flow(activity: Activity, skuDetails: SkuDetails?) {
-        Log.i(TAG, "flow")
-        Log.i(TAG, "skuDetails = null?: ${skuDetails == null}")
+        Log.i(LOG_TAG, "flow")
+        Log.i(LOG_TAG, "skuDetails = null?: ${skuDetails == null}")
         skuDetails.let {
             val billingFlowParams = it?.let { it1 ->
                 BillingFlowParams.newBuilder()

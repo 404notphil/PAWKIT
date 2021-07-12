@@ -67,7 +67,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     }
 
     private fun observeLiveData() {
-        Log.i("Repo.Class", "observeLiveData: ")
         viewModel.soundbankLiveData.observe(viewLifecycleOwner) { soundbank ->
             Log.i("log_tag", "observeLiveData")
             val adapter = LibraryListRecyclerAdapter(

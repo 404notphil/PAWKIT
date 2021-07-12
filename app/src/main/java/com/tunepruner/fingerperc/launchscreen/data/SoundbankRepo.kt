@@ -28,47 +28,54 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
     private val LOG_TAG = "Repo.Class"
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun populateFromFirestore(collectionName: String) {
-        Log.i(LOG_TAG, "populateFromFirestore: ")
-//        Log.i(LOG_TAG, "populateFromFirestore called!")
+    fun getCollectionFromFirestore() {
+        Log.d(LOG_TAG, "getCollectionFromFirestore() called!")
         isBeta()
-        val collectionRef = db.collection(collectionName)
+        val librariesCollectionRef = db.collection("libraries")
+        val soundpacksCollectionRef = db.collection("soundpacks")
 
-
-        collectionRef.get()
+        librariesCollectionRef.get()
             .addOnSuccessListener { it ->
-//                Log.i(LOG_TAG, "onSuccessCodeRun")
+                Log.i(LOG_TAG, "onSuccessCodeRun")
                 if (it != null) {
-                    if (collectionName.contains("libraries")) {
+                    Log.i(LOG_TAG, "libraries listener code was run!")
 
-                        val results: List<Library> = it.toObjects(Library::class.java)
-                        for (element in results) {
-                            libraries.add(element)
-                        }
-                        Log.i(LOG_TAG, "libraries.size: ${libraries.size}")
-                        populateFromFirestore("soundpacks")
+                    val results: List<Library> = it.toObjects(Library::class.java)
+                    for (element in results) {
+                        libraries.add(element)
+                    }
 
-                    } else {
-                        val results: List<Soundpack> =
-                            it.toObjects(Soundpack::class.java)
-                        for (element in results)
-                            soundpacks.add(element)
-                        for (soundpack in soundpacks) {
-                            for (library in libraries) {
-                                if (library.soundpackID == soundpack.soundpackID) {
-                                    soundpack.members.add(library)
+                    //getting soundpacks from firebase ONLY AFTER libraries.
+                    //This way, I can ensure that I have BOTH before initializing
+                    //soundbankPrimitive.
+                    soundpacksCollectionRef.get()
+                        .addOnSuccessListener {
+                            Log.i(LOG_TAG, "soundpacks listener code was run!")
+                            val results: List<Soundpack> =
+                                it.toObjects(Soundpack::class.java)
+                            for (element in results)
+                                soundpacks.add(element)
+                            for (soundpack in soundpacks) {
+                                for (library in libraries) {
+                                    if (library.soundpackID == soundpack.soundpackID) {
+                                        soundpack.members.add(library)
+                                    }
                                 }
                             }
+                            libraries =
+                                filterSoundpacks(libraries)/*This only does something if this class holds a value in soundpackID*/
+                            libraries.sortWith(compareByDescending { it.isPurchased })
+
+                            soundbankPrimitive = Soundbank(libraries, soundpacks)
+                            updateInstallStatuses(soundbankPrimitive)
+                            billingClientWrapper =
+                                BillingClientWrapper.getInstance(this, app.applicationContext)
                         }
-                        Log.i(LOG_TAG, "soundpacks.size: ${soundpacks.size}")
-                        libraries = filterSoundpacks(libraries)
-                    }
-                    libraries.sortWith(compareByDescending { it.isPurchased })
-                    soundbankPrimitive = Soundbank(libraries, soundpacks)
-                    updateInstallStatuses(soundbankPrimitive)
-                    soundbankLiveData.value = soundbankPrimitive
-                    billingClientWrapper =
-                        BillingClientWrapper.getInstance(this, app.applicationContext)
+                        .addOnFailureListener { exception ->
+                            Log.d(LOG_TAG, "get failed with ", exception)
+                        }
+
+
                 } else {
                     Log.d(LOG_TAG, "No such document")
                 }
@@ -76,6 +83,10 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
             .addOnFailureListener { exception ->
                 Log.d(LOG_TAG, "get failed with ", exception)
             }
+        Log.d(LOG_TAG, "listener evaluated for librariesCollectionRef, will run shortly...");
+
+
+        Log.d(LOG_TAG, "listener evaluated for soundpacksCollectionRef, will run shortly...");
     }
 
     override fun onClientReady() {
@@ -84,10 +95,6 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
     }
 
     override fun onPurchasesQueried(soundpacksPurchased: ArrayList<Purchase>) {
-//        Log.d(
-//            LOG_TAG,
-//            "onPurchasesQueried() called with: soundpacksPurchased = $soundpacksPurchased"
-//        )
         updatePurchaseStatuses(soundpacksPurchased)
     }
 
@@ -120,7 +127,6 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
     }
 
     private fun updatePurchaseStatuses(listOfPurchases: ArrayList<Purchase>) {
-//        Log.d(LOG_TAG, "updatePurchaseStatuses() called with: listOfPurchases = $listOfPurchases")
         for (library in soundbankPrimitive.libraries) {
             if (soundbankPrimitive.check(
                     Soundbank.CheckType.IS_PURCHASED,
@@ -135,6 +141,14 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
             }
         }
         soundbankLiveData.value = soundbankPrimitive
+
+        //Log the purchase statuses
+        Log.i(LOG_TAG, "_______________")
+        for (element in soundbankPrimitive.libraries) {
+            Log.i(LOG_TAG, "${element.soundpackName} is purchase? ${element.isPurchased}")
+        }
+        Log.i(LOG_TAG, "_______________")
+
     }
 
     private fun filterSoundpacks(list: ArrayList<Library>): ArrayList<Library> {
@@ -147,10 +161,10 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
         */
         val listToReturn = ArrayList<Library>()
         for (element in list) listToReturn.add(element)
-        Log.i(LOG_TAG, "listToReturn.size: ${listToReturn.size}")
 
         if (soundpackID.isNotEmpty()) {
             for (element in list) {
+                Log.i(LOG_TAG, "listToReturn: ${listToReturn.size}")
                 element.soundpackID?.let { library ->
                     if (!library.contains(soundpackID)) {
                         listToReturn.remove(element)
@@ -162,6 +176,7 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
     }
 
     private fun isBeta() {
+        Log.d(LOG_TAG, "isBeta() called")
 
         //first, get the persisted version of the story.
         val file = File(app.filesDir, "is_beta")

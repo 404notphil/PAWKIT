@@ -1,20 +1,23 @@
 package com.tunepruner.fingerperc.launchscreen.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tunepruner.fingerperc.launchscreen.data.SoundbankRepo
+import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
 
 class SoundbankViewModel(val app: Application, val soundpackID: String) : AndroidViewModel(app) {
     private val dataRepo = SoundbankRepo(app, soundpackID)
-    val soundbankLiveData = dataRepo.soundbankLiveData
+    val soundbankLiveData: LiveData<Soundbank>
+        get() {
+            return dataRepo.soundbankLiveData
+        }
     val connectionAchieved = false
 
-    fun getData(){
-        Log.i("Repo.Class", "getData: ")
-        dataRepo.populateFromFirestore("libraries")
+    fun getData() {
+        dataRepo.getCollectionFromFirestore()
     }
 }
 
