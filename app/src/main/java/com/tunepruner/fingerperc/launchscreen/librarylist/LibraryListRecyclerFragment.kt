@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
+import com.tunepruner.fingerperc.BuildConfig
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.databinding.LaunchScreen2Binding
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
@@ -187,7 +188,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
             requireActivity().findViewById<Button>(R.id.send_phil_feedback).setOnClickListener {
                 val i = Intent(Intent.ACTION_SENDTO)
                 i.data = Uri.parse("mailto:")
-                i.putExtra(Intent.EXTRA_EMAIL, arrayOf("philcarlson.developer@gmail.com"))
+                i.putExtra(Intent.EXTRA_EMAIL, arrayOf(BuildConfig.DEVELOPER_EMAIL))
                 i.putExtra(Intent.EXTRA_SUBJECT, "*TesterFeedback*")
                 i.putExtra(
                     Intent.EXTRA_TEXT,

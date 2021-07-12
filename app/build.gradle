@@ -16,6 +16,7 @@ android {
         targetSdkVersion 30
         versionCode 18
         versionName "1.0.0-beta.1"
+        buildConfigField("String", "DEVELOPER_EMAIL", DEVELOPER_EMAIL)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -101,6 +102,5 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
-
 
 }
