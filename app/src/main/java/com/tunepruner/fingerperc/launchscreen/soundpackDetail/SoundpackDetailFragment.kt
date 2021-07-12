@@ -44,7 +44,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        viewModel.getData()
         Log.i(TAG, "onCreate: ")
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
@@ -78,6 +78,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         if (args.ispurchased) {
             requireActivity().findViewById<LinearLayout>(R.id.buttons_parent)
                 .removeView(requireActivity().findViewById<Button>(R.id.button2))
@@ -88,7 +89,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
 
     override fun onResume() {
         super.onResume()
-        viewModel.getData()
+
         billingClientWrapper = BillingClientWrapper.getInstance(this, requireContext())
         binding.button2.text = args.price
     }
