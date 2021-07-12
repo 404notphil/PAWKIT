@@ -63,6 +63,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     override fun onResume() {
         super.onResume()
         observeLiveData()
+        viewModel.getData()
         setupDeveloperContactButton()
     }
 
@@ -89,7 +90,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
                 Log.i("log_tag", "It's got content: ${adapter?.itemCount}")
             }
         }
-        viewModel.getData()
     }
 
 

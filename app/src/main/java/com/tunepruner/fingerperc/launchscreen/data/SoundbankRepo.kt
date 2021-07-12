@@ -27,8 +27,9 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
     private lateinit var billingClientWrapper: BillingClientWrapper
     private val LOG_TAG = "Repo.Class"
 
-    @RequiresApi(Build.VERSION_CODES.N)
     fun getCollectionFromFirestore() {
+        libraries.clear()
+        soundpacks.clear()
         Log.d(LOG_TAG, "getCollectionFromFirestore() called!")
         isBeta()
         val librariesCollectionRef = db.collection("libraries")

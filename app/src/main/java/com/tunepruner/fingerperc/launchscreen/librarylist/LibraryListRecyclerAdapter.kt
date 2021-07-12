@@ -24,6 +24,7 @@ open class LibraryListRecyclerAdapter(
         val recyclerButtonTitle: TextView = itemView.findViewById(R.id.recycler_button_title)
         val recyclerButtonSubtitle: TextView = itemView.findViewById(R.id.recycler_button_sub_title)
         val recyclerButtonImage: ImageView = itemView.findViewById(R.id.recycler_button_image)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

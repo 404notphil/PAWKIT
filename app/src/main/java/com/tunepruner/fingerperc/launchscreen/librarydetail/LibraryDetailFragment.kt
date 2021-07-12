@@ -117,9 +117,23 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         binding.howToPlayButton.setOnClickListener {
             stopLoadingRequested = true
             if (binding.youtubePlayerView.alpha == 0F)
-                binding.youtubePlayerView.alpha = 1F
+                binding.youtubePlayerView.apply {
+                    alpha = 0f
+                    visibility = View.VISIBLE
+                    animate()
+                        .alpha(1f)
+                        .setDuration(500)
+                        .setListener(null)
+                }
             else {
-                binding.youtubePlayerView.alpha = 0F
+                binding.youtubePlayerView.apply {
+                    alpha = 1f
+                    visibility = View.VISIBLE
+                    animate()
+                        .alpha(0f)
+                        .setDuration(500)
+                        .setListener(null)
+                }
             }
         }
 
