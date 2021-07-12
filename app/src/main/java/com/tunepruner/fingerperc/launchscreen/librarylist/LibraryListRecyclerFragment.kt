@@ -176,7 +176,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
             val answer = "\n▼\n\n\n\n▲$separator"
             val androidVersion = "Android version: ${android.os.Build.VERSION.SDK_INT}"
             val modelVersion = "Phone model: ${capitalize(getDeviceName() ?: "")}"
-            val totalRAM = "Total RAM: ${bytesToHuman(memInfo.totalMem.toDouble())}"
+            val totalRAM = "RAM used: ${bytesToHuman(memInfo.totalMem.toDouble())}"
             val availableRam = "RAM available: ${bytesToHuman(memInfo.availMem.toDouble())}"
             val bluetoothConnected = "Bluetooth connected: ${isBluetoothHeadsetConnected()}"
             val questionQuitUnexp = "How many times has PAWKIT closed unexpectedly for you?"
