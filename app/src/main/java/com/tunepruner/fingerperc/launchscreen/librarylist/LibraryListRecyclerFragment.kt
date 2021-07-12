@@ -27,6 +27,8 @@ import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.databinding.LaunchScreen2Binding
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
+import com.tunepruner.fingerperc.launchscreen.viewmodel.SoundbankViewModel
+import com.tunepruner.fingerperc.launchscreen.viewmodel.SoundbankViewModelFactory
 import java.io.File
 import java.text.DecimalFormat
 

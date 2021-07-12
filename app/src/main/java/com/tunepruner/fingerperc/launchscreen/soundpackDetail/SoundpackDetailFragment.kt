@@ -23,6 +23,8 @@ import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragmentArgs
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
 import com.tunepruner.fingerperc.launchscreen.librarylist.*
+import com.tunepruner.fingerperc.launchscreen.viewmodel.SoundbankViewModel
+import com.tunepruner.fingerperc.launchscreen.viewmodel.SoundbankViewModelFactory
 
 class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener,
     BillingClientListener {

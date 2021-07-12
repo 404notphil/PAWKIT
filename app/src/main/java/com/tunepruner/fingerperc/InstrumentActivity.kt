@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.tunepruner.fingerperc.gui.InstrumentGUI
 import com.tunepruner.fingerperc.instrument.Instrument
+import com.tunepruner.fingerperc.launchscreen.data.UsageReportingService
 
 
 class InstrumentActivity : AppCompatActivity() {

@@ -1,11 +1,10 @@
-package com.tunepruner.fingerperc.launchscreen.librarylist
+package com.tunepruner.fingerperc.launchscreen.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
+import com.tunepruner.fingerperc.launchscreen.data.SoundbankRepo
 
 class SoundbankViewModel(val app: Application, val soundpackID: String) : AndroidViewModel(app) {
     private val dataRepo = SoundbankRepo(app, soundpackID)

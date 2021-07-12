@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.launchscreen.librarylist
+package com.tunepruner.fingerperc.launchscreen.data
 
 import android.app.Application
 import android.content.pm.PackageInfo
@@ -14,6 +14,8 @@ import com.google.firebase.ktx.Firebase
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundpack
+import com.tunepruner.fingerperc.launchscreen.librarylist.BillingClientListener
+import com.tunepruner.fingerperc.launchscreen.librarylist.BillingClientWrapper
 import java.io.File
 
 class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClientListener {
@@ -56,9 +58,8 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                                 }
                             }
                         }
-
+                        libraries = filterSoundpacks(libraries)
                     }
-                    libraries = filterSoundpacks(libraries)
                     libraries.sortWith(compareByDescending { it.isPurchased })
                     soundbankPrimitive = Soundbank(libraries, soundpacks)
                     updateInstallStatuses(soundbankPrimitive)
@@ -75,19 +76,23 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
     }
 
     override fun onClientReady() {
-        Log.d(LOG_TAG, "onClientReady() called")
+//        Log.d(LOG_TAG, "onClientReady() called")
         billingClientWrapper.queryPurchases()
     }
 
     override fun onPurchasesQueried(soundpacksPurchased: ArrayList<Purchase>) {
-        Log.d(
-            LOG_TAG,
-            "onPurchasesQueried() called with: soundpacksPurchased = $soundpacksPurchased"
-        )
+//        Log.d(
+//            LOG_TAG,
+//            "onPurchasesQueried() called with: soundpacksPurchased = $soundpacksPurchased"
+//        )
         updatePurchaseStatuses(soundpacksPurchased)
     }
 
     private fun updateInstallStatuses(soundbankPrimitive: Soundbank) {
+//        Log.d(
+//            LOG_TAG,
+//            "updateInstallStatuses() called with: soundbankPrimitive = $soundbankPrimitive"
+//        )
         val assetManager: AssetManager = app.assets
         val filePaths = assetManager.list("audio")
             ?: error("AssetManager couldn't get filePaths")
@@ -109,35 +114,31 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                 soundbankPrimitive.libraries[i].isInstalled = false
             }
         }
-        Log.d(
-            LOG_TAG,
-            "updateInstallStatuses() called with: soundbankPrimitive = $soundbankPrimitive"
-        )
     }
 
     private fun updatePurchaseStatuses(listOfPurchases: ArrayList<Purchase>) {
+//        Log.d(LOG_TAG, "updatePurchaseStatuses() called with: listOfPurchases = $listOfPurchases")
         for (library in soundbankPrimitive.libraries) {
-            if (soundbankLiveData.value?.check(Soundbank.CheckType.IS_PURCHASED, library) == true &&
-                library.soundpackID != null
+            if (soundbankPrimitive.check(Soundbank.CheckType.IS_PURCHASED, library) && library.soundpackID != null
             ) {
                 for (purchase in listOfPurchases) {
                     if (purchase.sku == library.soundpackID) {
-                        soundbankLiveData.value?.set(Soundbank.SetType.IS_PURCHASED, true, library)
+                        soundbankPrimitive.set(Soundbank.SetType.IS_PURCHASED, true, library)
                     }
                 }
             }
         }
-        Log.d(LOG_TAG, "updatePurchaseStatuses() called with: listOfPurchases = $listOfPurchases")
+        soundbankLiveData.value = soundbankPrimitive
     }
 
     private fun filterSoundpacks(list: ArrayList<Library>): ArrayList<Library> {
+//        Log.d(LOG_TAG, "filterSoundpacks() called with: list = $list")
         /*since this class is used for both the main LibraryListRecyclerFragment and the SoundpackDetailFragment,
         it has a field called "soundpackID" that stores an empty string if this class is serving
         LibraryListRecyclerFragment and otherwise it contains the name of the soundpack it is
         displaying, in which case the code below is for removing all libraries that don't belong to that
         soundpack.
         */
-
         val listToReturn = ArrayList<Library>()
         for (element in list) listToReturn.add(element)
 
@@ -150,7 +151,6 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                 }
             }
         }
-        Log.d(LOG_TAG, "filterSoundpacks() called with: list = $list")
         return listToReturn
     }
 

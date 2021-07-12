@@ -1,6 +1,7 @@
-package com.tunepruner.fingerperc
+package com.tunepruner.fingerperc.launchscreen.data
 
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.tunepruner.fingerperc.InstrumentActivity
 import java.io.File
 import java.util.*
 
