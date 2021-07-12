@@ -88,6 +88,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
 
     override fun onResume() {
         super.onResume()
+        viewModel.getData()
         billingClientWrapper = BillingClientWrapper.getInstance(this, requireContext())
         binding.button2.text = args.price
     }
