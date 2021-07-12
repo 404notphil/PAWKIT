@@ -29,14 +29,15 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun populateFromFirestore(collectionName: String) {
-        Log.i(LOG_TAG, "populateFromFirestore called!")
+        Log.i(LOG_TAG, "populateFromFirestore: ")
+//        Log.i(LOG_TAG, "populateFromFirestore called!")
         isBeta()
         val collectionRef = db.collection(collectionName)
 
 
         collectionRef.get()
             .addOnSuccessListener { it ->
-                Log.i(LOG_TAG, "onSuccessCodeRun")
+//                Log.i(LOG_TAG, "onSuccessCodeRun")
                 if (it != null) {
                     if (collectionName.contains("libraries")) {
 
@@ -44,6 +45,7 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                         for (element in results) {
                             libraries.add(element)
                         }
+                        Log.i(LOG_TAG, "libraries.size: ${libraries.size}")
                         populateFromFirestore("soundpacks")
 
                     } else {
@@ -58,6 +60,7 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                                 }
                             }
                         }
+                        Log.i(LOG_TAG, "soundpacks.size: ${soundpacks.size}")
                         libraries = filterSoundpacks(libraries)
                     }
                     libraries.sortWith(compareByDescending { it.isPurchased })
@@ -119,7 +122,10 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
     private fun updatePurchaseStatuses(listOfPurchases: ArrayList<Purchase>) {
 //        Log.d(LOG_TAG, "updatePurchaseStatuses() called with: listOfPurchases = $listOfPurchases")
         for (library in soundbankPrimitive.libraries) {
-            if (soundbankPrimitive.check(Soundbank.CheckType.IS_PURCHASED, library) && library.soundpackID != null
+            if (soundbankPrimitive.check(
+                    Soundbank.CheckType.IS_PURCHASED,
+                    library
+                ) && library.soundpackID != null
             ) {
                 for (purchase in listOfPurchases) {
                     if (purchase.sku == library.soundpackID) {
@@ -141,6 +147,7 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
         */
         val listToReturn = ArrayList<Library>()
         for (element in list) listToReturn.add(element)
+        Log.i(LOG_TAG, "listToReturn.size: ${listToReturn.size}")
 
         if (soundpackID.isNotEmpty()) {
             for (element in list) {

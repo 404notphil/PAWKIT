@@ -1,6 +1,7 @@
 package com.tunepruner.fingerperc.launchscreen.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +13,7 @@ class SoundbankViewModel(val app: Application, val soundpackID: String) : Androi
     val connectionAchieved = false
 
     fun getData(){
+        Log.i("Repo.Class", "getData: ")
         dataRepo.populateFromFirestore("libraries")
     }
 }

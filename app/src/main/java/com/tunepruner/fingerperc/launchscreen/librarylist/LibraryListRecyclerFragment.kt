@@ -55,8 +55,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         binding.recyclerView.addItemDecoration(SpacesItemDecoration(50))
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
-        observeLiveData()
-
         return binding.root
     }
 
@@ -69,6 +67,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     }
 
     private fun observeLiveData() {
+        Log.i("Repo.Class", "observeLiveData: ")
         viewModel.soundbankLiveData.observe(viewLifecycleOwner) { soundbank ->
             Log.i("log_tag", "observeLiveData")
             val adapter = LibraryListRecyclerAdapter(
