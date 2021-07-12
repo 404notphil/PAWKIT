@@ -145,6 +145,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         val buttonParent = requireActivity().findViewById<LinearLayout>(R.id.play_now_layout)
         val buttonToRemove = requireActivity().findViewById<LinearLayout>(R.id.play_button_parent)
 
+
         if (!args.ispurchased) { //ToDo remove djembe condition once samples are done!
             buttonParent.removeView(buttonToRemove)
         }

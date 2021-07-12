@@ -6,22 +6,25 @@ import android.bluetooth.BluetoothHeadset
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.tunepruner.fingerperc.R
+import com.tunepruner.fingerperc.databinding.LaunchScreen2Binding
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
 import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
 import java.io.File
@@ -37,22 +40,22 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         )
     }
     private lateinit var mListener: FragmentListener
-    private lateinit var recyclerView: RecyclerView
     private lateinit var navController: NavController
+    private lateinit var binding: LaunchScreen2Binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = LaunchScreen2Binding.inflate(layoutInflater)
+
         if (context is FragmentListener) mListener = context as FragmentListener
-        val view: View = inflater.inflate(R.layout.launch_screen2, container, false)
-        recyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.addItemDecoration(SpacesItemDecoration(50))
+        binding.recyclerView.addItemDecoration(SpacesItemDecoration(50))
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
         observeLiveData()
 
-        return view
+        return binding.root
     }
 
     //Todo review the first chapter of this course (https://www.linkedin.com/learning/android-development-essential-training-manage-data-with-kotlin/share-data-with-livedata-objects-2?contextUrn=urn%3Ali%3AlyndaLearningPath%3A5a724cba498e9ec2d506035e)
@@ -64,15 +67,31 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     }
 
     private fun observeLiveData() {
-        viewModel.soundbank.observe(viewLifecycleOwner) { soundbank ->
+        viewModel.soundbankLiveData.observe(viewLifecycleOwner) { soundbank ->
+            Log.i("log_tag", "observeLiveData")
             val adapter = LibraryListRecyclerAdapter(
                 requireContext(),
                 soundbank,
                 this
             )
-            recyclerView.adapter = adapter
+
+            binding.recyclerView.adapter = adapter
+
+            if (adapter.itemCount == 0) {
+                Log.i("log_tag", "Is empty, or was for a moment")
+
+
+                Log.i(TAG, "${viewModel.soundbankLiveData.value?.soundpacks?.size}")
+                for (element in viewModel.soundbankLiveData.value?.soundpacks!!) {
+                    Log.i(TAG, "${element.isInstalled}: ")
+                }
+            } else {
+                Log.i("log_tag", "It's got content: ${adapter?.itemCount}")
+            }
+
 
         }
+        viewModel.getData()
     }
 
 
@@ -84,16 +103,29 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         val amountOfIntervals = 10
         val duration = interval * amountOfIntervals
         when {
-            viewModel.soundbank.value?.check(Soundbank.CheckType.IS_RELEASED, library) == false ||
-                    viewModel.soundbank.value?.check(Soundbank.CheckType.IS_RELEASED, library) == null -> {
+            viewModel.soundbankLiveData.value?.check(
+                Soundbank.CheckType.IS_RELEASED,
+                library
+            ) == false ||
+                    viewModel.soundbankLiveData.value?.check(
+                        Soundbank.CheckType.IS_RELEASED,
+                        library
+                    ) == null -> {
 //                navController.navigate(R.id.comingSoonFragment)
                 val text = "Coming soon!"
                 val toastDuration = Toast.LENGTH_SHORT
 
                 val toast = Toast.makeText(context, text, toastDuration)
-                toast.show() }
-            viewModel.soundbank.value?.check(Soundbank.CheckType.IS_INSTALLED, library) == false &&
-                    viewModel.soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library) == true -> {
+                toast.show()
+            }
+            viewModel.soundbankLiveData.value?.check(
+                Soundbank.CheckType.IS_INSTALLED,
+                library
+            ) == false &&
+                    viewModel.soundbankLiveData.value?.check(
+                        Soundbank.CheckType.IS_PURCHASED,
+                        library
+                    ) == true -> {
                 val intent = Intent(requireActivity(), UpdateDialogActivity::class.java)
                 startActivity(intent)
             }
@@ -104,7 +136,10 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
                         library.libraryID ?: "",
                         library.soundpackID ?: "",
                         library.imageUrl ?: "",
-                        viewModel.soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library)?: false,
+                        viewModel.soundbankLiveData.value?.check(
+                            Soundbank.CheckType.IS_PURCHASED,
+                            library
+                        ) ?: false,
                         "$0.99",
                         library.soundpackName ?: "(unknown name)"
                     )
@@ -128,8 +163,8 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
             else -> null
         }
         if (isBeta == false) {
-            val buttonParent = requireActivity().findViewById<LinearLayout>(R.id.linearLayout2)
-            val button = requireActivity().findViewById<Button>(R.id.send_phil_feedback)
+            val buttonParent = binding.linearLayout2
+            val button = binding.sendPhilFeedback
             buttonParent.removeView(button)
         } else {
             //get device memory
@@ -189,7 +224,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     }
 
     private fun bytesToHuman(size: Double): String? {
-        val Kb: Double= 1024.0
+        val Kb: Double = 1024.0
         val Mb: Double = Kb * 1024.0
         val Gb: Double = Mb * 1024.0
         val Tb: Double = Gb * 1024.0
@@ -198,11 +233,11 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         val f = DecimalFormat("##.00")
 
         if (size < Kb) return "$size byte"
-        if (size > Kb && size < Mb ) return f.format(size / Kb).toString() + " KB"
-        if (size > Mb && size < Gb ) return f.format(size / Mb).toString() + " MB"
-        if (size > Gb && size < Tb ) return f.format(size / Gb).toString() + " GB"
-        if (size > Tb && size < Pb ) return f.format(size / Tb).toString() + " TB"
-        if (size > Pb && size < Eb ) return f.format(size / Pb).toString() + " Pb"
+        if (size > Kb && size < Mb) return f.format(size / Kb).toString() + " KB"
+        if (size > Mb && size < Gb) return f.format(size / Mb).toString() + " MB"
+        if (size > Gb && size < Tb) return f.format(size / Gb).toString() + " GB"
+        if (size > Tb && size < Pb) return f.format(size / Tb).toString() + " TB"
+        if (size > Pb && size < Eb) return f.format(size / Pb).toString() + " Pb"
         return if (size >= Eb) ((size / Eb)).toString() + " Eb" else "0"
     }
 
@@ -235,8 +270,10 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     }
 
     private fun isBluetoothHeadsetConnected(): Boolean {
-        val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()?: null
-        return (bluetoothAdapter?.isEnabled ?: false && bluetoothAdapter?.getProfileConnectionState(BluetoothHeadset.HEADSET) === BluetoothHeadset.STATE_CONNECTED)
+        val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter() ?: null
+        return (bluetoothAdapter?.isEnabled ?: false && bluetoothAdapter?.getProfileConnectionState(
+            BluetoothHeadset.HEADSET
+        ) === BluetoothHeadset.STATE_CONNECTED)
     }
 
     interface FragmentListener {

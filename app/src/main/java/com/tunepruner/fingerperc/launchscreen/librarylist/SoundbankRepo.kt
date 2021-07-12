@@ -18,24 +18,23 @@ import java.io.File
 
 class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClientListener {
     private lateinit var soundbankPrimitive: Soundbank
-    val soundbank = MutableLiveData<Soundbank>()
+    val soundbankLiveData = MutableLiveData<Soundbank>()
     var libraries = ArrayList<Library>()
     val soundpacks = ArrayList<Soundpack>()
     private val db = Firebase.firestore
     private lateinit var billingClientWrapper: BillingClientWrapper
-    private val TAG = "Repo.Class"
-
-    init {
-        populateFromFirestore("libraries")
-    }
+    private val LOG_TAG = "Repo.Class"
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun populateFromFirestore(collectionName: String) {
+    fun populateFromFirestore(collectionName: String) {
+        Log.i(LOG_TAG, "populateFromFirestore called!")
         isBeta()
         val collectionRef = db.collection(collectionName)
 
+
         collectionRef.get()
             .addOnSuccessListener { it ->
+                Log.i(LOG_TAG, "onSuccessCodeRun")
                 if (it != null) {
                     if (collectionName.contains("libraries")) {
 
@@ -58,29 +57,33 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                             }
                         }
 
-                        libraries = filterSoundpacks(libraries)
-                        libraries.sortWith(compareByDescending { it.isPurchased })
-                        soundbankPrimitive = Soundbank(libraries, soundpacks)
-                        updateInstallStatuses(soundbankPrimitive)
-                        soundbank.value = soundbankPrimitive
-                        billingClientWrapper =
-                            BillingClientWrapper.getInstance(this, app.applicationContext)
-
                     }
+                    libraries = filterSoundpacks(libraries)
+                    libraries.sortWith(compareByDescending { it.isPurchased })
+                    soundbankPrimitive = Soundbank(libraries, soundpacks)
+                    updateInstallStatuses(soundbankPrimitive)
+                    soundbankLiveData.value = soundbankPrimitive
+                    billingClientWrapper =
+                        BillingClientWrapper.getInstance(this, app.applicationContext)
                 } else {
-                    Log.d(TAG, "No such document")
+                    Log.d(LOG_TAG, "No such document")
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
+                Log.d(LOG_TAG, "get failed with ", exception)
             }
     }
 
     override fun onClientReady() {
+        Log.d(LOG_TAG, "onClientReady() called")
         billingClientWrapper.queryPurchases()
     }
 
     override fun onPurchasesQueried(soundpacksPurchased: ArrayList<Purchase>) {
+        Log.d(
+            LOG_TAG,
+            "onPurchasesQueried() called with: soundpacksPurchased = $soundpacksPurchased"
+        )
         updatePurchaseStatuses(soundpacksPurchased)
     }
 
@@ -94,33 +97,47 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                 if (filePaths[j].contains(libraryName)) {
 //                    soundbankPrimitive.libraries[i].isInstalled = true
 //                    val testing = soundbank.value
-                    soundbankPrimitive.set(Soundbank.SetType.IS_INSTALLED, true, soundbankPrimitive.libraries[i])
+                    soundbankPrimitive.set(
+                        Soundbank.SetType.IS_INSTALLED,
+                        true,
+                        soundbankPrimitive.libraries[i]
+                    )
                     break
                 }
             }
             if (soundbankPrimitive.libraries[i].isInstalled == null) {
                 soundbankPrimitive.libraries[i].isInstalled = false
-                Log.i(TAG, "${soundbankPrimitive.libraries[i].libraryName} is not installed...")
-
             }
         }
+        Log.d(
+            LOG_TAG,
+            "updateInstallStatuses() called with: soundbankPrimitive = $soundbankPrimitive"
+        )
     }
 
     private fun updatePurchaseStatuses(listOfPurchases: ArrayList<Purchase>) {
         for (library in soundbankPrimitive.libraries) {
-            if (soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library) == true &&
+            if (soundbankLiveData.value?.check(Soundbank.CheckType.IS_PURCHASED, library) == true &&
                 library.soundpackID != null
             ) {
                 for (purchase in listOfPurchases) {
                     if (purchase.sku == library.soundpackID) {
-                        soundbank.value?.set(Soundbank.SetType.IS_PURCHASED, true, library)
+                        soundbankLiveData.value?.set(Soundbank.SetType.IS_PURCHASED, true, library)
                     }
                 }
             }
         }
+        Log.d(LOG_TAG, "updatePurchaseStatuses() called with: listOfPurchases = $listOfPurchases")
     }
 
     private fun filterSoundpacks(list: ArrayList<Library>): ArrayList<Library> {
+        /*since this class is used for both the main LibraryListRecyclerFragment and the SoundpackDetailFragment,
+        it has a field called "soundpackID" that stores an empty string if this class is serving
+        LibraryListRecyclerFragment and otherwise it contains the name of the soundpack it is
+        displaying, in which case the code below is for removing all libraries that don't belong to that
+        soundpack.
+        */
+
         val listToReturn = ArrayList<Library>()
         for (element in list) listToReturn.add(element)
 
@@ -133,6 +150,7 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                 }
             }
         }
+        Log.d(LOG_TAG, "filterSoundpacks() called with: list = $list")
         return listToReturn
     }
 
@@ -172,7 +190,10 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                     loop@ for (element in results) {
                         if (element.versionNumber == verCode) {
                             isBeta = element.isCurrent
-                            file.writeText(isBeta.toString(), Charsets.UTF_8) //Todo double check the toString method to make sure it creates a simple "true" or "false"
+                            file.writeText(
+                                isBeta.toString(),
+                                Charsets.UTF_8
+                            ) //Todo double check the toString method to make sure it creates a simple "true" or "false"
                             break@loop
                         }
                     }

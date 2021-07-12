@@ -57,7 +57,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
 
         recyclerView.addItemDecoration(SpacesItemDecoration(50))
 
-        viewModel.soundbank.observe(viewLifecycleOwner) { soundbank ->
+        viewModel.soundbankLiveData.observe(viewLifecycleOwner) { soundbank ->
             val adapter = SoundpackRecyclerAdapter(
                 requireContext(),
                 soundbank,
@@ -95,8 +95,8 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
         recyclerButtonSubtitle: TextView
     ) {
         when {
-            viewModel.soundbank.value?.check(Soundbank.CheckType.IS_RELEASED, library) == false ||
-                    viewModel.soundbank.value?.check(
+            viewModel.soundbankLiveData.value?.check(Soundbank.CheckType.IS_RELEASED, library) == false ||
+                    viewModel.soundbankLiveData.value?.check(
                         Soundbank.CheckType.IS_RELEASED,
                         library
                     ) == null -> {
@@ -107,10 +107,10 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
                 val toast = Toast.makeText(context, text, toastDuration)
                 toast.show()
             }
-            viewModel.soundbank.value?.check(
+            viewModel.soundbankLiveData.value?.check(
                 Soundbank.CheckType.IS_INSTALLED,
                 library
-            ) == false && viewModel.soundbank.value?.check(
+            ) == false && viewModel.soundbankLiveData.value?.check(
                 Soundbank.CheckType.IS_PURCHASED,
                 library
             ) == true -> {
@@ -124,7 +124,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
                         library.libraryID ?: "",
                         library.soundpackID ?: "",
                         library.imageUrl ?: "",
-                        viewModel.soundbank.value?.check(Soundbank.CheckType.IS_PURCHASED, library)
+                        viewModel.soundbankLiveData.value?.check(Soundbank.CheckType.IS_PURCHASED, library)
                             ?: false,
                         "$0.99",
                         library.soundpackName ?: "(unknown name)"
