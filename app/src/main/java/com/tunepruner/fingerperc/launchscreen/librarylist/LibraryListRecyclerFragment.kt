@@ -88,8 +88,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
             } else {
                 Log.i("log_tag", "It's got content: ${adapter?.itemCount}")
             }
-
-
         }
         viewModel.getData()
     }

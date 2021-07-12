@@ -39,10 +39,9 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inflater = TransitionInflater.from(requireContext())
-        enterTransition = inflater.inflateTransition(R.transition.fade)
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-        sharedElementEnterTransition =
-            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+//        sharedElementEnterTransition =
+//            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
     }
 
     override fun onResume() {
