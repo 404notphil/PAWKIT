@@ -1,10 +1,10 @@
 package com.tunepruner.fingerperc.store.ui
 
+import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import androidx.transition.TransitionInflater
 import com.android.billingclient.api.*
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -26,22 +25,16 @@ import com.tunepruner.fingerperc.store.BillingClientListener
 import com.tunepruner.fingerperc.store.BillingClientWrapper
 
 class LibraryDetailFragment : Fragment(), BillingClientListener {
-    private lateinit var skuDetails: SkuDetails
-    private val logTag = "LbrryDetlFrgmnt.Class"
+    private var player: YouTubePlayer? = null
     private val args: LibraryDetailFragmentArgs by navArgs()
     private lateinit var binding: FragmentLibraryDetailBinding
     private var stopLoadingRequested = false
-    private lateinit var purchasesUpdatedListener: PurchasesUpdatedListener
-    lateinit var billingClientWrapper: BillingClientWrapper
-    private val TAG = "LibraryDetailFragment.class"
+    private lateinit var billingClientWrapper: BillingClientWrapper
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val inflater = TransitionInflater.from(requireContext())
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-//        sharedElementEnterTransition =
-//            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
     }
 
     override fun onResume() {
@@ -51,7 +44,8 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         binding.titleOfLibraryDetail.text = args.libraryname
 
-        binding.soundpackButton.text = context?.getString(R.string.view_soundpack, args.soundpackname)
+        binding.soundpackButton.text =
+            context?.getString(R.string.view_soundpack, args.soundpackname)
 
         billingClientWrapper = BillingClientWrapper.getInstance(this, requireContext())
 
@@ -67,7 +61,6 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         }
 
         binding.soundpackButton.setOnClickListener {
-            Log.i(TAG, "clicked: ")
             stopLoadingRequested = true
             val action =
                 LibraryDetailFragmentDirections.actionLibraryDetailFragment3ToSoundpackFragment(
@@ -91,8 +84,9 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         binding.playButton.setOnClickListener {
             stopLoadingRequested = false
-            if (binding.youtubePlayerView.alpha == 1F)
-                binding.youtubePlayerView.alpha = 0F
+            with(binding.youtubePlayerView) {
+                if (this.alpha == 1f) this.alpha = 0F
+            }
 
             if (args.ispurchased) {
                 val progressBarDuration = 1000
@@ -126,13 +120,23 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
                         .setListener(null)
                 }
             else {
+                player?.pause()
                 binding.youtubePlayerView.apply {
+                    val view = this
                     alpha = 1f
                     visibility = View.VISIBLE
                     animate()
                         .alpha(0f)
                         .setDuration(500)
-                        .setListener(null)
+                        .setListener(object : Animator.AnimatorListener {
+                            override fun onAnimationStart(animation: Animator?) {}
+                            override fun onAnimationCancel(animation: Animator?) {}
+                            override fun onAnimationRepeat(animation: Animator?) {}
+                            override fun onAnimationEnd(animation: Animator?) {
+                                view.visibility = View.GONE
+                            }
+                        })
+
                 }
             }
         }
@@ -140,17 +144,15 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         val youTubePlayerView: YouTubePlayerView = binding.youtubePlayerView
         youTubePlayerView.enterFullScreen()
 
-        Log.i(logTag, "Resuming")
-
         lifecycle.addObserver(youTubePlayerView)
 
         youTubePlayerView.addYouTubePlayerListener(
-            object :
-                AbstractYouTubePlayerListener() {
+            object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
-                    youTubePlayer.cueVideo("48E8RgHFo30", 0F)
+                    player = youTubePlayer.apply { cueVideo("48E8RgHFo30", 0F) }
                 }
             })
+
     }
 
     override fun onCreateView(
@@ -167,7 +169,6 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         val buttonParent = requireActivity().findViewById<LinearLayout>(R.id.play_now_layout)
         val buttonToRemove = requireActivity().findViewById<LinearLayout>(R.id.play_button_parent)
 
-
         if (!args.ispurchased) { //ToDo remove djembe condition once samples are done!
             buttonParent.removeView(buttonToRemove)
         }
@@ -183,7 +184,6 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
     }
 
     private fun showLoadingInstrument(progressBarDuration: Int) {
-        Log.i(TAG, "showLoadingInstrument: ")
         val intervalLength = 10
         val amountOfIntervals = progressBarDuration / intervalLength
 
@@ -203,7 +203,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         val handler = Handler(Looper.getMainLooper())
 
         var intervalsAccumulated = intervalLength
-        loop@for (i in 0..amountOfIntervals) {
+        loop@ for (i in 0..amountOfIntervals) {
             handler.postDelayed(
                 {
                     if (!stopLoadingRequested) {
@@ -235,7 +235,6 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         titleOfLibrary: TextView,
         progressBarLayout: LinearLayout
     ) {
-        Log.i(TAG, "onProgressStarted: ")
         buttonParent.removeView(titleOfLibrary)
         buttonParent.removeView(progressBarLayout)
         buttonParent.addView(progressBarLayout, 0)
@@ -246,7 +245,6 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
         titleOfLibrary: TextView,
         progressBarLayout: LinearLayout
     ) {
-        Log.i(TAG, "onProgressFinished: ")
         buttonParent.removeView(progressBarLayout)
         buttonParent.removeView(titleOfLibrary)
         buttonParent.addView(titleOfLibrary, 0)
