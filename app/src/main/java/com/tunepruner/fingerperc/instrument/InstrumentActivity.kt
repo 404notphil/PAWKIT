@@ -12,7 +12,6 @@ import com.tunepruner.fingerperc.instrument.logging.UsageReportingService
 class InstrumentActivity : AppCompatActivity() {
     lateinit var instrument: Instrument
     lateinit var libraryID: String
-    private val TAG = "InstrumentActivity"
     private lateinit var usageReportingService: UsageReportingService
 
     override fun onCreate(savedInstanceState: Bundle?) {

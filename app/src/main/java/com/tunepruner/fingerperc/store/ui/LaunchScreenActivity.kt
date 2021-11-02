@@ -8,7 +8,6 @@ import com.tunepruner.fingerperc.instrument.InstrumentActivity
 import com.tunepruner.fingerperc.store.Library
 
 class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.FragmentListener {
-    private val TAG = "LaunchScreenActivity.Class"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

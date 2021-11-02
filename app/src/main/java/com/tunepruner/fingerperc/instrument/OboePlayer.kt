@@ -18,7 +18,6 @@ class OboePlayer(
 
 ) : Player {
     private val jniPlayerAdapter = JNIPlayerAdapter()
-    private val TAG = "Player"
     private var testingCounter = 0
 
     init {

@@ -12,7 +12,6 @@ class V1VelocityZone(
     val screenDimensions: ScreenDimensions
 ) : VelocityZone {
     private var zoneLimits: ZoneLimits
-    private val TAG = "V1VelocityZone"
 
     init {
         zoneLimits = calculateLimits()
@@ -22,16 +21,13 @@ class V1VelocityZone(
         val isInBounds = pointF.x.toInt() in (zoneLimits.leftLimit + 1)..zoneLimits.rightLimit &&
                 pointF.y.toInt() in (zoneLimits.topLimit + 1)..zoneLimits.bottomLimit
         return if (isInBounds) {
-//            Log.i(TAG, "a match!")
             0
         } else {
             var boundaryCode = 0
             if (pointF.y < zoneLimits.topLimit) {
                 boundaryCode = -1
-//                Log.i(TAG, boundaryCode.toString())
             } else if (pointF.y > zoneLimits.bottomLimit) {
                 boundaryCode = -2
-//                Log.i(TAG, boundaryCode.toString())
             }
             boundaryCode
         }
@@ -61,7 +57,6 @@ class V1VelocityZone(
         /* Deriving top limit of this VelocityLayer from (height of a layer) * (number of preceding ones) */
         val thisLayerZoneHeight =
             thisArticulationZone / velocityCountOfArticulation//TODO I don't yet account for remainders of the division, which might be causing crashes!
-//        Log.i(TAG, "thisLayerZoneHeight = $thisLayerZoneHeight")
         val topLimit = articulationZoneTopLimit + thisLayerZoneHeight * (reverseVelocityNumber - 1)
 
         val bottomLimit = topLimit + thisLayerZoneHeight

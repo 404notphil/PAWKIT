@@ -23,22 +23,17 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
     val soundpacks = ArrayList<Soundpack>()
     private val db = Firebase.firestore
     private lateinit var billingClientWrapper: BillingClientWrapper
-    private val LOG_TAG = "Repo.Class"
 
     fun getCollectionFromFirestore() {
         libraries.clear()
         soundpacks.clear()
-        Log.d(LOG_TAG, "getCollectionFromFirestore() called!")
         isBeta()
         val librariesCollectionRef = db.collection("libraries")
         val soundpacksCollectionRef = db.collection("soundpacks")
 
         librariesCollectionRef.get()
             .addOnSuccessListener { it ->
-                Log.i(LOG_TAG, "onSuccessCodeRun")
                 if (it != null) {
-                    Log.i(LOG_TAG, "libraries listener code was run!")
-
                     val results: List<Library> = it.toObjects(Library::class.java)
                     for (element in results) {
                         libraries.add(element)
@@ -49,7 +44,6 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                     //soundbankPrimitive.
                     soundpacksCollectionRef.get()
                         .addOnSuccessListener {
-                            Log.i(LOG_TAG, "soundpacks listener code was run!")
                             val results: List<Soundpack> =
                                 it.toObjects(Soundpack::class.java)
                             for (element in results)
@@ -71,21 +65,15 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
                                 BillingClientWrapper.getInstance(this, app.applicationContext)
                         }
                         .addOnFailureListener { exception ->
-                            Log.d(LOG_TAG, "get failed with ", exception)
+                            Log.e(this.javaClass.name, "get failed with ", exception)
                         }
 
 
-                } else {
-                    Log.d(LOG_TAG, "No such document")
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d(LOG_TAG, "get failed with ", exception)
+                Log.e(this.javaClass.name, "get failed with ", exception)
             }
-        Log.d(LOG_TAG, "listener evaluated for librariesCollectionRef, will run shortly...")
-
-
-        Log.d(LOG_TAG, "listener evaluated for soundpacksCollectionRef, will run shortly...")
     }
 
     override fun onClientReady() {
@@ -142,12 +130,6 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
         soundbankLiveData.value = soundbankPrimitive
 
         //Log the purchase statuses
-        Log.i(LOG_TAG, "_______________")
-        for (element in soundbankPrimitive.libraries) {
-            Log.i(LOG_TAG, "${element.soundpackName} is purchase? ${element.isPurchased}")
-        }
-        Log.i(LOG_TAG, "_______________")
-
     }
 
     private fun filterSoundpacks(list: ArrayList<Library>): ArrayList<Library> {
@@ -163,7 +145,6 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
 
         if (soundpackID.isNotEmpty()) {
             for (element in list) {
-                Log.i(LOG_TAG, "listToReturn: ${listToReturn.size}")
                 element.soundpackID?.let { library ->
                     if (!library.contains(soundpackID)) {
                         listToReturn.remove(element)
@@ -175,8 +156,6 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
     }
 
     private fun isBeta() {
-        Log.d(LOG_TAG, "isBeta() called")
-
         //first, get the persisted version of the story.
         val file = File(app.filesDir, "is_beta")
         val textFromFile: String = if (file.exists()) {

@@ -25,14 +25,13 @@ import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.databinding.LaunchScreen2Binding
 import com.tunepruner.fingerperc.store.Library
 import com.tunepruner.fingerperc.store.Soundbank
-import com.tunepruner.fingerperc.launchscreen.librarylist.SpacesItemDecoration
+import com.tunepruner.fingerperc.store.ui.util.SpacesItemDecoration
 import com.tunepruner.fingerperc.store.viewmodel.SoundbankViewModel
 import com.tunepruner.fingerperc.store.viewmodel.SoundbankViewModelFactory
 import java.io.File
 import java.text.DecimalFormat
 
 class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener {
-    private val TAG = "LibraryListRecyclerFragment.Class"
     private val wasSet = false
     private val viewModel: SoundbankViewModel by viewModels {
         SoundbankViewModelFactory(
@@ -76,18 +75,6 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
             )
 
             binding.recyclerView.adapter = adapter
-
-            if (adapter.itemCount == 0) {
-                Log.i("log_tag", "Is empty, or was for a moment")
-
-
-                Log.i(TAG, "${viewModel.soundbankLiveData.value?.soundpacks?.size}")
-                for (element in viewModel.soundbankLiveData.value?.soundpacks!!) {
-                    Log.i(TAG, "${element.isInstalled}: ")
-                }
-            } else {
-                Log.i("log_tag", "It's got content: ${adapter?.itemCount}")
-            }
         }
     }
 
@@ -221,21 +208,21 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
     }
 
     private fun bytesToHuman(size: Double): String? {
-        val Kb: Double = 1024.0
-        val Mb: Double = Kb * 1024.0
-        val Gb: Double = Mb * 1024.0
-        val Tb: Double = Gb * 1024.0
-        val Pb: Double = Tb * 1024.0
-        val Eb: Double = Pb * 1024.0
+        val kB = 1024.0
+        val mB: Double = kB * 1024.0
+        val gB: Double = mB * 1024.0
+        val tB: Double = gB * 1024.0
+        val pB: Double = tB * 1024.0
+        val eB: Double = pB * 1024.0
         val f = DecimalFormat("##.00")
 
-        if (size < Kb) return "$size byte"
-        if (size > Kb && size < Mb) return f.format(size / Kb).toString() + " KB"
-        if (size > Mb && size < Gb) return f.format(size / Mb).toString() + " MB"
-        if (size > Gb && size < Tb) return f.format(size / Gb).toString() + " GB"
-        if (size > Tb && size < Pb) return f.format(size / Tb).toString() + " TB"
-        if (size > Pb && size < Eb) return f.format(size / Pb).toString() + " Pb"
-        return if (size >= Eb) ((size / Eb)).toString() + " Eb" else "0"
+        if (size < kB) return "$size byte"
+        if (size > kB && size < mB) return f.format(size / kB).toString() + " KB"
+        if (size > mB && size < gB) return f.format(size / mB).toString() + " MB"
+        if (size > gB && size < tB) return f.format(size / gB).toString() + " GB"
+        if (size > tB && size < pB) return f.format(size / tB).toString() + " TB"
+        if (size > pB && size < eB) return f.format(size / pB).toString() + " Pb"
+        return if (size >= eB) ((size / eB)).toString() + " Eb" else "0"
     }
 
     fun getDeviceName(): String? {

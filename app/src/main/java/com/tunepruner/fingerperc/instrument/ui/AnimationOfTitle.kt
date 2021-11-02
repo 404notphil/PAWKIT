@@ -48,7 +48,6 @@ class AnimationOfTitleRequest(activity: Activity, val velocityZone: VelocityZone
         AnimationOfTitle.addRequest(this, articulationNumber)
         bringGraphicForward()
         sendGraphicToBack()
-
     }
 
     private fun bringGraphicForward() {

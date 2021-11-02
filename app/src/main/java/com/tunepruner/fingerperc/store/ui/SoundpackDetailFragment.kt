@@ -2,7 +2,6 @@ package com.tunepruner.fingerperc.store.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,16 +20,15 @@ import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.databinding.FragmentSoundpackDetailBinding
 import com.tunepruner.fingerperc.store.Library
 import com.tunepruner.fingerperc.store.Soundbank
-import com.tunepruner.fingerperc.launchscreen.librarylist.*
 import com.tunepruner.fingerperc.store.viewmodel.SoundbankViewModel
 import com.tunepruner.fingerperc.store.viewmodel.SoundbankViewModelFactory
 import com.tunepruner.fingerperc.store.BillingClientListener
 import com.tunepruner.fingerperc.store.BillingClientWrapper
+import com.tunepruner.fingerperc.store.ui.util.SpacesItemDecoration
 
 class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener,
     BillingClientListener {
     private val args: LibraryDetailFragmentArgs by navArgs()
-    private val TAG = "SnpkDetFgmt.Class"
     private val viewModel: SoundbankViewModel by viewModels {
         SoundbankViewModelFactory(
             requireActivity().application,
@@ -46,7 +44,6 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getData()
-        Log.i(TAG, "onCreate: ")
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
 

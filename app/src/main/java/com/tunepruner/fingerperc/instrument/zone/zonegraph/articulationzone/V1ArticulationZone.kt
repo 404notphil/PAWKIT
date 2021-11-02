@@ -11,7 +11,6 @@ class V1ArticulationZone(
     val zoneIteration: Int,
     val screenDimensions: ScreenDimensions
 ) : ArticulationZone {
-    private val TAG = "ArticulationZone"
     private val velocityZones: ArrayList<VelocityZone> = ArrayList<VelocityZone>()
     private var zoneLimits: ZoneLimits
 
@@ -50,7 +49,7 @@ class V1ArticulationZone(
         var velocityZone: VelocityZone? = null
 
         for (element in velocityZones) {
-            when (val result = element.isMatch(pointF)){
+            when (element.isMatch(pointF)){
                 0 -> {
                     velocityZone = element
 //                    Log.i(TAG, result.toString())

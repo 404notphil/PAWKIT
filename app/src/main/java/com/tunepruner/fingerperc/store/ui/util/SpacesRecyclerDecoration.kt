@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.launchscreen.librarylist
+package com.tunepruner.fingerperc.store.ui.util
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

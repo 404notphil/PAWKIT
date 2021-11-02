@@ -6,25 +6,20 @@ import com.tunepruner.fingerperc.instrument.zone.zonegraph.articulationzone.velo
 
 class V1ZoneGraph : ZoneGraph {
     private val articulationZones: ArrayList<ArticulationZone> = ArrayList()
-    private val TAG =  "V1ZoneGraph"
 
     override fun invokeZone(pointF: PointF): VelocityZone {
         var articulationZone: ArticulationZone? = null
         loop@ for (element in articulationZones) {
-            val result = element.isMatch(pointF)
-            when (result) {
+            when (element.isMatch(pointF)) {
                 0 -> {
                     articulationZone = element
-//                    Log.i(TAG, result.toString())
                     break@loop
                 }
                 -1 -> {
                     articulationZone = articulationZones[0]
-//                    Log.i(TAG, result.toString())
                 }
                 -2 -> {
                     articulationZone = articulationZones[articulationZones.lastIndex]
-//                    Log.i(TAG, result.toString())
                 }
             }
         }
@@ -35,8 +30,6 @@ class V1ZoneGraph : ZoneGraph {
                 articulationZones[articulationZones.lastIndex]
             }
         }
-//        articulationZone
-//            ?: error("ZoneManager called zoneGraph.invokeLayer(point) but got back a null value")
         return articulationZone.invokeZone(pointF)
             ?: error("ZoneGraph called articulationZone.invokeLayer(point) but got back a null value")
     }

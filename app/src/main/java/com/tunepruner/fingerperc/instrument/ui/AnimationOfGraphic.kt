@@ -18,7 +18,6 @@ class AnimationOfGraphic(
     private val currentIndex: Int,
     activity: Activity
 ) {
-    val TAG: String = "AnimOfGrphc.Class"
     private val offsetMax = 40
     private val durationMax = 700L
     private val articulationNumber = velocityZone.getArticulationNumber()
@@ -28,7 +27,6 @@ class AnimationOfGraphic(
 
     init {
         val imageID = findImageToAnimate(velocityZone)
-        val textID = findTextToAnimate(velocityZone)
 
         val velocityCount =
             resourceManager.getVelocityLayerCount(articulationNumber)
@@ -56,14 +54,6 @@ class AnimationOfGraphic(
         }
     }
 
-    private fun findTextToAnimate(velocityZone: VelocityZone): Int {
-        return if (velocityZone.getArticulationNumber() == 1) {
-            R.id.articulation1title
-        } else {
-            R.id.articulation2title
-        }
-    }
-
     fun stopAnimation() {
         stopRequested = true
     }
@@ -83,7 +73,6 @@ class AnimationOfGraphic(
         val delayPartial = 5
         val cycleLength = delayPartial * 5
         val totalCycles = duration / cycleLength
-        Log.i(TAG, "totalCycles = $totalCycles")
         val constant = 100
         val numeratorBase = 85
         val numeratorIncrement: Long = (constant - numeratorBase) / totalCycles
@@ -120,8 +109,6 @@ class AnimationOfGraphic(
                     }, delayPartial.toLong())
                 }, delayPartial.toLong())
             }, delayLocal)
-
-            Log.i(TAG, "$adjustedCoordsOffset")
 
             cycleStart += cycleLength
             counter++

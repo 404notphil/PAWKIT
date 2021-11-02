@@ -31,6 +31,7 @@
     <string name="check_it_out">Check it out!</string>
     <string name="coming_soon">Coming soon!</string>
     <string name="app_name_full">PAWKIT drums by TunePruner</string>
+    <string name="no_update_available">No update available!</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

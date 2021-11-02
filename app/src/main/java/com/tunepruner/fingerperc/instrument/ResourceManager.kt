@@ -39,7 +39,7 @@ class ResourceManager(context: Context, private val libraryName: String) {
     ): FileSnapshot {
 
         val trimDirectories = fileName.split("/")
-        val trimExtension = trimDirectories[trimDirectories.size-1].split(".")
+        val trimExtension = trimDirectories[trimDirectories.size - 1].split(".")
         val fileNameMembers = trimExtension[0].split("_")
 
         return FileSnapshot(
@@ -108,13 +108,18 @@ class ResourceManager(context: Context, private val libraryName: String) {
         return null
     }
 
-    fun getFileSnapshot(articulationNumber: Int, velocityNumber: Int, roundRobinNumber: Int): FileSnapshot? {
+    fun getFileSnapshot(
+        articulationNumber: Int,
+        velocityNumber: Int,
+        roundRobinNumber: Int
+    ): FileSnapshot? {
         var toReturn: FileSnapshot? = null
         for (element in fileSnapshots) {
-            if(
+            if (
                 element.articulationNumber == articulationNumber &&
                 element.velocityNumber == velocityNumber &&
-                element.roundRobinNumber == roundRobinNumber){
+                element.roundRobinNumber == roundRobinNumber
+            ) {
                 toReturn = element
                 break
             }
@@ -133,10 +138,11 @@ data class FileSnapshot(
     val assetFileDescriptor: AssetFileDescriptor,
     var assetManager: AssetManager
 ) {
-    fun equals(toFind: FileSnapshot): Boolean {
-        return toFind.articulationNumber == articulationNumber &&
-                toFind.velocityNumber == velocityNumber &&
-                toFind.roundRobinNumber == roundRobinNumber &&
-                toFind.libraryName.contains(libraryName)//compiler told me this is fine, but I'm not sure...not .equals? or .contains?
+    override fun equals(other: Any?): Boolean {
+        return other is FileSnapshot &&
+                other.articulationNumber == articulationNumber &&
+                other.velocityNumber == velocityNumber &&
+                other.roundRobinNumber == roundRobinNumber &&
+                other.libraryName.contains(libraryName)//compiler told me this is fine, but I'm not sure...not .equals? or .contains?
     }
 }
