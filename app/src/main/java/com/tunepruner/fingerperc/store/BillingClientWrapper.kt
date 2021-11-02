@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.launchscreen.librarylist
+package com.tunepruner.fingerperc.store
 import android.app.Activity
 import android.content.Context
 import android.util.Log
@@ -46,7 +46,7 @@ class BillingClientWrapper {
                 } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
                     // Handle an error caused by a user cancelling the purchase flow.
                 } else {
-                    // Handle any other error codes.
+                    // TODO Handle any other error codes.
                 }
             }
         billingClient = BillingClient.newBuilder(context)

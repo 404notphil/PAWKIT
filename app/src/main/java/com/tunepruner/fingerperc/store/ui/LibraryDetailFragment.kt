@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.launchscreen.librarydetail
+package com.tunepruner.fingerperc.store.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,11 +19,11 @@ import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import com.tunepruner.fingerperc.InstrumentActivity
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.databinding.FragmentLibraryDetailBinding
-import com.tunepruner.fingerperc.launchscreen.librarylist.BillingClientListener
-import com.tunepruner.fingerperc.launchscreen.librarylist.BillingClientWrapper
+import com.tunepruner.fingerperc.instrument.InstrumentActivity
+import com.tunepruner.fingerperc.store.BillingClientListener
+import com.tunepruner.fingerperc.store.BillingClientWrapper
 
 class LibraryDetailFragment : Fragment(), BillingClientListener {
     private lateinit var skuDetails: SkuDetails
@@ -51,7 +51,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         binding.titleOfLibraryDetail.text = args.libraryname
 
-        binding.soundpackButton.text = "View soundpack: \"${args.soundpackname}\""
+        binding.soundpackButton.text = context?.getString(R.string.view_soundpack, args.soundpackname)
 
         billingClientWrapper = BillingClientWrapper.getInstance(this, requireContext())
 
@@ -198,7 +198,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         onProgressStarted(parent, titleOfLibrary, progressBarLayout)
 
-        loadingText.text = "Loading..."
+        loadingText.text = getString(R.string.loading)
 
         val handler = Handler(Looper.getMainLooper())
 
@@ -218,7 +218,7 @@ class LibraryDetailFragment : Fragment(), BillingClientListener {
 
         handler.postDelayed({
             if (!stopLoadingRequested) {
-                loadingText.text = "Opening..."
+                loadingText.text = getString(R.string.opening)
             }
         }, (intervalLength * amountOfIntervals).toLong() - 200)
 

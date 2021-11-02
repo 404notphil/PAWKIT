@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.launchscreen.librarylist
+package com.tunepruner.fingerperc.store.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -11,7 +11,6 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.tunepruner.fingerperc.R
-import com.tunepruner.fingerperc.launchscreen.LaunchScreenActivity
 
 class UpdateDialogActivity : Activity() {
     lateinit var appUpdateManager: AppUpdateManager

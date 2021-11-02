@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.launchscreen.librarylist
+package com.tunepruner.fingerperc.store.ui
 
 import android.app.ActivityManager
 import android.bluetooth.BluetoothAdapter
@@ -6,13 +6,11 @@ import android.bluetooth.BluetoothHeadset
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,14 +20,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.recyclerview.widget.RecyclerView
 import com.tunepruner.fingerperc.BuildConfig
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.databinding.LaunchScreen2Binding
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
-import com.tunepruner.fingerperc.launchscreen.viewmodel.SoundbankViewModel
-import com.tunepruner.fingerperc.launchscreen.viewmodel.SoundbankViewModelFactory
+import com.tunepruner.fingerperc.store.Library
+import com.tunepruner.fingerperc.store.Soundbank
+import com.tunepruner.fingerperc.launchscreen.librarylist.SpacesItemDecoration
+import com.tunepruner.fingerperc.store.viewmodel.SoundbankViewModel
+import com.tunepruner.fingerperc.store.viewmodel.SoundbankViewModelFactory
 import java.io.File
 import java.text.DecimalFormat
 
@@ -156,7 +154,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
         val textFromFile: String = if (file.exists()) {
             file.readText()
         } else "null"
-        var isBeta = when {/*this will potentially be changed by the database check*/
+        val isBeta = when {/*this will potentially be changed by the database check*/
             textFromFile.contains("true") -> true
             textFromFile.contains("false") -> false
             else -> null
@@ -175,7 +173,7 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
             //setup all the substrings for email
             val separator = "\n________________________________\n"
             val answer = "\n▼\n\n\n\n▲$separator"
-            val androidVersion = "Android version: ${android.os.Build.VERSION.SDK_INT}"
+            val androidVersion = "Android version: ${Build.VERSION.SDK_INT}"
             val modelVersion = "Phone model: ${capitalize(getDeviceName() ?: "")}"
             val totalRAM = "RAM used: ${bytesToHuman(memInfo.totalMem.toDouble())}"
             val availableRam = "RAM available: ${bytesToHuman(memInfo.availMem.toDouble())}"
@@ -193,21 +191,21 @@ class LibraryListRecyclerFragment : Fragment(), LibraryListRecyclerAdapter.Libra
                 i.putExtra(
                     Intent.EXTRA_TEXT,
                     "" +
-                            "$separator" +
+                            separator +
                             "$questionQuitUnexp$answer" +
                             "$questionSound$answer" +
                             "$otherProblems$answer" +
                             "$anySuggestions$answer" +
                             "THANK YOU!!! : D" +
-                            "$separator" +
-                            "$separator" +
+                            separator +
+                            separator +
                             "($androidVersion\n" +
                             "$modelVersion\n" +
                             "$totalRAM\n" +
                             "$availableRam\n" +
                             "$bluetoothConnected)" +
-                            "$separator" +
-                            "$separator"
+                            separator +
+                            separator
                 )
                 try {
                     startActivity(Intent.createChooser(i, "Email to developer..."))

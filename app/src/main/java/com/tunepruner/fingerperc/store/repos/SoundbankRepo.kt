@@ -1,21 +1,19 @@
-package com.tunepruner.fingerperc.launchscreen.data
+package com.tunepruner.fingerperc.store.repos
 
 import android.app.Application
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.android.billingclient.api.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundpack
-import com.tunepruner.fingerperc.launchscreen.librarylist.BillingClientListener
-import com.tunepruner.fingerperc.launchscreen.librarylist.BillingClientWrapper
+import com.tunepruner.fingerperc.store.Library
+import com.tunepruner.fingerperc.store.Soundbank
+import com.tunepruner.fingerperc.store.Soundpack
+import com.tunepruner.fingerperc.store.BillingClientListener
+import com.tunepruner.fingerperc.store.BillingClientWrapper
 import java.io.File
 
 class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClientListener {
@@ -84,10 +82,10 @@ class SoundbankRepo(val app: Application, val soundpackID: String) : BillingClie
             .addOnFailureListener { exception ->
                 Log.d(LOG_TAG, "get failed with ", exception)
             }
-        Log.d(LOG_TAG, "listener evaluated for librariesCollectionRef, will run shortly...");
+        Log.d(LOG_TAG, "listener evaluated for librariesCollectionRef, will run shortly...")
 
 
-        Log.d(LOG_TAG, "listener evaluated for soundpacksCollectionRef, will run shortly...");
+        Log.d(LOG_TAG, "listener evaluated for soundpacksCollectionRef, will run shortly...")
     }
 
     override fun onClientReady() {

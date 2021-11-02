@@ -1,17 +1,16 @@
-package com.tunepruner.fingerperc.launchscreen.librarylist
+package com.tunepruner.fingerperc.store.ui
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tunepruner.fingerperc.R
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
+import com.tunepruner.fingerperc.store.Library
+import com.tunepruner.fingerperc.store.Soundbank
 
 open class LibraryListRecyclerAdapter(
     open val context: Context,
@@ -48,10 +47,10 @@ open class LibraryListRecyclerAdapter(
                 if (soundbank.check(Soundbank.CheckType.IS_RELEASED, library))
                     if (soundbank.check(Soundbank.CheckType.IS_PURCHASED, library))
                         if (soundbank.check(Soundbank.CheckType.IS_INSTALLED, library))
-                            it.text = "Tap to play!"
-                        else it.text = "Tap to install"
-                    else it.text = "Check it out!"
-                else it.text = "Coming soon!"
+                            it.text = context.getString(R.string.tap_to_play)
+                        else it.text = context.getString(R.string.tap_to_install)
+                    else it.text = context.getString(R.string.check_it_out)
+                else it.text = context.getString(R.string.coming_soon)
             }
 //            val picasso = Picasso.get()
             recyclerButtonImage.transitionName = "${library.soundpackID}"

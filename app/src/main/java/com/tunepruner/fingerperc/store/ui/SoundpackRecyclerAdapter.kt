@@ -1,12 +1,11 @@
-package com.tunepruner.fingerperc.launchscreen.soundpackDetail
+package com.tunepruner.fingerperc.store.ui
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.tunepruner.fingerperc.R
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
-import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryListRecyclerAdapter
+import com.tunepruner.fingerperc.store.Soundbank
 
 class SoundpackRecyclerAdapter(
     context: Context,

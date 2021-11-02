@@ -2,9 +2,9 @@ package com.tunepruner.fingerperc.instrument
 
 import android.app.Activity
 import android.view.MotionEvent
-import com.tunepruner.fingerperc.gui.AnimationManager
-import com.tunepruner.fingerperc.gui.InstrumentGUI
-import com.tunepruner.fingerperc.gui.SimpleAnimationManager
+import com.tunepruner.fingerperc.instrument.ui.AnimationManager
+import com.tunepruner.fingerperc.instrument.ui.InstrumentGUI
+import com.tunepruner.fingerperc.instrument.ui.SimpleAnimationManager
 import com.tunepruner.fingerperc.instrument.sample.SampleFactory
 import com.tunepruner.fingerperc.instrument.sample.SampleManager
 import com.tunepruner.fingerperc.instrument.sample.SimpleSampleManager

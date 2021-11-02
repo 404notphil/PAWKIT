@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/launchScreenFragment"
-        android:name="com.tunepruner.fingerperc.launchscreen.librarylist.LibraryListRecyclerFragment"
+        android:name="com.tunepruner.fingerperc.store.ui.LibraryListRecyclerFragment"
         android:label="launch_screen"
         tools:layout="@layout/launch_screen2">
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/libraryDetailFragment3"
-        android:name="com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragment"
+        android:name="com.tunepruner.fingerperc.store.ui.LibraryDetailFragment"
         android:label="fragment_library_detail3"
         tools:layout="@layout/fragment_library_detail">
         <argument
@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/soundpackFragment"
-        android:name="com.tunepruner.fingerperc.launchscreen.soundpackDetail.SoundpackDetailFragment"
+        android:name="com.tunepruner.fingerperc.store.ui.SoundpackDetailFragment"
         android:label="fragment_soundpack"
         tools:layout="@layout/fragment_soundpack_detail">
         <argument

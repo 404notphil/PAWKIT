@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/background_general"
 
-        tools:context=".launchscreen.LaunchScreenActivity">
+        tools:context=".store.ui.LaunchScreenActivity">
 
         <LinearLayout
             android:id="@+id/buttons_parent"
@@ -31,7 +31,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_weight="10"
                 android:fontFamily="@font/kodchasan_regular"
-                android:text="Soundpack Title"
+                tools:text="Soundpack Title"
                 android:textColor="@color/textColor"
                 android:textSize="40sp" />
 
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="15"
                 android:fontFamily="@font/kodchasan_regular"
-                android:text="soundpack"
+                tools:text="soundpack"
                 android:textColor="@color/textColor"
                 android:textSize="20sp" />
 
@@ -56,7 +56,7 @@
                 android:background="@drawable/background_grid_item"
                 android:padding="20dp"
                 android:fontFamily="@font/kodchasan_regular"
-                android:text="Button"
+                tools:text="Button"
                 android:textColor="@color/textColor" />
 
         </LinearLayout>

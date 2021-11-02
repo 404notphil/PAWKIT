@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.launchscreen.soundpackDetail
+package com.tunepruner.fingerperc.store.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,12 +19,13 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.tunepruner.fingerperc.R
 import com.tunepruner.fingerperc.databinding.FragmentSoundpackDetailBinding
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
-import com.tunepruner.fingerperc.launchscreen.librarydetail.LibraryDetailFragmentArgs
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Soundbank
+import com.tunepruner.fingerperc.store.Library
+import com.tunepruner.fingerperc.store.Soundbank
 import com.tunepruner.fingerperc.launchscreen.librarylist.*
-import com.tunepruner.fingerperc.launchscreen.viewmodel.SoundbankViewModel
-import com.tunepruner.fingerperc.launchscreen.viewmodel.SoundbankViewModelFactory
+import com.tunepruner.fingerperc.store.viewmodel.SoundbankViewModel
+import com.tunepruner.fingerperc.store.viewmodel.SoundbankViewModelFactory
+import com.tunepruner.fingerperc.store.BillingClientListener
+import com.tunepruner.fingerperc.store.BillingClientWrapper
 
 class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryItemListener,
     BillingClientListener {
@@ -52,7 +53,7 @@ class SoundpackDetailFragment : Fragment(), LibraryListRecyclerAdapter.LibraryIt
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentSoundpackDetailBinding.inflate(inflater, container, false)
         recyclerView = binding.root.findViewById(R.id.recyclerView)
