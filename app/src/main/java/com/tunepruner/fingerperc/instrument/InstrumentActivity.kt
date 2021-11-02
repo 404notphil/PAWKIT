@@ -1,13 +1,12 @@
-package com.tunepruner.fingerperc
+package com.tunepruner.fingerperc.instrument
 
 import android.app.Activity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.tunepruner.fingerperc.gui.InstrumentGUI
-import com.tunepruner.fingerperc.instrument.Instrument
-import com.tunepruner.fingerperc.launchscreen.data.UsageReportingService
+import com.tunepruner.fingerperc.instrument.ui.InstrumentGUI
+import com.tunepruner.fingerperc.instrument.logging.UsageReportingService
 
 
 class InstrumentActivity : AppCompatActivity() {

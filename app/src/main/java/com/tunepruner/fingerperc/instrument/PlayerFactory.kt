@@ -1,6 +1,6 @@
 package com.tunepruner.fingerperc.instrument
 
-import com.tunepruner.fingerperc.gui.AnimationManager
+import com.tunepruner.fingerperc.instrument.ui.AnimationManager
 import com.tunepruner.fingerperc.instrument.sample.SampleManager
 import com.tunepruner.fingerperc.instrument.zone.ZoneManager
 

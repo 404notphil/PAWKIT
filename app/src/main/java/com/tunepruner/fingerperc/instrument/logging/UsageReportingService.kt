@@ -1,7 +1,7 @@
-package com.tunepruner.fingerperc.launchscreen.data
+package com.tunepruner.fingerperc.instrument.logging
 
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.tunepruner.fingerperc.InstrumentActivity
+import com.tunepruner.fingerperc.instrument.InstrumentActivity
 import java.io.File
 import java.util.*
 
@@ -14,7 +14,7 @@ class UsageReportingService(val app: InstrumentActivity) {
     val firebaseAnalytics = FirebaseAnalytics.getInstance(app)
 
     init{
-        startTime = Calendar.getInstance().timeInMillis.toLong()
+        startTime = Calendar.getInstance().timeInMillis
     }
 
     fun startClock(){

@@ -1,12 +1,11 @@
-package com.tunepruner.fingerperc.launchscreen
+package com.tunepruner.fingerperc.store.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.tunepruner.fingerperc.InstrumentActivity
 import com.tunepruner.fingerperc.R
-import com.tunepruner.fingerperc.launchscreen.librarydetail.Library
-import com.tunepruner.fingerperc.launchscreen.librarylist.LibraryListRecyclerFragment
+import com.tunepruner.fingerperc.instrument.InstrumentActivity
+import com.tunepruner.fingerperc.store.Library
 
 class LaunchScreenActivity : AppCompatActivity(), LibraryListRecyclerFragment.FragmentListener {
     private val TAG = "LaunchScreenActivity.Class"

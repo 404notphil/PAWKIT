@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.launchscreen.librarydetail
+package com.tunepruner.fingerperc.store
 
 
 class Soundbank(val libraries: ArrayList<Library>, val soundpacks: ArrayList<Soundpack>) {
@@ -11,8 +11,8 @@ class Soundbank(val libraries: ArrayList<Library>, val soundpacks: ArrayList<Sou
         checkTypeFunctions[CheckType.IS_PURCHASED] = { getSoundpack(it)?.isPurchased ?: false }
         checkTypeFunctions[CheckType.IS_INSTALLED] = { getSoundpack(it)?.isInstalled ?: false }
         setTypeFunctions[SetType.IS_RELEASED] = { value, library ->  getSoundpack(library)?.isReleased = value }
-        setTypeFunctions[SetType.IS_PURCHASED] = {  value, library ->  getSoundpack(library)?.isPurchased = value }
-        setTypeFunctions[SetType.IS_INSTALLED] = {  value, library ->  getSoundpack(library)?.isInstalled = value }
+        setTypeFunctions[SetType.IS_PURCHASED] = { value, library ->  getSoundpack(library)?.isPurchased = value }
+        setTypeFunctions[SetType.IS_INSTALLED] = { value, library ->  getSoundpack(library)?.isInstalled = value }
     }
 
     fun check(checkType: CheckType, library: Library): Boolean {

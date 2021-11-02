@@ -1,4 +1,4 @@
-package com.tunepruner.fingerperc.launchscreen.librarydetail
+package com.tunepruner.fingerperc.store.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,13 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.tunepruner.fingerperc.databinding.LoadingInstrumentFragmentBinding
 
 class LoadingInstrumentFragement :Fragment(){
-    private lateinit var viewModel:LoadingInstrumentViewModel
+    private lateinit var viewModel: LoadingInstrumentViewModel
     private lateinit var binding:LoadingInstrumentFragmentBinding
 
     override fun onCreateView(
         inflater:LayoutInflater,container:ViewGroup?,
         savedInstanceState:Bundle?
-    ):View?{
+    ):View{
         binding=LoadingInstrumentFragmentBinding.inflate(inflater,container,false)
         viewModel=ViewModelProvider(this).get(LoadingInstrumentViewModel::class.java)
 
