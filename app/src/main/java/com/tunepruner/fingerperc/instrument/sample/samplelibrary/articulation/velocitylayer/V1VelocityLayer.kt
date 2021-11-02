@@ -33,7 +33,7 @@ class V1VelocityLayer(private val layerNumber: Int, private val roundRobinLogic:
 
     override fun getSampleBySampleCoords(key: SampleCoords): Sample {
         return samplesBySampleCoords[key] ?:
-        return samplesBySampleCoords[1] ?:
+        return samplesBySampleCoords[sampleCoordsByInt[1]] ?:
         error("playablesBySampleCoords not found")
     }
 }
