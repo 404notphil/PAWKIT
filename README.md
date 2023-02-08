@@ -1,6 +1,6 @@
 <h1 align="center">PAWKIT</h1>
 <p align="center">
- An interface for playing drums and percussion on a touchscreen <br> that enables <em>highly dynamic control</em> and follows <br> industry standard techniques for audio sampling.<br><br></p>
+PAWKIT is a drum instrument in the form of a mobile app, packaged with a collection of custom sampled acoustic instruments. Through a custom triggering interface, it provides a highly dynamic way to trigger sampled drum sounds. <br><br></p>
 
  <p align="center">
 <a href="https://play.google.com/store/apps/details?id=com.tunepruner.fingerperc&hl=en_US&gl=US" target="_blank"><img src="google-play-badge.png" width="200" alt="Screen recording of app"></a>
@@ -14,14 +14,13 @@ _____
 
 # Abstract
 
-PAWKIT is a musical instrument in the form of an Android app. It's a dynamic, zone-based percussion interface,
+PAWKIT is a dynamic, zone-based percussion interface,
 packaged with deep-sampled acoustic percussion instruments and drum kits. A user can load an instrument and then
 create sound by tapping the screen. For each instrument, there are two zones on the screen which represent the
 primary sounds that the instrument can make. For example, in the case of the Bombo Legüero,
-those two sounds are 1) a hit on the wooden rim of the drum and 2) a hit in the center of the drum head
-(membrane, that is). In the case of a drum kit, the two zones correspond to the snare drum and the kick drum.
-The dynamic level of each hit
-(the volume, basically) is determined by where you tap on the Y axis.
+those two sounds are 1) a hit on the wooden rim of the drum and 2) a hit in the center of the "drum head", 
+or membrane. In the case of a drum kit, the two zones correspond to the snare drum and the kick drum.
+The the volume of each drum hit is determined by where you tap on the Y axis.
 [You can watch my demonstration video to see it in action.](https://youtu.be/RQXtMMSJ8G4)
 
 
