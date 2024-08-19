@@ -21,7 +21,6 @@ primary sounds that the instrument can make. For example, in the case of the Bom
 those two sounds are 1) a hit on the wooden rim of the drum and 2) a hit in the center of the "drum head", 
 or membrane. In the case of a drum kit, the two zones correspond to the snare drum and the kick drum.
 The the volume of each drum hit is determined by where you tap on the Y axis.
-[You can watch my demonstration video to see it in action.](https://youtu.be/RQXtMMSJ8G4)
 
 
 # Under the hood
@@ -40,7 +39,7 @@ I recorded up to 10 of them for each velocity layer.
 When a user triggers the exact same zone multiple times in a row, programming logic
 chooses any round robin from those available, excluding the last one played, and submits its choice to the Player service.
 The reason that RoundRobins are used is to avoid the dreaded "machine gun effect" that happens in
-virtual instruments of lower quality. [You can watch my technical walkthrough video for more info.](https://youtu.be/6Hf7qcKE2H8)
+virtual instruments of lower quality.
 
 # Status
 
